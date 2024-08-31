@@ -37,7 +37,7 @@ public class Table {
              .append(key.toString())
              .append("</code></td><td><code>")
              .append(te.name)
-             .append("<code></td><td style='text-align:center'><code>")
+             .append("</code></td><td style='text-align:center'><code>")
              .append(te.type.getHTML())
              .append("</code></td><td style='width:100%'>")
              .append(te.description)

@@ -23,7 +23,7 @@ public class CreateDocument {
 
         replace("${PAYMENT_REQUEST}", new PaymentRequest());
         replace("${PAYMENT_INFO}", new PaymentInfo());
-        replace("${AUTHORIZATION_RESPONSE}", new AuthorizationResponse());
+        replace("${AUTHORIZATION_RESPONSE}", new SignedAuthorization());
 
         IO.writeFile(documentFileName, template);
     }
