@@ -7,23 +7,29 @@ public class CreateDocument {
 
     String template;
 
-    void replace(String holder, TableExecutor executor) {
-        String title = executor.getTitle();
+    void replace(TableExecutor executor) {
+        String oldTemplate = template;
+        String holder = "${" + executor.getLink() + "}";
         template = template.replace(holder, 
             "<h5 id='" +
-            title.toLowerCase().replace(" ","-") +
+            executor.getLink() +
             "'>" +
-            title +
+            executor.getTitle() +
             "</h5>" +
             executor.getTableString());
+        if (oldTemplate.length() == template.length()) {
+            throw new RuntimeException("Did not find: " +holder);
+        }
     }
 
     CreateDocument(String templateFileName, String documentFileName) {
         template = UTF8.decode(IO.readFile(templateFileName));
 
-        replace("${PAYMENT_REQUEST}", new PaymentRequest());
-        replace("${PAYMENT_INFO}", new PaymentInfo());
-        replace("${AUTHORIZATION_RESPONSE}", new SignedAuthorization());
+        replace(new PaymentRequest());
+        replace(new SignedAuthorization());
+        replace(new AuthorizationResponse());
+        replace(new PassThroughData());
+        replace(new ServiceProvider());
 
         IO.writeFile(documentFileName, template);
     }

@@ -2,7 +2,7 @@ package org.webpki.wallet_core;
 
 import static org.webpki.wallet_core.Common.*;
 
-public class PaymentRequest implements TableExecutor {
+public class PaymentRequest extends TableExecutor {
 
     static final String AMOUNT_NAME      = "amount";
     static final String COMMON_NAME_NAME = "commonName";
@@ -11,7 +11,7 @@ public class PaymentRequest implements TableExecutor {
     static final String NON_DIRECT_NAME  = "nonDirect";
 
     @Override
-    public String getTableString() {
+    String getTableString() {
         return new Table()
             .add(AMOUNT_LABEL, AMOUNT_NAME, Types.TSTR,
                 "Monetary amount.")
@@ -32,7 +32,7 @@ public class PaymentRequest implements TableExecutor {
     }
 
     @Override
-    public String getTitle() {
+    String getTitle() {
         return "Payment Request";
     }
 }

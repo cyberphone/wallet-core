@@ -29,8 +29,9 @@ public class Table {
 
     public String toString() {
         StringBuilder s = new StringBuilder("<div class='webpkifloat'>" +
-                        "<table class='webpkitable' style='margin-left:2em;width:50em'>" +
-            "<tr><th>Label</th><th>Name</th><th>Type</th><th>Description</th></tr>");
+             "<table class='webpkitable' style='margin-left:2em;width:50em'>" +
+                "<tr><th>Label</th><th>Name</th><th>Type</th>" +
+                    "<th style='width:100%'>Description</th></tr>");
         for (CBORObject key : elements.keySet()) {
             TableElement te = elements.get(key);
             s.append("<tr><td style='text-align:center'><code>")
@@ -39,7 +40,7 @@ public class Table {
              .append(te.name)
              .append("</code></td><td style='text-align:center'><code>")
              .append(te.type.getHTML())
-             .append("</code></td><td style='width:100%'>")
+             .append("</code></td><td>")
              .append(te.description)
              .append("</td></tr>");
         }

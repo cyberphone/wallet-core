@@ -2,10 +2,9 @@ package org.webpki.wallet_core;
 
 import static org.webpki.wallet_core.Common.*;
 
-public class SignedAuthorization implements TableExecutor {
+public class SignedAuthorization extends TableExecutor {
 
-    static final String PAYMENT_REQUEST_NAME = "paymentRequest";
-    static final String PAYMENT_INFO_NAME    = "paymentInfo";
+    static final String PASS_THROUGH_NAME    = "passThrough";
     static final String PAYEE_HOST_NAME      = "payeeHost";
     static final String ACCOUNT_ID_NAME      = "accountId";
     static final String SERIAL_NUMBER_NAME   = "serialNumber";
@@ -18,14 +17,14 @@ public class SignedAuthorization implements TableExecutor {
     @Override
     public String getTableString() {
         return new Table()
-            .add(PAYMENT_REQUEST_LABEL, PAYMENT_REQUEST_NAME, Types.MAP,
-                "Holds <a href='#payment-request'>Payment Request</a> object.")
 
-            .add(PAYMENT_INFO_LABEL, PAYMENT_INFO_NAME, Types.MAP,
-                "Holds <a href='#payment-information'>Payment Information</a> object.")
+            .add(PASS_THROUGH_LABEL, PASS_THROUGH_NAME, Types.MAP,
+                "Holds a " +
+                new PassThroughData().getHref() +
+                " object.")
 
             .add(PAYEE_HOST_LABEL, PAYEE_HOST_NAME, Types.TSTR,
-                "Host name or IP address of invoking Payee (Merchant).")
+                "Host name or IP address of invoking Payee (merchant).")
 
             .add(ACCOUNT_ID_LABEL, ACCOUNT_ID_NAME, Types.TSTR,
                 "Account identifier associated with the virtual card.")
@@ -44,8 +43,8 @@ public class SignedAuthorization implements TableExecutor {
                             "and latitude <code>[1]</code>, expressed as CBOR floats.")
 
             .add(TIME_STAMP_LABEL, TIME_STAMP_NAME, Types.TSTR,
-                            "ISO date-time string using UTC (<kbd>T</kbd>) or " +
-                            "local time (<kbd>Z</kbd>) format.")
+                            "ISO date-time string using UTC (T) or " +
+                            "local time (Z) format.")
 
             .add(SIGNATURE_LABEL, SIGNATURE_NAME, Types.MAP,
                 "Authorization signature.")
@@ -53,7 +52,7 @@ public class SignedAuthorization implements TableExecutor {
     }
 
     @Override
-    public String getTitle() {
+    String getTitle() {
         return "Signed Authorization";
     }
 }

@@ -2,10 +2,10 @@ package org.webpki.wallet_core;
 
 import static org.webpki.wallet_core.Common.*;
 
-public class PaymentInfo implements TableExecutor {
+public class ServiceProvider extends TableExecutor {
 
     @Override
-    public String getTableString() {
+    String getTableString() {
         return new Table()
             .add(PAYMENT_NETWORK_LABEL, "paymentNetwork", Types.TSTR,
                 "Payment network/method identifier.")
@@ -15,7 +15,12 @@ public class PaymentInfo implements TableExecutor {
     }
 
     @Override
-    public String getTitle() {
-        return "Payment Information";
+    String getTitle() {
+        return "Service Provider Information";
+    }
+
+    @Override
+    String getLink() {
+        return "service-provider";
     }
 }
