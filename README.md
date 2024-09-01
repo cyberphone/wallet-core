@@ -1,5 +1,6 @@
-# library
-This repository holds the core project of openkeystore which is a Java library
+# Wallet Core
+This repository holds the messaging components of a payment wallet.
 
-## API
-The API is described on https://cyberphone.github.io/doc/openkeystore/javaapi/overview-summary.html
+## Documentation
+The message flow and associated contents are documented in:
+https://cyberphone.github.io/wallet-core/doc
