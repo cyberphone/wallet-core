@@ -36,6 +36,8 @@ public class CreateDocument {
 
     static final String OBJECT_ID = "https://saturn.standard/v4";
 
+    static final String TIME_STAMP = "2024-09-01T13:28:02-02:00";
+
     KeyPair authorizationKey;
     KeyPair encryptionKey;
 
@@ -106,6 +108,8 @@ public class CreateDocument {
         replace(new PassThroughData());
         replace(new ServiceProvider());
 
+        // Create AuthorizationRequest
+
         CBORMap paymentRequest = new CBORMap()
             .set(AMOUNT_LABEL, new CBORString("600.00"))
             .set(CURRENCY_LABEL, new CBORString("EUR"))
@@ -123,16 +127,21 @@ public class CreateDocument {
                 .add(new CBORString(BANKNET2)));
         codeTable("authz-req.txt", authorizationRequest);
 
+        // Create a singned authorization response
+
         CBORMap passThrough = new CBORMap()
             .set(PAYMENT_REQUEST_LABEL, paymentRequest)
             .set(SERVICE_PROVIDER_LABEL, serviceProvider);
 
         CBORMap signedAuthorization = new CBORMap()
-            .set(PASS_THROUGH_LABEL, passThrough);
+            .set(PASS_THROUGH_LABEL, passThrough)
+            .set(TIME_STAMP_LABEL, new CBORString(TIME_STAMP));
         new CBORAsymKeySigner(authorizationKey.getPrivate())
             .setPublicKey(authorizationKey.getPublic())
             .sign(SIGNATURE_LABEL, signedAuthorization);
         codeTable("signed-authz.txt", signedAuthorization);
+
+        // Create the actual (encrypted) AuthorizationResponse
 
         signedAuthorization.remove(PASS_THROUGH_LABEL);
         byte[] cbor = new CBORAsymKeyEncrypter(encryptionKey.getPublic(), 
@@ -150,9 +159,11 @@ public class CreateDocument {
             })
             .setPublicKeyOption(true)
             .encrypt(signedAuthorization.encode()).encode();
-
         CBORTag encrypted = CBORDecoder.decode(cbor).getTag();
         codeTable("authz-res.txt", encrypted);
+
+        // Now, decode/decrypt/verify AuthorizationResponse
+        // Note: this is performed by the Issuer!
 
         final CBORMap saveCustomData[] = new CBORMap[1];
         cbor = new CBORAsymKeyDecrypter(new CBORAsymKeyDecrypter.KeyLocator() {
@@ -188,6 +199,9 @@ public class CreateDocument {
             }
                                 
         }).decrypt(encrypted);
+
+        // Restore message and verify signature
+
         CBORMap restored = CBORDecoder.decode(cbor).getMap();
         restored.set(PASS_THROUGH_LABEL, saveCustomData[0]);
 
