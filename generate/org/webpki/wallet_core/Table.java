@@ -29,7 +29,7 @@ public class Table {
 
     public String toString() {
         StringBuilder s = new StringBuilder("<div class='webpkifloat'>" +
-             "<table class='webpkitable' style='margin-left:2em;width:50em'>" +
+             "<table class='webpkitable' style='width:52em'>" +
                 "<tr><th>Label</th><th>Name</th><th>Type</th>" +
                     "<th style='width:100%'>Description</th></tr>");
         for (CBORObject key : elements.keySet()) {

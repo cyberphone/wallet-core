@@ -12,6 +12,8 @@ public class Common {
     static final CBORInt CURRENCY_LABEL         = new CBORInt(4); 
     static final CBORInt NON_DIRECT_LABEL       = new CBORInt(5); 
 
+    static final CBORInt PAYMENT_NETWORKS_LABEL = new CBORInt(2);
+
     static final CBORInt SERVICE_PROVIDER_LABEL = new CBORInt(2);
 
     static final CBORInt PAYMENT_NETWORK_LABEL  = new CBORInt(1); 

@@ -19,7 +19,7 @@ public class PassThroughData extends TableExecutor {
             .add(SERVICE_PROVIDER_LABEL, SERVICE_PROVIDER_NAME, Types.MAP,
                 "Holds the " +
                 new ServiceProvider().getHref() +
-                " required by the Payee (merchant) to initiate " +
+                " required by the Payee (merchant) for initiating " +
                 "a payment transaction.")
 
             .toString();

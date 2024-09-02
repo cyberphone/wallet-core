@@ -8,7 +8,10 @@
   <property name="npm.index.cjs" location="${npm.dir}/cjs/index.cjs"/>
   <property name="temp.dir" location=".tmp"/>
   <property name="webpki.lib.dir" location="../openkeystore/library/dist"/>
+  <property name="authz-key" location="../openkeystore/testdata/keys/ed25519privatekey.jwk"/>
+  <property name="enc-key" location="../openkeystore/testdata/keys/p256privatekey.jwk"/>
   <property name="doc.file" location="doc/index.html"/>
+  <property name="docgen.dir" location="docgen"/>
   <property name="document-template.file" location="document-template.html"/>
   <property name="test.dir" location="../test"/>
   <property name="browser-test.file" location="../doc/browser-test.html"/>
@@ -46,7 +49,7 @@
           <include name="*.jar"/>
         </fileset>
       </classpath>
-      <arg line="${document-template.file} ${doc.file}"/>
+      <arg line="${document-template.file} ${doc.file} ${docgen.dir} ${authz-key} ${enc-key}"/>
     </java>
     <delete dir="${temp.dir}"/>
   </target>

@@ -19,7 +19,7 @@ public class SignedAuthorization extends TableExecutor {
         return new Table()
 
             .add(PASS_THROUGH_LABEL, PASS_THROUGH_NAME, Types.MAP,
-                "Holds a " +
+                "Holds the " +
                 new PassThroughData().getHref() +
                 " object.")
 
@@ -48,6 +48,7 @@ public class SignedAuthorization extends TableExecutor {
 
             .add(SIGNATURE_LABEL, SIGNATURE_NAME, Types.MAP,
                 "Authorization signature.")
+    
             .toString();
     }
 

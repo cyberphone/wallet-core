@@ -9,8 +9,10 @@ public class ServiceProvider extends TableExecutor {
         return new Table()
             .add(PAYMENT_NETWORK_LABEL, "paymentNetwork", Types.TSTR,
                 "Payment network/method identifier.")
+
             .add(PAYMENT_SERVICE_LABEL, "paymentService", Types.TSTR,
                 "Payment service URL or host name.")
+    
             .toString();
     }
 
