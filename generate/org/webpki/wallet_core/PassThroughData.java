@@ -14,13 +14,13 @@ public class PassThroughData extends TableExecutor {
                 "By including a copy of the " +
                 new PaymentRequest().getHref() +
                 " in the user authorization, this object remains <i>authoritative</i> " +
-                "throughout the entire payment process.")
+                "throughout the payment process (except for interbank operations).")
 
             .add(SERVICE_PROVIDER_LABEL, SERVICE_PROVIDER_NAME, Types.MAP,
                 "Holds the " +
                 new ServiceProvider().getHref() +
-                " required by the Payee (merchant) for initiating " +
-                "a payment transaction.")
+                " required by the Payee (merchant) for deriving which payment network " +
+                "to use and initiating a compatible payment transaction request.")
 
             .toString();
     }
