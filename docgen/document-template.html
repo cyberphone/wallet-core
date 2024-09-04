@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <link rel='icon' href='webpkiorg.png' sizes='192x192'>
+  <meta name='viewport' content='initial-scale=1.0'>
+  <meta charset='UTF-8'>
+  <title>Wallet Core</title>
+  <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<h3 style="text-align:center;font-weight:normal;font-size:1.5em">Saturn - Payment Authorization Wallet</h3>
+<i>Disclaimer: this is a specification in an early state, subject to change.</i>
+<h5 id='introduction'>Introduction</h5>
+This document describes the core companents of the Saturn wallet.
+Note that Saturn is a <i>payment authorization </i> system for end-users,
+not a payment system.  Saturn is heavily influenced by the current
+&quot;gold&nbsp;standard&quot; for consumer payments, ${href.emv}.
+<p style='padding-bottom:0;margin-bottom:0'>
+Compared to EMV, Saturn introduces several enhancements:
+</p>
+<ul style='padding-top:0;margin:0 0 0 1em'>
+  <li style='padding-top:0.5em;margin-top:0'>For privacy reasons user authorizations are <i>encrypted</i>.</li>
+  <li>Intended to work with <i>any</i> account based payment system.</li>
+  <li>Eliminates specific on-line solutions like 3D Secure.</li>
+  <li>Receipt option.</li>
+  <li>Account balance option.</li>
+  <li>Built-in support for authorization of non-direct payments.</li>
+</ul>
+<p>
+Saturn builds on the idea that different payment networks should not
+need unique user authorizations solutions; only identifiers
+related to accounts and payment networks need to be adapted.
+This data is provided in the associated virtual payment cards (payment credentials),
+making the wallet software <i>universal</i>.
+</p>
+The sequence diagram below outlines the Saturn protocol: 
+<div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Wallet Overview'></div>
+<h5 id='operation'>Detailed Operation</h5>
+To guide the reader, operation is described based on an example which
+in turn provides links to the formal definitions.
+<p>
+The Saturn protocol is based on CBOR [${href.rfc8949}] which is a binary interchange format.
+For documentation purposes only, messages are shown in <i>diagnostic notation</i>.
+</p>
+${authz-req.txt}
+${authz-res.txt}
+${authorization-request}
+Authorization&nbsp;Request is the core Payee (merchant) wallet message,
+holding the actual monetary request.  In Web contexts this message is also associated
+with opening the wallet application.
+${payment-request}
+${authorization-response}
+${service-provider}
+${pass-through}
+${signed-authorization}
+${signed-authz.txt}
+<h5 id='test-vectors'>Test Vectors</h5>
+Equipped with an appropriate diagnostic notation parser like
+<a href='https://cyberphone.github.io/CBOR.js/doc/playground.html'>
+https://cyberphone.github.io/CBOR.js/doc/playground.html
+</a> and COSE algorithm support, the <a href='#authz-res.txt'>sample authorization</a>
+should be possible to decrypt and verify, using the following sample keys.
+<div style='margin-top:0.8em'>Authorization key in JWK format:</div>
+${authorization-key.jwk}
+<div style='margin-top:0.8em'>Authorization key in COSE format:</div>
+${authorization-key.txt}
+<div style='margin-top:0.8em'>Encryption key in JWK format:</div>
+${encryption-key.jwk}
+<div style='margin-top:0.8em'>Encryption key in COSE format:</div>
+${encryption-key.txt}
+<h5 id='version'>Version</h5>
+  API version: 1.0.0<br>
+  Document version: 2024-09-04
+</body>
+</html>

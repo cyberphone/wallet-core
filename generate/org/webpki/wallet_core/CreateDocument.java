@@ -2,6 +2,8 @@ package org.webpki.wallet_core;
 
 import static org.webpki.wallet_core.Common.*;
 
+import java.io.File;
+
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -82,7 +84,9 @@ public class CreateDocument {
 
     void codeTable(String holder, String cleanText) {
         updateTemplate(holder,
-            "<div class='webpkifloat'><div class='webpkibox' style='width:50em'>" +
+            "<div class='webpkifloat'><div class='webpkibox' id='" +
+            holder +
+            "' style='width:50em'>" +
             cleanText +
             "</div></div>");
     }
@@ -97,7 +101,7 @@ public class CreateDocument {
                    String authKeyFile,
                    String encKeyFile) {
         this.docgenDirectory = docgenDirectory;
-        template = UTF8.decode(IO.readFile(templateFileName));
+        template = UTF8.decode(IO.readFile(docgenDirectory + File.separator + templateFileName));
         authorizationKey = getKeyPair("authorization-key", authKeyFile);
         encryptionKey = getKeyPair("encryption-key", encKeyFile);
 
@@ -207,6 +211,11 @@ public class CreateDocument {
 
         new CBORAsymKeyValidator(authorizationKey.getPublic())
             .validate(SIGNATURE_LABEL, restored);
+
+        // Fill in external links
+        for (ExternalLinks link : ExternalLinks.values()) {
+            template = template.replace(link.getHolder(), link.getHtml());
+        }
  
         IO.writeFile(documentFileName, template);
     }

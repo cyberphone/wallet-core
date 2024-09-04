@@ -12,7 +12,6 @@
   <property name="enc-key" location="../openkeystore/testdata/keys/p256privatekey.jwk"/>
   <property name="doc.file" location="doc/index.html"/>
   <property name="docgen.dir" location="docgen"/>
-  <property name="document-template.file" location="document-template.html"/>
   <property name="test.dir" location="../test"/>
   <property name="browser-test.file" location="../doc/browser-test.html"/>
   <property name="browser-test-template.file" location="browser-test-template.html"/>
@@ -49,7 +48,7 @@
           <include name="*.jar"/>
         </fileset>
       </classpath>
-      <arg line="${document-template.file} ${doc.file} ${docgen.dir} ${authz-key} ${enc-key}"/>
+      <arg line="document-template.html ${doc.file} ${docgen.dir} ${authz-key} ${enc-key}"/>
     </java>
     <delete dir="${temp.dir}"/>
   </target>

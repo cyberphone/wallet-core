@@ -31,7 +31,7 @@ h5 {
 }
 
 li {
-  padding-top:5pt;
+  padding-top:0.5em;
 }
 
 .staticbox, .textbox {
@@ -147,7 +147,7 @@ li {
   display: inline-block;
   border-collapse: collapse;
   box-shadow: 0.2em 0.2em 0.2em #d0d0d0;
-  margin: 1em 1em 1em 2em;
+  margin: 1em;
 }
 
 .webpkitable td {
@@ -190,7 +190,7 @@ li {
 .webpkibox, .webpkihexbox {
   padding: 0.8em 1em;
   font-family: "Noto Mono",monospace;
-  margin: 1em 1em 1em 2em;
+  margin: 1em;
 }
 
 .webpkisvg {
