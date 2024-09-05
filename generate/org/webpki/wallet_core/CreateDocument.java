@@ -21,6 +21,7 @@ import org.webpki.cbor.CBORObject;
 import org.webpki.cbor.CBORString;
 import org.webpki.cbor.CBORTag;
 
+import org.webpki.crypto.AsymSignatureAlgorithms;
 import org.webpki.crypto.ContentEncryptionAlgorithms;
 import org.webpki.crypto.CryptoException;
 import org.webpki.crypto.KeyEncryptionAlgorithms;
@@ -48,6 +49,7 @@ public class CreateDocument {
     String template;
     String docgenDirectory;
 
+    int outerCount = 3;
     int innerCount;
 
     KeyPair getKeyPair(String holder, String jwkFile) {
@@ -71,7 +73,7 @@ public class CreateDocument {
         updateTemplate(executor.getLink(),
             "<h5 id='" +
             executor.getLink() +
-            "'>3." + (++innerCount) + ".&nbsp; " +
+            "'>" + outerCount + "." + (++innerCount) + ".&nbsp; " +
             executor.getTitle() +
             "</h5>" +
             executor.getTableString());
@@ -115,6 +117,10 @@ public class CreateDocument {
         replace(new AuthorizationResponse());
         replace(new PassThroughData());
         replace(new ServiceProvider());
+
+        outerCount = 4;
+        innerCount = 0;
+        replace(new PaymentCredential());
 
         // Create AuthorizationRequest
 
@@ -216,8 +222,28 @@ public class CreateDocument {
         
         restored.set(PASS_THROUGH_LABEL, saveCustomData[0]);
 
-        new CBORAsymKeyValidator(authorizationKey.getPublic())
-            .validate(SIGNATURE_LABEL, restored);
+        // We want to 1) enforce public key 2) check key for trust after validation
+        PublicKey[] suppliedPublicKey = new PublicKey[1];
+        new CBORAsymKeyValidator(new CBORAsymKeyValidator.KeyLocator() {
+
+            @Override
+            public PublicKey locate(PublicKey optionalPublicKey, 
+                                    CBORObject optionalKeyId, 
+                                    AsymSignatureAlgorithms asymSignatureAlgorithm) {
+                if (optionalPublicKey == null) {
+                    throw new CryptoException("Missing public key");
+                }
+                if (asymSignatureAlgorithm != AsymSignatureAlgorithms.ED25519) {
+                    throw new CryptoException("Invalid algorithm: " + asymSignatureAlgorithm);
+                }
+                suppliedPublicKey[0] = optionalPublicKey;
+                return optionalPublicKey;
+            }
+
+        }).validate(SIGNATURE_LABEL, restored);
+        if (!suppliedPublicKey[0].equals(authorizationKey.getPublic())) {
+            throw new CryptoException("Unknown public key");
+        }
 
         // Fill in external links
         for (ExternalLinks link : ExternalLinks.values()) {

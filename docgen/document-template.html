@@ -80,13 +80,21 @@ ${authorization-response}
 ${service-provider}
 ${pass-through}
 ${signed-authorization}
-<h3 id='decryption-validatiom'>4.&nbsp; Decryption and Validation</h3>
+<h3 id='credential-database'>4.&nbsp; Credential Database</h3>
+A fundamental part of the wallet is a local database holding
+enrolled payment credentials.
+<p>
+Each entry in the database contains a payment credential according
+to the following definition:
+</p>
+${payment-credential}
+<h3 id='decryption-validatiom'>5.&nbsp; Decryption and Validation</h3>
 This section describes how an
 <a href='#authorization-response'>Authorization&nbsp;Response</a> message
 is decrypted and validated, using the
 <a href='#authz-res.txt'>sample&nbsp;object</a>  and the 
 <a href="#test-vectors">Test Vectors</a>.
-<h5>4.1.&nbsp; Decryption</h5>
+<h5>5.1.&nbsp; Decryption</h5>
 The <a href='#authorization-response'>Authorization&nbsp;Response</a>
 needs to be decrypted using a private key associated with a supplied
 <code>publicKey</code> or <code>keyId</code>.
@@ -97,7 +105,7 @@ object which is supplied in clear:
 ${pass-through.txt}
 and another object which after decryption should read like the following:
 ${restored.txt}
-<h5>4.2.&nbsp; Validation</h5>
+<h5>5.2.&nbsp; Validation</h5>
 By simply combining the objects retrived during the decryption phase,
 the <a href='#signed-authorization'>Signed&nbsp;Authorization</a> object is recreated:
 ${signed-authz.txt}
@@ -107,7 +115,7 @@ attribute, it can be validated using &quot;as&nbsp;is&quot;.
 Note that the <i>trust</i> in the supplied public key <b>must</b>
 be verified <i>before</i> the authorization object is used!
 </p>
-<h3 id='test-vectors'>5.&nbsp; Test Vectors</h3>
+<h3 id='test-vectors'>6.&nbsp; Test Vectors</h3>
 Equipped with an appropriate diagnostic notation parser like
 <a href='https://cyberphone.github.io/CBOR.js/doc/playground.html'>
 https://cyberphone.github.io/CBOR.js/doc/playground.html
