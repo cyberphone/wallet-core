@@ -8,11 +8,14 @@ public class ServiceProvider extends TableExecutor {
     String getTableString() {
         return new Table()
             .add(PAYMENT_NETWORK_LABEL, "paymentNetwork", Types.TSTR,
-                "Payment network/method identifier.")
+                "Copy of the same attribute in the selected " +
+                "virtual card (see " +
+                "<a href='#payment-credentials'>Payment&nbsp;Credentials</a>).")
 
             .add(PAYMENT_SERVICE_LABEL, "paymentService", Types.TSTR,
-                "Payment service URL or host name.")
-    
+                "Copy of the same attribute in the selected " +
+                "virtual card (see " +
+                "<a href='#payment-credentials'>Payment&nbsp;Credentials</a>).")
             .toString();
     }
 

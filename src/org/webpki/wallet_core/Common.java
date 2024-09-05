@@ -23,8 +23,8 @@ public class Common {
     static final CBORInt PAYEE_HOST_LABEL       = new CBORInt(2);
     static final CBORInt ACCOUNT_ID_LABEL       = new CBORInt(3);
     static final CBORInt SERIAL_NUMBER_LABEL    = new CBORInt(4);
-    static final CBORInt PLATFORM_DATA_LABEL    = new CBORInt(5);
-    static final CBORInt WALLET_SOFTWARE_LABEL  = new CBORInt(6);
+    static final CBORInt PLATFORM_DATA_LABEL    = new CBORInt(5);   
+    static final CBORInt WALLET_DATA_LABEL      = new CBORInt(6);
     static final CBORInt LOCATION_LABEL         = new CBORInt(7);
     static final CBORInt TIME_STAMP_LABEL       = new CBORInt(8);
 

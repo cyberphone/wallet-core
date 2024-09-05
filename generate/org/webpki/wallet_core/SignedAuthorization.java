@@ -9,7 +9,7 @@ public class SignedAuthorization extends TableExecutor {
     static final String ACCOUNT_ID_NAME      = "accountId";
     static final String SERIAL_NUMBER_NAME   = "serialNumber";
     static final String PLATFORM_DATA_NAME   = "platformData";
-    static final String WALLET_SOFTWARE_NAME = "walletSoftware";
+    static final String WALLET_DATA_NAME     = "walletData";
     static final String LOCATION_NAME        = "location";
     static final String TIME_STAMP_NAME      = "timeStamp";
     static final String SIGNATURE_NAME       = "signature";
@@ -32,19 +32,21 @@ public class SignedAuthorization extends TableExecutor {
             .add(SERIAL_NUMBER_LABEL, SERIAL_NUMBER_NAME, Types.TSTR,
                 "Serial number of the virtual card.")
 
-            .add(PLATFORM_DATA_LABEL, PLATFORM_DATA_NAME, Types.MAP,
-                "Hardware and operating system.")
+            .add(PLATFORM_DATA_LABEL, PLATFORM_DATA_NAME, Types.ARRAY,
+                "Array holding the name and version of the operating system in " +
+                "<code>[0]</code> and <code>[1]</code> respectively, expressed as CBOR strings.")
 
-            .add(WALLET_SOFTWARE_LABEL, WALLET_SOFTWARE_NAME, Types.MAP,
-                "Wallet software and version.")
+            .add(WALLET_DATA_LABEL, WALLET_DATA_NAME, Types.ARRAY,
+                "Array holding the name and version of the wallet software in " +
+                "<code>[0]</code> and <code>[1]</code> respectively, expressed as CBOR strings.")
 
             .add(LOCATION_LABEL, LOCATION_NAME, Types.ARRAY,
-                            "<i>Optional</i>: Array holding longitude <code>[0]</code> " +
-                            "and latitude <code>[1]</code>, expressed as CBOR floats.")
+                "<i>Optional</i>: Array holding longitude <code>[0]</code> " +
+                "and latitude <code>[1]</code>, expressed as CBOR floats.")
 
             .add(TIME_STAMP_LABEL, TIME_STAMP_NAME, Types.TSTR,
-                            "ISO date-time string using UTC (T) or " +
-                            "local time (Z) format.")
+                "ISO date-time string using UTC (T) or " +
+                "local time (Z) format.")
 
             .add(SIGNATURE_LABEL, SIGNATURE_NAME, Types.MAP,
                 "Authorization signature.")

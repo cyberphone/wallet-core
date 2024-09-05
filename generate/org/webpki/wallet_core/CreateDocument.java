@@ -13,6 +13,7 @@ import org.webpki.cbor.CBORAsymKeyDecrypter;
 import org.webpki.cbor.CBORAsymKeyEncrypter;
 import org.webpki.cbor.CBORAsymKeySigner;
 import org.webpki.cbor.CBORAsymKeyValidator;
+import org.webpki.cbor.CBORCryptoConstants;
 import org.webpki.cbor.CBORCryptoUtils;
 import org.webpki.cbor.CBORDecoder;
 import org.webpki.cbor.CBORKeyPair;
@@ -39,9 +40,13 @@ public class CreateDocument {
 
     static final String OBJECT_ID = "https://saturn.standard/v4";
 
+    static final String PAYEE_HOST = "spaceshop.com";
+
     static final String TIME_STAMP = "2024-09-01T13:28:02-02:00";
 
     static final String PAYER_ACCOUNT = "FR7630002111110020050014382";
+
+    static final String SERIAL_NUMBER = "010049255";
 
     KeyPair authorizationKey;
     KeyPair encryptionKey;
@@ -112,11 +117,11 @@ public class CreateDocument {
         encryptionKey = getKeyPair("encryption-key", encKeyFile);
 
         replace(new AuthorizationRequest());
-        replace(new PaymentRequest());
-        replace(new SignedAuthorization());
         replace(new AuthorizationResponse());
         replace(new PassThroughData());
+        replace(new PaymentRequest());
         replace(new ServiceProvider());
+        replace(new SignedAuthorization());
 
         outerCount = 4;
         innerCount = 0;
@@ -147,8 +152,21 @@ public class CreateDocument {
             .set(PAYMENT_REQUEST_LABEL, paymentRequest)
             .set(SERVICE_PROVIDER_LABEL, serviceProvider);
 
+        CBORArray platformData = new CBORArray()
+            .add(new CBORString("Android"))
+            .add(new CBORString("14.1"));
+
+        CBORArray walletData = new CBORArray()
+            .add(new CBORString("Saturn"))
+            .add(new CBORString("1.0.0"));
+
         CBORMap signedAuthorization = new CBORMap()
             .set(PASS_THROUGH_LABEL, passThrough)
+            .set(PAYEE_HOST_LABEL, new CBORString(PAYEE_HOST))
+            .set(ACCOUNT_ID_LABEL, new CBORString(PAYER_ACCOUNT))
+            .set(SERIAL_NUMBER_LABEL, new CBORString(SERIAL_NUMBER))
+            .set(PLATFORM_DATA_LABEL, platformData)
+            .set(WALLET_DATA_LABEL, walletData)
             .set(TIME_STAMP_LABEL, new CBORString(TIME_STAMP));
         new CBORAsymKeySigner(authorizationKey.getPrivate())
             .setPublicKey(authorizationKey.getPublic())
@@ -174,6 +192,13 @@ public class CreateDocument {
             .setPublicKeyOption(true)
             .encrypt(signedAuthorization.encode()).encode();
         CBORTag encrypted = CBORDecoder.decode(cbor).getTag();
+
+/* test verifying that the unencrypted data is protected by AEAD
+        encrypted.getTaggedObject().getArray().get(1).getMap()
+            .get(CBORCryptoConstants.CUSTOM_DATA_LABEL).getMap()
+            .get(PAYMENT_REQUEST_LABEL).getMap()
+            .remove(ACCOUNT_ID_LABEL);
+*/
         codeTable("authz-res.txt", encrypted);
 
         // Now, decode/decrypt/verify AuthorizationResponse
@@ -201,8 +226,8 @@ public class CreateDocument {
                 CBORTag cborTag = object.getTag();
                 if (cborTag.getTagNumber() != CBORTag.RESERVED_TAG_COTX ||
                     !cborTag.getTaggedObject().getArray().get(0).getString().equals(OBJECT_ID)) {
-                        throw new CryptoException("Un known tag:" + cborTag);
-                    }
+                        throw new CryptoException("Unknown tag:" + cborTag);
+                }
             }
 
         }).setCustomDataPolicy(CBORCryptoUtils.POLICY.MANDATORY, new CBORCryptoUtils.Collector() {
