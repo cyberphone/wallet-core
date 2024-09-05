@@ -40,11 +40,15 @@ public class CreateDocument {
 
     static final String TIME_STAMP = "2024-09-01T13:28:02-02:00";
 
+    static final String PAYER_ACCOUNT = "FR7630002111110020050014382";
+
     KeyPair authorizationKey;
     KeyPair encryptionKey;
 
     String template;
     String docgenDirectory;
+
+    int innerCount;
 
     KeyPair getKeyPair(String holder, String jwkFile) {
         JSONObjectReader jwk = JSONParser.parse(IO.readFile(jwkFile));
@@ -67,7 +71,7 @@ public class CreateDocument {
         updateTemplate(executor.getLink(),
             "<h5 id='" +
             executor.getLink() +
-            "'>" +
+            "'>3." + (++innerCount) + ".&nbsp; " +
             executor.getTitle() +
             "</h5>" +
             executor.getTableString());
@@ -203,10 +207,13 @@ public class CreateDocument {
             }
                                 
         }).decrypt(encrypted);
+        codeTable("pass-through.txt", saveCustomData[0]);
 
         // Restore message and verify signature
 
         CBORMap restored = CBORDecoder.decode(cbor).getMap();
+        codeTable("restored.txt", restored);
+        
         restored.set(PASS_THROUGH_LABEL, saveCustomData[0]);
 
         new CBORAsymKeyValidator(authorizationKey.getPublic())

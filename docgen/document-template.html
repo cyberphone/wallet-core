@@ -10,7 +10,7 @@
 <body>
 <h3 style="text-align:center;font-weight:normal;font-size:1.5em">Saturn - Payment Authorization Wallet</h3>
 <i>Disclaimer: this is a specification in an early state, subject to change without notice.</i>
-<h5 id='introduction'>Introduction</h5>
+<h3 id='introduction'>1.&nbsp; Introduction</h3>
 This document describes the core components of the Saturn wallet.
 Note that Saturn is a <i>payment authorization </i> system for end-users,
 not a payment system.  Saturn is heavily influenced by the current
@@ -18,8 +18,8 @@ not a payment system.  Saturn is heavily influenced by the current
 <p style='padding-bottom:0;margin-bottom:0'>
 Compared to EMV, Saturn introduces several enhancements:
 </p>
-<ul style='padding-top:0;margin:0 0 0 1em'>
-  <li style='padding-top:0.5em;margin-top:0'>For privacy reasons user authorizations are <i>encrypted</i>.</li>
+<ul style='padding-top:0;margin-top:0'>
+  <li style='padding-top:0.5em'>For privacy reasons user authorizations are <i>encrypted</i>.</li>
   <li>Intended to work with <i>any</i> account based payment system.</li>
   <li>Eliminates specific on-line solutions like 3D Secure.</li>
   <li>Receipt option.</li>
@@ -34,27 +34,80 @@ This data is provided in the associated virtual payment cards (payment credentia
 making the wallet software <i>universal</i>.
 </p>
 The sequence diagram below outlines the Saturn protocol: 
-<div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Wallet Overview'></div>
-<h5 id='operation'>Detailed Operation</h5>
+<div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Sequence Diagram'></div>
+<h3 id='operation'>2.&nbsp; Detailed Operation</h3>
 To guide the reader, operation is described based on an example which
 in turn provides links to the formal definitions.
 <p>
 The Saturn protocol is based on CBOR [${href.rfc8949}] which is a <i>binary</i> interchange format.
 However, for documentation purposes, messages are shown in <i>diagnostic notation</i>.
 </p>
+<h5 id='initation'>2.1.&nbsp; Initiation</h5>
+The payment proccess is initiated when the Payer hits a &quot;Pay&quot;
+button on the Web or scans a QR-code, causing the wallet to perfom a HTTP&nbsp;GET
+(step #1 in the sequence diagram) to the Payee service.  This returns a <a href='#authorization-request'>Authorization Request</a>
+(step #2 in the sequence diagram) like the following:
 ${authz-req.txt}
+<h5 id='wallet-request-ui'>2.2.&nbsp; Wallet Request UI</h5>
+After receival of the <a href='#authorization-request'>Authorization Request</a>,
+the wallet should display a UI like the following:
+<div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0' class='webpkibox'  title='Wallet UI'></div>
+If the wallet contains multiple payment credentials matching the Payee
+request, the Payer needs to select (step #3 in the sequence diagram) a suitable
+credential, unless the default (or last used) is deamed suitable.
+<h5 id='payer-authorizes-the-request'>2.3.&nbsp; Payer Authorizes the Request</h5>
+Assuming that the Payer accepts and subsequently authorizes 
+(step #4 in the sequence diagram) the request,
+the wallet will perform a HTTP&nbsp;POST (step #5 in the sequence diagram)
+to the Payee service containing an
+<a href='#authorization-response'>Authorization Response</a>
+object like the following: 
 ${authz-res.txt}
+<h5 id='wallet-termination'>2.4.&nbsp; Wallet Termination</h5>
+After successful (or failed) authorization, the 
+<a href='#authorization-response'>Authorization Response</a>
+should return a message (step #6 in the sequence diagram).
+This message depends on how the payment process was initiated,
+and is yet to be specified.
+<h3 id='reference'>3.&nbsp; Reference</h3>
+This section contains a reference to the Saturn messages.
 ${authorization-request}
-Authorization&nbsp;Request is the core Payee (merchant) wallet message,
-holding the actual monetary request.  In Web contexts this message is also associated
+Authorization&nbsp;Request is the core Payee (merchant) to wallet message.
+In same-device Web contexts this message is also associated
 with opening the wallet application.
 ${payment-request}
 ${authorization-response}
 ${service-provider}
 ${pass-through}
 ${signed-authorization}
+<h3 id='decryption-validatiom'>4.&nbsp; Decryption and Validation</h3>
+This section describes how an
+<a href='#authorization-response'>Authorization&nbsp;Response</a> message
+is decrypted and validated, using the
+<a href='#authz-res.txt'>sample&nbsp;object</a>  and the 
+<a href="#test-vectors">Test Vectors</a>.
+<h5>4.1.&nbsp; Decryption</h5>
+The <a href='#authorization-response'>Authorization&nbsp;Response</a>
+needs to be decrypted using a private key associated with a supplied
+<code>publicKey</code> or <code>keyId</code>.
+In the sample, a <code>publicKey</code> was used.
+The decryption process should return two CBOR objects:
+the <a href='#patj-through'>&quot;Path Through&quot;Information</a>
+object which is supplied in clear:
+${pass-through.txt}
+and another object which after decryption should read like the following:
+${restored.txt}
+<h5>4.2.&nbsp; Validation</h5>
+By simply combining the objects retrived during the decryption phase,
+the <a href='#signed-authorization'>Signed&nbsp;Authorization</a> object is recreated:
 ${signed-authz.txt}
-<h5 id='test-vectors'>Test Vectors</h5>
+Since this object contains a <code>publicKey</code>
+attribute, it can be validated using &quot;as&nbsp;is&quot;.
+<p>
+Note that the <i>trust</i> in the supplied public key <b>must</b>
+be verified <i>before</i> the authorization object is used!
+</p>
+<h3 id='test-vectors'>5.&nbsp; Test Vectors</h3>
 Equipped with an appropriate diagnostic notation parser like
 <a href='https://cyberphone.github.io/CBOR.js/doc/playground.html'>
 https://cyberphone.github.io/CBOR.js/doc/playground.html
@@ -68,7 +121,7 @@ ${authorization-key.txt}
 ${encryption-key.jwk}
 <div style='margin-top:0.8em'>Encryption key in COSE format:</div>
 ${encryption-key.txt}
-<h5 id='version'>Version</h5>
+<h3 id='version'>Version</h3>
   API version: 1.0.0<br>
   Document version: 2024-09-04
 </body>
