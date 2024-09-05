@@ -120,7 +120,7 @@ public class CreateDocument {
 
         outerCount = 4;
         innerCount = 0;
-        replace(new PaymentCredential());
+        updateTemplate("payment-credential", new PaymentCredential().getTableString());
 
         // Create AuthorizationRequest
 

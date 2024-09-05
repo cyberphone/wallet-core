@@ -51,7 +51,7 @@ ${authz-req.txt}
 <h5 id='wallet-request-ui'>2.2.&nbsp; Wallet Request UI</h5>
 After receival of the <a href='#authorization-request'>Authorization Request</a>,
 the wallet should display a UI like the following:
-<div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0' class='webpkibox'  title='Wallet UI'></div>
+<div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0;width:25em' class='webpkibox'  title='Wallet UI'></div>
 If the wallet contains multiple payment credentials matching the Payee
 request, the Payer needs to select (step #3 in the sequence diagram) a suitable
 credential, unless the default (or last used) is deamed suitable.
@@ -80,25 +80,25 @@ ${authorization-response}
 ${service-provider}
 ${pass-through}
 ${signed-authorization}
-<h3 id='credential-database'>4.&nbsp; Credential Database</h3>
+<h3 id='payment-credentials'>4.&nbsp; Payment Credentials</h3>
 A fundamental part of the wallet is a local database holding
 enrolled payment credentials.
-<p>
+<p style='margin-bottom:0.5em;padding-bottom:0'>
 Each entry in the database contains a payment credential according
 to the following definition:
 </p>
 ${payment-credential}
-<h3 id='decryption-validatiom'>5.&nbsp; Decryption and Validation</h3>
-This section describes how an
-<a href='#authorization-response'>Authorization&nbsp;Response</a> message
-is decrypted and validated, using the
-<a href='#authz-res.txt'>sample&nbsp;object</a>  and the 
+<h3 id='authorization-processing'>5.&nbsp; Authorization Processing</h3>
+This section describes how
+<a href='#authorization-response'>Authorization&nbsp;Response</a> messages
+should be processed, using the
+<a href='#authz-res.txt'>sample&nbsp;object</a>  and
 <a href="#test-vectors">Test Vectors</a>.
 <h5>5.1.&nbsp; Decryption</h5>
-The <a href='#authorization-response'>Authorization&nbsp;Response</a>
-needs to be decrypted using a private key associated with a supplied
-<code>publicKey</code> or <code>keyId</code>.
-In the sample, a <code>publicKey</code> was used.
+Firstly the <a href='#authorization-response'>Authorization&nbsp;Response</a>
+object needs to be <i>decrypted</i> using a private key associated with the 
+supplied <code>publicKey</code> or <code>keyId</code> attribute.
+In the sample, a <code>publicKey</code> attribute was used.
 The decryption process should return two CBOR objects:
 the <a href='#patj-through'>&quot;Path Through&quot;Information</a>
 object which is supplied in clear:
