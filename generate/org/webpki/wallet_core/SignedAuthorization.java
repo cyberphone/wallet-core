@@ -41,8 +41,8 @@ public class SignedAuthorization extends TableExecutor {
                 "<code>[0]</code> and <code>[1]</code> respectively, expressed as CBOR strings.")
 
             .add(LOCATION_LABEL, LOCATION_NAME, Types.ARRAY,
-                "<i>Optional</i>: Array holding longitude <code>[0]</code> " +
-                "and latitude <code>[1]</code>, expressed as CBOR floats.")
+                "<i>Optional</i>: Array holding latitude <code>[0]</code> " +
+                "and longitude <code>[1]</code>, expressed as CBOR floats.")
 
             .add(TIME_STAMP_LABEL, TIME_STAMP_NAME, Types.TSTR,
                 "ISO date-time string using UTC (T) or " +

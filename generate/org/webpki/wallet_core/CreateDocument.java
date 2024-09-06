@@ -16,6 +16,7 @@ import org.webpki.cbor.CBORAsymKeyValidator;
 import org.webpki.cbor.CBORCryptoConstants;
 import org.webpki.cbor.CBORCryptoUtils;
 import org.webpki.cbor.CBORDecoder;
+import org.webpki.cbor.CBORFloat;
 import org.webpki.cbor.CBORKeyPair;
 import org.webpki.cbor.CBORMap;
 import org.webpki.cbor.CBORObject;
@@ -161,6 +162,10 @@ public class CreateDocument {
         CBORArray walletData = new CBORArray()
             .add(new CBORString("Saturn"))
             .add(new CBORString("1.0.0"));
+        
+        CBORArray location = new CBORArray()
+            .add(new CBORFloat(38.88820))
+            .add(new CBORFloat(-77.01988));
 
         CBORMap signedAuthorization = new CBORMap()
             .set(PASS_THROUGH_LABEL, passThrough)
@@ -168,6 +173,7 @@ public class CreateDocument {
             .set(ACCOUNT_ID_LABEL, new CBORString(PAYER_ACCOUNT))
             .set(SERIAL_NUMBER_LABEL, new CBORString(SERIAL_NUMBER))
             .set(PLATFORM_DATA_LABEL, platformData)
+            .set(LOCATION_LABEL, location)
             .set(WALLET_DATA_LABEL, walletData)
             .set(TIME_STAMP_LABEL, new CBORString(TIME_STAMP));
         new CBORAsymKeySigner(authorizationKey.getPrivate())
