@@ -6,6 +6,14 @@ abstract class TableExecutor {
 
     abstract String getTitle();
 
+    String getBeforeText() {
+        return null;
+    }
+
+    String getAfterText() {
+        return null;
+    }
+
     String getLink() {
         return getTitle().toLowerCase().replace(' ', '-');
     }
@@ -15,12 +23,6 @@ abstract class TableExecutor {
                "'>" +
                getTitle().replace(" ", "&nbsp;") +
                "</a>";
-    }
-
-    static String getCEFLink() {
-        return "<a href='" +
-            "https://cyberphone.github.io/javaapi/org/webpki/cbor/doc-files/encryption.html' " +
-            "title='CBOR Encryption Format (CEF)'>CEF<img src='xtl.svg' alt='CEF'></a>";
     }
 
 }

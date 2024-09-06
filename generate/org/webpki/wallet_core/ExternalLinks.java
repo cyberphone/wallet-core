@@ -10,7 +10,11 @@ enum ExternalLinks {
 
     COSE  ("https://www.rfc-editor.org/rfc/rfc9052.html"),
 
+    COTX  ("https://www.ietf.org/archive/id/draft-rundgren-cotx-04.html"),
+
     CDE  ("https://datatracker.ietf.org/doc/draft-ietf-cbor-cde/"),
+
+    RFC8615 ("https://www.rfc-editor.org/rfc/rfc8615"),
 
     RFC8949 ("https://www.rfc-editor.org/rfc/rfc8949.html");
 

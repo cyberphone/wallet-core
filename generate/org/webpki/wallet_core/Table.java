@@ -36,9 +36,9 @@ public class Table {
             TableElement te = elements.get(key);
             s.append("<tr><td style='text-align:center'><code>")
              .append(key.toString())
-             .append("</code></td><td><code>")
+             .append("</code></td><td><kbd>")
              .append(te.name)
-             .append("</code></td><td style='text-align:center'><code>")
+             .append("</kbd></td><td style='text-align:center'><code>")
              .append(te.type.getHTML())
              .append("</code></td><td>")
              .append(te.description)

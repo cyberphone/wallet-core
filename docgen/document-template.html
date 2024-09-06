@@ -72,11 +72,9 @@ should return a message (step #6 in the sequence diagram).
 This message depends on how the payment process was initiated,
 and is yet to be specified.
 <h3 id='reference'>3.&nbsp; Reference</h3>
-This section contains a reference to the Saturn messages.
+This section contains a reference to the components underpinning Saturn messages.
+The components are based on CBOR <code>map</code> objects.
 ${authorization-request}
-Authorization&nbsp;Request is the core Payee (merchant) to wallet message.
-In same-device Web contexts this message is also associated
-with opening the wallet application.
 ${authorization-response}
 ${pass-through}
 ${payment-request}
@@ -85,6 +83,10 @@ ${signed-authorization}
 <h3 id='payment-credentials'>4.&nbsp; Payment Credentials</h3>
 A fundamental part of the wallet is a local database holding
 enrolled payment credentials.
+Note that although credentials herein are expressed as CBOR,
+other representations may be used.
+The only requirement is that credential attributes can be securely
+mapped back and forth to CBOR.
 <p style='margin-bottom:0.5em;padding-bottom:0'>
 Each entry in the database contains a payment credential according
 to the following definition:
@@ -94,13 +96,13 @@ ${payment-credential}
 This section describes how
 <a href='#authorization-response'>Authorization&nbsp;Response</a> messages
 should be processed, using the
-<a href='#authz-res.txt'>sample&nbsp;object</a>  and
+<a href='#authz-res.txt'>Sample&nbsp;Object</a>  and
 <a href="#test-vectors">Test Vectors</a>.
 <h5>5.1.&nbsp; Decryption</h5>
 Firstly the <a href='#authorization-response'>Authorization&nbsp;Response</a>
 object needs to be <i>decrypted</i> using a private key associated with the 
-supplied <code>publicKey</code> or <code>keyId</code> attribute.
-In the sample, a <code>publicKey</code> attribute was used.
+supplied ${href.cef} <kbd>publicKey</kbd> or <kbd>keyId</kbd> attribute.
+In the sample, a <kbd>publicKey</kbd> attribute was used.
 The decryption process should return two CBOR objects:
 the <a href='#patj-through'>&quot;Path Through&quot;Information</a>
 object which is supplied in clear:
@@ -111,17 +113,17 @@ ${restored.txt}
 By simply combining the objects retrived during the decryption phase,
 the <a href='#signed-authorization'>Signed&nbsp;Authorization</a> object is recreated:
 ${signed-authz.txt}
-Since this object contains a <code>publicKey</code>
+Since this object contains a ${href.csf} <kbd>publicKey</kbd>
 attribute, it can be validated using &quot;as&nbsp;is&quot;.
 <p>
-Note that the <i>trust</i> in the supplied public key <b>must</b>
+Note that the <i>trust</i> in a received public key <b>must</b>
 be verified <i>before</i> the authorization object is used!
 </p>
 <h3 id='test-vectors'>6.&nbsp; Test Vectors</h3>
 Equipped with an appropriate diagnostic notation parser like
 <a href='https://cyberphone.github.io/CBOR.js/doc/playground.html'>
 https://cyberphone.github.io/CBOR.js/doc/playground.html
-</a> and COSE algorithm support, the <a href='#authz-res.txt'>sample authorization</a>
+</a> and ${href.cef}/${href.csf} support, the <a href='#authz-res.txt'>Sample Authorization</a>
 should be possible to decrypt and verify, using the following sample keys.
 <div style='margin-top:0.8em'>Authorization key in JWK format:</div>
 ${authorization-key.jwk}

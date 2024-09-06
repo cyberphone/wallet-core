@@ -1,6 +1,6 @@
 package org.webpki.wallet_core;
 
-import static org.webpki.wallet_core.Common.*;
+import static org.webpki.wallet_core.MessageCommon.*;
 
 public class ServiceProvider extends TableExecutor {
 

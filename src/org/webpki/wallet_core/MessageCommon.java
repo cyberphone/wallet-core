@@ -2,7 +2,7 @@ package org.webpki.wallet_core;
 
 import org.webpki.cbor.CBORInt;
 
-public class Common {
+public class MessageCommon {
 
     static final CBORInt PAYMENT_REQUEST_LABEL  = new CBORInt(1); 
 

@@ -1,6 +1,6 @@
 package org.webpki.wallet_core;
 
-import static org.webpki.wallet_core.Common.*;
+import static org.webpki.wallet_core.MessageCommon.*;
 
 import java.io.File;
 
@@ -81,7 +81,9 @@ public class CreateDocument {
             "'>" + outerCount + "." + (++innerCount) + ".&nbsp; " +
             executor.getTitle() +
             "</h5>" +
-            executor.getTableString());
+            (executor.getBeforeText() == null ? "" : executor.getBeforeText()) +
+            executor.getTableString() +
+            (executor.getAfterText() == null ? "" : executor.getAfterText()));
     }
 
     String htmlize(String text) {

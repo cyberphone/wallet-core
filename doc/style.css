@@ -18,11 +18,11 @@ h3 {
 
 code {
   font-family:'DejaVu Sans Mono', monospace;
-  color:maroon;
 }
 
 kbd {
-  font-size: 1.1em;
+  font-family:'DejaVu Sans Mono', monospace;
+  color:maroon;
 }
 
 h5 {
