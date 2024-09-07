@@ -8,12 +8,13 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+import java.util.ArrayList;
+
 import org.webpki.cbor.CBORArray;
 import org.webpki.cbor.CBORAsymKeyDecrypter;
 import org.webpki.cbor.CBORAsymKeyEncrypter;
 import org.webpki.cbor.CBORAsymKeySigner;
 import org.webpki.cbor.CBORAsymKeyValidator;
-import org.webpki.cbor.CBORCryptoConstants;
 import org.webpki.cbor.CBORCryptoUtils;
 import org.webpki.cbor.CBORDecoder;
 import org.webpki.cbor.CBORFloat;
@@ -58,6 +59,8 @@ public class CreateDocument {
     int outerCount = 3;
     int innerCount;
 
+    ArrayList<TableExecutor> tableReferences = new ArrayList<>();
+
     KeyPair getKeyPair(String holder, String jwkFile) {
         JSONObjectReader jwk = JSONParser.parse(IO.readFile(jwkFile));
         jwk.removeProperty(JOSEKeyWords.KID_JSON);
@@ -76,15 +79,19 @@ public class CreateDocument {
     }
 
     void replace(TableExecutor executor) {
+        executor.innerCount = ++innerCount;
+        executor.outerCount = outerCount;
         updateTemplate(executor.getLink(),
             "<h5 id='" +
-            executor.getLink() +
-            "'>" + outerCount + "." + (++innerCount) + ".&nbsp; " +
+            executor.getTCLink() +
+            "'>" + outerCount + "." + innerCount + ".&nbsp; " +
             executor.getTitle() +
             "</h5>" +
             (executor.getBeforeText() == null ? "" : executor.getBeforeText()) +
             executor.getTableString() +
             (executor.getAfterText() == null ? "" : executor.getAfterText()));
+
+        tableReferences.add(executor);
     }
 
     String htmlize(String text) {
@@ -246,7 +253,7 @@ public class CreateDocument {
             }
                                 
         }).decrypt(encrypted);
-        codeTable("pass-through.txt", saveCustomData[0]);
+        codeTable("pass-through-data.txt", saveCustomData[0]);
 
         // Restore message and verify signature
 
@@ -281,6 +288,13 @@ public class CreateDocument {
         // Fill in external links
         for (ExternalLinks link : ExternalLinks.values()) {
             template = template.replace(link.getHolder(), link.getHtml());
+        }
+
+        for (TableExecutor tableExecutor : tableReferences) {
+            template = template.replace("${href." + tableExecutor.getLink() + "}", 
+                                        "<a href='#" + tableExecutor.getTCLink() +
+                                            "'>" + 
+                                            tableExecutor.getTCTitle() + "</a>"); 
         }
  
         IO.writeFile(documentFileName, template);

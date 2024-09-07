@@ -11,9 +11,7 @@ public class AuthorizationRequest extends TableExecutor {
         return new Table()
 
             .add(PAYMENT_REQUEST_LABEL, PassThroughData.PAYMENT_REQUEST_NAME, Types.MAP,
-                "Holds the " +
-                new PaymentRequest().getHref() +
-                " object.")
+                "Holds the ${href.payment-request} object.")
 
             .add(PAYMENT_NETWORKS_LABEL, PAYMENT_NETWORKS_NAME, Types.ARRAY,
                 "Holds a non-empty list of payment network/method identifiers that the Payee " +

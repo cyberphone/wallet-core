@@ -16,6 +16,8 @@ enum ExternalLinks {
 
     RFC8615 ("https://www.rfc-editor.org/rfc/rfc8615"),
 
+    SVG ("https://www.w3.org/TR/SVG11/"),
+
     RFC8949 ("https://www.rfc-editor.org/rfc/rfc8949.html");
 
     String link;

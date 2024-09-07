@@ -12,22 +12,15 @@ public class AuthorizationResponse extends TableExecutor {
         return new Table()
             .add(CUSTOM_DATA_LABEL, CUSTOM_DATA_NAME, Types.MAP,
                 "CEF: custom (<i>unencrypted</i>) data in the form of a copy of the " +
-                new PassThroughData().getHref() +
-                " object.")
+                "${href.pass-through-data} object.")
 
             .add(CIPHER_TEXT_LABEL, CIPHER_TEXT_NAME, Types.BSTR,
-                "CEF: " +
-                "<i>encrypted</i> " +
-                new SignedAuthorization().getHref() +
-                " having the " +
-                new PassThroughData().getHref() +
-                " object being removed <i>after</i> signing. " +
-                "Note that the modified " + 
-                new SignedAuthorization().getHref() +
-                " <code>map</code> object <b>must</b> be updated to refect " +
-                "the removal of the " + 
-                new PassThroughData().getHref() +
-                " object.")
+                "CEF: <i>encrypted</i> ${href.signed-authorization} where the " +
+                "${href.pass-through-data} object was removed <i>after</i> the " +
+                "authorizatioon signature process. " +
+                "Note that the modified ${href.signed-authorization} " +
+                "<code>map</code> object <b>must</b> be updated (<i>before</i> being " +
+                "encrypted), to refect the removal of the ${href.pass-through-data} object.")
 
             .toString();
     }

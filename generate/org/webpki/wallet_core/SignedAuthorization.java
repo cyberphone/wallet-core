@@ -19,34 +19,36 @@ public class SignedAuthorization extends TableExecutor {
         return new Table()
 
             .add(PASS_THROUGH_LABEL, PASS_THROUGH_NAME, Types.MAP,
-                "Holds the " +
-                new PassThroughData().getHref() +
-                " object.")
+                "Holds the ${href.pass-though-data} object.")
 
             .add(PAYEE_HOST_LABEL, PAYEE_HOST_NAME, Types.TSTR,
-                "Host name or IP address of invoking Payee (merchant).")
+                "Host name or IP address of the invoking Payee (merchant), " +
+                "derived from step #1 in the sequence diagram.")
 
             .add(ACCOUNT_ID_LABEL, ACCOUNT_ID_NAME, Types.TSTR,
-                "Account identifier associated with the virtual card.")
+                "Copy of the same attribute of the selected " +
+                "virtual card (see ${href.payment-credentials}).")
 
             .add(SERIAL_NUMBER_LABEL, SERIAL_NUMBER_NAME, Types.TSTR,
-                "Serial number of the virtual card.")
+                "Copy of the same attribute of the selected " +
+                "virtual card (see ${href.payment-credentials}).")
 
             .add(PLATFORM_DATA_LABEL, PLATFORM_DATA_NAME, Types.ARRAY,
                 "Array holding the name and version of the operating system in " +
-                "<code>[0]</code> and <code>[1]</code> respectively, expressed as CBOR strings.")
+                "<code>[0]</code> and <code>[1]</code> respectively, expressed as " +
+                "CBOR strings (tstr).")
 
             .add(WALLET_DATA_LABEL, WALLET_DATA_NAME, Types.ARRAY,
                 "Array holding the name and version of the wallet software in " +
-                "<code>[0]</code> and <code>[1]</code> respectively, expressed as CBOR strings.")
+                "<code>[0]</code> and <code>[1]</code> respectively, expressed as " +
+                "CBOR strings (tstr).")
 
             .add(LOCATION_LABEL, LOCATION_NAME, Types.ARRAY,
                 "<i>Optional</i>: Array holding latitude <code>[0]</code> " +
-                "and longitude <code>[1]</code>, expressed as CBOR floats.")
+                "and longitude <code>[1]</code>, expressed as CBOR floating point values.")
 
             .add(TIME_STAMP_LABEL, TIME_STAMP_NAME, Types.TSTR,
-                "ISO date-time string using UTC (T) or " +
-                "local time (Z) format.")
+                "ISO date-time string using UTC (T) or local time (Z) format.")
 
             .add(SIGNATURE_LABEL, SIGNATURE_NAME, Types.MAP,
                 "Authorization signature.")

@@ -31,7 +31,7 @@ Saturn builds on the idea that different payment networks should not
 need unique user authorizations solutions; only identifiers
 related to accounts and payment networks need to be adapted.
 This data is provided in the associated virtual payment cards (payment credentials),
-making the wallet software <i>universal</i>.
+potentially making the wallet software <i>universal</i>.
 </p>
 The sequence diagram below outlines the Saturn protocol: 
 <div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Sequence Diagram'></div>
@@ -42,50 +42,54 @@ in turn provides links to the formal definitions.
 The Saturn protocol is based on CBOR [${href.rfc8949}] which is a <i>binary</i> interchange format.
 However, for documentation purposes, messages are shown in <i>diagnostic notation</i>.
 </p>
-<h5 id='initation'>2.1.&nbsp; Initiation</h5>
+<h5 id='wallet-initation'>2.1.&nbsp; Wallet Initiation</h5>
 The payment proccess is initiated when the Payer hits a &quot;Pay&quot;
-button on the Web or scans a QR-code, causing the wallet to perfom a HTTP&nbsp;GET
-(step #1 in the sequence diagram) to the Payee service.  This returns a <a href='#authorization-request'>Authorization Request</a>
+button on the Web or scans a QR-code, returning a wallet activation URL.
+The wallet should then use the received URL for performing an HTTP&nbsp;GET
+(step #1 in the sequence diagram) to the Payee service.
+This operation should return an ${href.authorization-request} object
 (step #2 in the sequence diagram) like the following:
 ${authz-req.txt}
 <h5 id='wallet-request-ui'>2.2.&nbsp; Wallet Request UI</h5>
-After receival of the <a href='#authorization-request'>Authorization Request</a>,
+After receival of the ${href.authorization-request},
 the wallet should display a UI like the following:
 <div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0;width:25em' class='webpkibox'  title='Wallet UI'></div>
 If the wallet contains multiple 
-<a href='#payment-credentials'>Payment&nbsp;Credentials</a>
+${href.payment-credentials}
 matching the Payee
 request, the Payer needs to select (step #3 in the sequence diagram) a suitable
 credential, unless the default (or last used) is deamed suitable.
-<h5 id='payer-authorizes-the-request'>2.3.&nbsp; Payer Authorizes the Request</h5>
+<h5 id='payer-authorization'>2.3.&nbsp; Payer Authorization</h5>
 Assuming that the Payer accepts and subsequently authorizes 
-(step #4 in the sequence diagram) the request,
-the wallet will perform a HTTP&nbsp;POST (step #5 in the sequence diagram)
+the request (step #4 in the sequence diagram),
+the wallet should perform an HTTP&nbsp;POST (step #5 in the sequence diagram)
 to the Payee service containing an
-<a href='#authorization-response'>Authorization Response</a>
+${href.authorization-response}
 object like the following: 
 ${authz-res.txt}
+Note that the POST <b>must</b> be directed to the same URL as
+used by the GET in ${href.wallet-initation}.
 <h5 id='wallet-termination'>2.4.&nbsp; Wallet Termination</h5>
 After successful (or failed) authorization, the 
-<a href='#authorization-response'>Authorization Response</a>
+${href.authorization-response}
 should return a message (step #6 in the sequence diagram).
 This message depends on how the payment process was initiated,
 and is yet to be specified.
-<h3 id='reference'>3.&nbsp; Reference</h3>
+<h3 id='message-reference'>3.&nbsp; Message Reference</h3>
 This section contains a reference to the components underpinning Saturn messages.
 The components are based on CBOR <code>map</code> objects.
 ${authorization-request}
 ${authorization-response}
-${pass-through}
+${pass-through-data}
 ${payment-request}
 ${service-provider}
 ${signed-authorization}
 <h3 id='payment-credentials'>4.&nbsp; Payment Credentials</h3>
 A fundamental part of the wallet is a local database holding
 enrolled payment credentials.
-Note that although credentials herein are expressed as CBOR,
+Note that although credential data types are expressed as CBOR,
 other representations may be used.
-The only requirement is that credential attributes can be securely
+The only requirement is that credential data types can be securely
 mapped back and forth to CBOR.
 <p style='margin-bottom:0.5em;padding-bottom:0'>
 Each entry in the database contains a payment credential according
@@ -94,30 +98,38 @@ to the following definition:
 ${payment-credential}
 <h3 id='authorization-processing'>5.&nbsp; Authorization Processing</h3>
 This section describes how
-<a href='#authorization-response'>Authorization&nbsp;Response</a> messages
-should be processed, using the
-<a href='#authz-res.txt'>Sample&nbsp;Object</a>  and
-<a href="#test-vectors">Test Vectors</a>.
+${href.authorization-response} messages
+should be processed, using the ${href.payer-authorization} sample and
+associated ${href.#test-vectors}.
 <h5>5.1.&nbsp; Decryption</h5>
-Firstly the <a href='#authorization-response'>Authorization&nbsp;Response</a>
+Firstly the ${href.authorization-response}
 object needs to be <i>decrypted</i> using a private key associated with the 
 supplied ${href.cef} <kbd>publicKey</kbd> or <kbd>keyId</kbd> attribute.
 In the sample, a <kbd>publicKey</kbd> attribute was used.
 The decryption process should return two CBOR objects:
-the <a href='#patj-through'>&quot;Path Through&quot;Information</a>
+the ${href.pass-through-data}
 object which is supplied in clear:
-${pass-through.txt}
+${pass-through-data.txt}
 and another object which after decryption should read like the following:
 ${restored.txt}
-<h5>5.2.&nbsp; Validation</h5>
-By simply combining the objects retrived during the decryption phase,
-the <a href='#signed-authorization'>Signed&nbsp;Authorization</a> object is recreated:
+<h5>5.2.&nbsp; Signature Validation</h5>
+Now combine the objects retrieved during the decryption phase
+by copying the first object (${href.pass-through-data})
+to a label <code>1</code> of the second object.
+Note that the length of the resulting <code>map</code> object
+<b>must</b> be updated to reflect the addition of an item.
+This operation effectively <i>recreates</i> the ${href.signed-authorization} object:
 ${signed-authz.txt}
 Since this object contains a ${href.csf} <kbd>publicKey</kbd>
 attribute, it can be validated using &quot;as&nbsp;is&quot;.
 <p>
-Note that the <i>trust</i> in a received public key <b>must</b>
-be verified <i>before</i> the authorization object is used!
+Note that the <i>authenticity</i> of received public keys <b>must</b>
+be verified <i>before</i> authorization objects are acted upon!
+</p>
+<p>
+Unsurprisingly, authorization objects <b>must</b> also
+be checked for alignment with the specification.
+Missing, additional, or malformed elements <b>must</b> be rejected.
 </p>
 <h3 id='test-vectors'>6.&nbsp; Test Vectors</h3>
 Equipped with an appropriate diagnostic notation parser like

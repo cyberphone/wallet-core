@@ -2,6 +2,10 @@ package org.webpki.wallet_core;
 
 abstract class TableExecutor {
 
+    int innerCount;
+
+    int outerCount;
+
     abstract String getTableString();
 
     abstract String getTitle();
@@ -18,11 +22,12 @@ abstract class TableExecutor {
         return getTitle().toLowerCase().replace(' ', '-');
     }
 
-    String getHref() {
-        return "<a href='#" + getLink() + 
-               "'>" +
-               getTitle().replace(" ", "&nbsp;") +
-               "</a>";
+    String getTCLink() {
+        return String.valueOf(outerCount) + "." + String.valueOf(innerCount) + "." + getLink();
+    }
+
+    public String getTCTitle() {
+        return getTitle().replace(" ", "&nbsp;");
     }
 
 }
