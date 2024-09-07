@@ -15,8 +15,8 @@ public class AuthorizationRequest extends TableExecutor {
 
             .add(PAYMENT_NETWORKS_LABEL, PAYMENT_NETWORKS_NAME, Types.ARRAY,
                 "Holds a non-empty list of payment network/method identifiers " +
-                "that the <code style='color:darkgreen'>Payee</code> " +
-                "(merchant) supports.  Identifiers are expressed as CBOR strings (tstr)." +
+                "that the <code class='entity'>Payee</code> supports. " +
+                "Identifiers are expressed as CBOR strings (tstr)." +
                 "<div style='padding-top:0.5em'>" +
                 "See also <kbd>" + ServiceProvider.PAYMENT_NETWORK_NAME + "</kbd> in " +
                 "${href.payment-credentials}.</div>")
@@ -32,8 +32,8 @@ public class AuthorizationRequest extends TableExecutor {
     @Override
     String getAfterText() {
         return getTitle() + " is the core " +
-            "<code style='color:darkgreen'>Payee</code> (merchant) to wallet message. " + 
+            "<code class='entity'>Payee</code> to <code class='entity'>Wallet</code> message. " + 
             "In same-device Web contexts this message is also associated " +
-            "with opening the wallet application.";
+            "with the invocation of the <code class='entity'>Wallet</code> application.";
     }
 }

@@ -142,6 +142,11 @@ li {
   text-align:center;
 }
 
+.entity {
+  color: darkgreen;
+  font-weight: bold;
+}
+
 
 .webpkitable {
   display: inline-block;

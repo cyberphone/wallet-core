@@ -11,12 +11,11 @@ public class ServiceProvider extends TableExecutor {
     String getTableString() {
         return new Table()
             .add(PAYMENT_NETWORK_LABEL, PAYMENT_NETWORK_NAME, Types.TSTR,
-                "Copy of the same attribute of the selected " +
-                "virtual card (see ${href.payment-credentials}).")
+                CreateDocument.COPY_ATTRIBUTE)
 
             .add(PAYMENT_SERVICE_LABEL, PAYMENT_SERVICE_NAME, Types.TSTR,
-                "Copy of the same attribute of the selected " +
-                "virtual card (see ${href.payment-credentials}).")
+                CreateDocument.COPY_ATTRIBUTE)
+
             .toString();
     }
 

@@ -24,7 +24,7 @@ public class PaymentCredential {
         add(ServiceProvider.PAYMENT_NETWORK_NAME, Types.TSTR,
             "Payment network/method identifier. " +
             "Since payment networks are likely to continue having unique message " +
-            "solutions, the <code style='color:darkgreen'>Payee</code> needs to " +
+            "solutions, the <code class='entity'>Payee</code> needs to " +
             "identify the specific network before making a transation request." +
             "<div style='padding-top:0.5em'>" +
             "Payment network identifiers may be expressed as URLs or as " +
@@ -34,7 +34,7 @@ public class PaymentCredential {
 
         add(ServiceProvider.PAYMENT_SERVICE_NAME, Types.TSTR,
             "Payment service URL or host name. " +
-            "This attribute enables the <code style='color:darkgreen'>Payee</code> " +
+            "This attribute enables the <code class='entity'>Payee</code> " +
             "to find the end-point of the specific payment service (like a bank), " +
             "associated with the payment credential." +
             "<div style='padding-top:0.5em'>" +
@@ -55,11 +55,12 @@ public class PaymentCredential {
 
         add(CARD_IMAGE_NAME, Types.BSTR,
             "Virtual card image. Card images are used for " +
-            "<code style='color:darkgreen'>Payer</code> administration of " +
-            "wallet credentials as well as displayed in payment UIs " +
-            "(${href.payer-authorization}). " +
+            "<code class='entity'>Payer</code> administration of " +
+            "<code class='entity'>Wallet</code> credentials as well as displayed in the " +
+            "${href.wallet-request-ui}. " +
+            "<div style='padding-top:0.5em'>" +
             "Card images <b>must</b> be in ${href.svg} format and tentatively having " +
-            "a size of <code>300&times;180</code> pixels.");
+            "a size of <code>300&times;180</code> pixels.</div>");
 /* 
         add(ServiceProvider.PAYMENT_SERVICE_NAME, Types.TSTR,
             "Payment service URL or host name. This attribute enables the <code>Payee</code> " +

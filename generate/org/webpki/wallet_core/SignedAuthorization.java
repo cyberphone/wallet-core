@@ -22,16 +22,14 @@ public class SignedAuthorization extends TableExecutor {
                 "Holds the ${href.pass-through-data} object.")
 
             .add(PAYEE_HOST_LABEL, PAYEE_HOST_NAME, Types.TSTR,
-                "Host name or IP address of the invoking Payee (merchant), " +
+                "Host name or IP address of the invoking <code class='entity'>Payee</code>, " +
                 "derived from step #1 in the sequence diagram.")
 
             .add(ACCOUNT_ID_LABEL, ACCOUNT_ID_NAME, Types.TSTR,
-                "Copy of the same attribute of the selected " +
-                "virtual card (see ${href.payment-credentials}).")
+                CreateDocument.COPY_ATTRIBUTE)
 
             .add(SERIAL_NUMBER_LABEL, SERIAL_NUMBER_NAME, Types.TSTR,
-                "Copy of the same attribute of the selected " +
-                "virtual card (see ${href.payment-credentials}).")
+                CreateDocument.COPY_ATTRIBUTE)
 
             .add(PLATFORM_DATA_LABEL, PLATFORM_DATA_NAME, Types.ARRAY,
                 "Array holding the name and version of the operating system in " +
@@ -39,8 +37,8 @@ public class SignedAuthorization extends TableExecutor {
                 "CBOR strings (tstr).")
 
             .add(WALLET_DATA_LABEL, WALLET_DATA_NAME, Types.ARRAY,
-                "Array holding the name and version of the wallet software in " +
-                "<code>[0]</code> and <code>[1]</code> respectively, expressed as " +
+                "Array holding the name and version of the <code class='entity'>Wallet</code> " +
+                "software in <code>[0]</code> and <code>[1]</code> respectively, expressed as " +
                 "CBOR strings (tstr).")
 
             .add(LOCATION_LABEL, LOCATION_NAME, Types.ARRAY,
@@ -48,7 +46,8 @@ public class SignedAuthorization extends TableExecutor {
                 "and longitude <code>[1]</code>, expressed as CBOR floating point values.")
 
             .add(TIME_STAMP_LABEL, TIME_STAMP_NAME, Types.TSTR,
-                "ISO date-time string using UTC (T) or local time (Z) format.")
+                "ISO date-time string [${href.rfc3339}] " +
+                "using UTC (T) or local time (Z) format.")
 
             .add(SIGNATURE_LABEL, SIGNATURE_NAME, Types.MAP,
                 "Authorization signature.")

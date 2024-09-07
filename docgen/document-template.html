@@ -10,6 +10,10 @@
 <body>
 <h3 style="text-align:center;font-weight:normal;font-size:1.5em">Saturn - Payment Authorization Wallet</h3>
 <i>Disclaimer: this is a specification in an early state, subject to change without notice.</i>
+<h3>Table of Contents</h3>
+<div class='webpkifloat'><div>
+${toc}
+</div></div>
 ${introduction}
 This document describes the core components of the Saturn wallet.
 Note that Saturn is a <i>payment authorization </i> system for end-users,
@@ -36,46 +40,58 @@ potentially making the wallet software <i>universal</i>.
 The sequence diagram below outlines the Saturn protocol: 
 <div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Sequence Diagram'></div>
 ${detailed-operation}
-To guide the reader, operation is described based on an example which
+To guide the reader, this document is based on an example which
 in turn provides links to the formal definitions.
 <p>
 The Saturn protocol is based on CBOR [${href.rfc8949}] which is a <i>binary</i> interchange format.
 However, for documentation purposes, messages are shown in <i>diagnostic notation</i>.
 </p>
 ${wallet-initiation}
-The payment proccess is initiated when the <code style='color:darkgreen'>Payer</code> hits a &quot;Pay&quot;
-button on the Web or scans a QR-code, returning a wallet activation URL.
-The wallet should then use the received URL for performing an HTTP&nbsp;GET
-(step #1 in the sequence diagram) to the <code style='color:darkgreen'>Payee</code> service.
+The payment proccess is initiated when the <code class='entity'>Payer</code> hits a &quot;Pay&quot;
+button on the Web or scans a QR-code, returning a <code class='entity'>Wallet</code> activation URL.
+The <code class='entity'>Wallet</code> should then use the received URL for performing an HTTP&nbsp;GET
+(step #1 in the sequence diagram) to the <code class='entity'>Payee</code> service.
 This operation should return an ${href.authorization-request} object
 (step #2 in the sequence diagram) like the following:
 ${authz-req.txt}
+Note that the <code class='entity'>Payee</code> service <b>must</b> set the
+HTTP <code style='white-space:nowrap'>Content-Type</code> to <code>application/cbor</code>.
 ${wallet-request-ui}
 After receival of the ${href.authorization-request},
-the wallet should display a UI like the following:
-<div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0;width:25em' class='webpkibox'  title='Wallet UI'></div>
-If the wallet contains multiple 
+the <code class='entity'>Wallet</code> should display a UI like the following:
+<div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0;width:28em' class='webpkibox'  title='Wallet UI'></div>
+If the <code class='entity'>Wallet</code> contains multiple 
 ${href.payment-credentials}
-matching the <code style='color:darkgreen'>Payee</code>
-request, the <code style='color:darkgreen'>Payer</code> needs
+matching the <code class='entity'>Payee</code>
+request, the <code class='entity'>Payer</code> needs
 to select (step #3 in the sequence diagram) a suitable
-credential, unless the default (or last used) is deamed suitable.
+credential, unless the default (or last used) credential already meet
+the preferences of the <code class='entity'>Payer</code>.
+<p>
+If there are no matching payment credentials, the <code class='entity'>Wallet</code>
+<b>must</b> provide the <code class='entity'>Payer</code> with
+a suitable error message and a cancel button. 
+</p>
 ${payer-authorization}
-Assuming that the <code style='color:darkgreen'>Payer</code> accepts and subsequently authorizes 
+Assuming that the <code class='entity'>Payer</code> accepts and subsequently authorizes 
 the request (step #4 in the sequence diagram),
-the wallet should perform an HTTP&nbsp;POST (step #5 in the sequence diagram)
-to the <code style='color:darkgreen'>Payee</code> service containing an
+the <code class='entity'>Wallet</code> should perform an HTTP&nbsp;POST
+(step #5 in the sequence diagram)
+to the <code class='entity'>Payee</code> service containing an
 ${href.authorization-response}
 object like the following: 
 ${authz-res.txt}
 Note that the POST <b>must</b> be directed to the same URL as
 used by the GET in ${href.wallet-initiation}.
+In addition, the HTTP <code style='white-space:nowrap'>Content-Type</code>
+<b>must</b> be set to <code>application/cbor</code>.
 ${wallet-termination}
 After successful (or failed) authorization, the 
 ${href.authorization-response}
-should return a message (step #6 in the sequence diagram).
+should return a <code class='entity'>Wallet</code> termination
+message (step #6 in the sequence diagram).
 This message depends on how the payment process was initiated,
-and is yet to be specified.
+and is currently TBD.
 ${message-reference}
 This section contains a reference to the components underpinning Saturn messages.
 The components are based on CBOR <code>map</code> objects.
@@ -86,7 +102,7 @@ ${payment-request}
 ${service-provider}
 ${signed-authorization}
 ${payment-credentials}
-A fundamental part of the wallet is a local database holding
+A fundamental part of the <code class='entity'>Wallet</code> is a local database holding
 enrolled payment credentials.
 Note that although credential data types are expressed as CBOR,
 other representations may be used.

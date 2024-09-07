@@ -18,6 +18,10 @@ enum ExternalLinks {
 
     SVG ("https://www.w3.org/TR/SVG11/"),
 
+    RFC3339 ("https://www.rfc-editor.org/rfc/rfc3339"),
+
+    ISO4217 ("https://www.iso.org/iso-4217-currency-codes.html"),
+
     RFC8949 ("https://www.rfc-editor.org/rfc/rfc8949.html");
 
     String link;

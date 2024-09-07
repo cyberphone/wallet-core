@@ -50,6 +50,10 @@ public class CreateDocument {
 
     static final String SERIAL_NUMBER = "010049255";
 
+    static final String COPY_ATTRIBUTE =
+        "Copy of the same attribute of the selected virtual card." +
+        "<div style='padding-top:0.5em'>Also see ${href.payment-credentials}.</div>";
+
     KeyPair authorizationKey;
     KeyPair encryptionKey;
 
@@ -64,6 +68,7 @@ public class CreateDocument {
         String rawName;
         String id;
         String rawId;
+        boolean indent;
     }
 
     ArrayList<TocEntry> toc = new ArrayList<>();
@@ -78,6 +83,7 @@ public class CreateDocument {
         } else {
             prefix = String.valueOf(outerCount) + "." + String.valueOf(innerCount++);
             h = 5;
+            tocEntry.indent = true;
         }
         tocEntry.rawName = name.replace(" ", "&nbsp;");
         tocEntry.name = prefix + ".&nbsp; " + tocEntry.rawName;
@@ -337,13 +343,21 @@ public class CreateDocument {
             template = template.replace(link.getHolder(), link.getHtml());
         }
 
+        StringBuilder tocHtml = new StringBuilder();
         for (TocEntry tocEntry : toc) {
             template = template.replace("${href." + tocEntry.rawId + "}", 
                                         "<a href='#" + tocEntry.id +
                                             "'>" + 
-                                            tocEntry.rawName + "</a>"); 
+                                            tocEntry.rawName + "</a>");
+            tocHtml.append("<div style='padding-left:")
+                   .append(tocEntry.indent ? 4 : 2)
+                   .append("em'><a href='#")
+                   .append(tocEntry.id)
+                   .append("'>")
+                   .append(tocEntry.name)
+                   .append("</a></div>");
         }
-                                    
+        updateTemplate("toc", tocHtml.toString());                          
  
         IO.writeFile(documentFileName, template);
     }

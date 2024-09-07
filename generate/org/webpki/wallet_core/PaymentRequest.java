@@ -14,19 +14,26 @@ public class PaymentRequest extends TableExecutor {
     String getTableString() {
         return new Table()
             .add(AMOUNT_LABEL, AMOUNT_NAME, Types.TSTR,
-                "Monetary amount.")
+                "Monetary amount compatible with the regular expression: " +
+                "<code style='white-space:nowrap'>^(0|[1-9][0-9]*)(\\.[0-9]+)?$</code>. " +
+                "<div style='padding-top:0.5em'>" +
+                "Amounts <b>must&nbsp;not</b> use more decimals than is " +
+                "custom for prices for the specific <kbd>currency</kbd>.</div>")
 
             .add(CURRENCY_LABEL, CURRENCY_NAME, Types.TSTR,
-                "Currency.")
+                "Currency expressed in ${href.iso4217} <i>alphabetical</i> format.")
 
             .add(COMMON_NAME_LABEL, COMMON_NAME_NAME, Types.TSTR,
-                "Payee (merchant) common name to be shown in UIs.")
+                "<code class='entity'>Payee</code> common name to be shown in UIs.")
     
             .add(INSTANCE_ID_LABEL, INSTANCE_ID_NAME, Types.TSTR,
-                "Payee (merchant) transaction Id.")
+                "<code class='entity'>Payee</code> instance Id. " +
+                "<div style='padding-top:0.5em'>" +
+                "Instance Ids <b>must</b> be unique with respect to the " +
+                "<code class='entity'>Payee</code>.</div>")
 
             .add(NON_DIRECT_LABEL, NON_DIRECT_NAME, Types.MAP,
-                "<i>Optional</i>: Non-direct payment request.")
+                "<i>Optional</i>: Non-direct payment request. TBD.")
 
            .toString();
     }
