@@ -25,7 +25,7 @@ public class PaymentCredential {
             "Payment network/method identifier. " +
             "Since payment networks are likely to continue having unique message " +
             "solutions, the <code class='entity'>Payee</code> needs to " +
-            "identify the specific network before making a transation request." +
+            "identify the specific network before making a transaction request." +
             "<div style='padding-top:0.5em'>" +
             "Payment network identifiers may be expressed as URLs or as " +
             "simple names like \"VISA\".  Note that this concept does not " +
@@ -38,7 +38,7 @@ public class PaymentCredential {
             "to find the end-point of the specific payment service (like a bank), " +
             "associated with the payment credential." +
             "<div style='padding-top:0.5em'>" +
-            "How to interprete this attribute is dictated by the <kbd>" +
+            "How to interpret this attribute is dictated by the <kbd>" +
             ServiceProvider.PAYMENT_NETWORK_NAME + "</kbd> identifier. If <kbd>" + 
             ServiceProvider.PAYMENT_SERVICE_NAME + "</kbd> is expressed as a host-name only, " +
             "a <code style='white-space:nowrap'>&quot;.well-known&quot;</code> " +

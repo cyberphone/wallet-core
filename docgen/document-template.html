@@ -24,7 +24,7 @@ Compared to EMV, Saturn introduces several enhancements:
 </p>
 <ul style='padding-top:0;margin-top:0'>
   <li style='padding-top:0.5em'>For privacy reasons user authorizations are <i>encrypted</i>.</li>
-  <li>Intended to work with <i>any</i> account based payment system.</li>
+  <li>Intended to work with <i>any</i> account-based payment system.</li>
   <li>Eliminates specific on-line solutions like 3D Secure.</li>
   <li>Receipt option.</li>
   <li>Account balance option.</li>
@@ -46,8 +46,11 @@ in turn provides links to the formal definitions.
 The Saturn protocol is based on CBOR [${href.rfc8949}] which is a <i>binary</i> interchange format.
 However, for documentation purposes, messages are shown in <i>diagnostic notation</i>.
 </p>
+To support cryptographic operations requiring secure transformations of CBOR <code>map</code> objects,
+Saturn relies on an IETF standard in development [${href.cde}],
+which defines <i>deterministic encoding</i> of CBOR.
 ${wallet-initiation}
-The payment proccess is initiated when the <code class='entity'>Payer</code> hits a &quot;Pay&quot;
+The payment process is initiated when the <code class='entity'>Payer</code> hits a &quot;Pay&quot;
 button on the Web or scans a QR-code, returning a <code class='entity'>Wallet</code> activation URL.
 The <code class='entity'>Wallet</code> should then use the received URL for performing an HTTP&nbsp;GET
 (step #1 in the sequence diagram) to the <code class='entity'>Payee</code> service.
@@ -119,7 +122,7 @@ ${href.authorization-response} messages
 should be processed, using the ${href.payer-authorization} sample and
 associated ${href.test-vectors} as model data.
 ${decryption}
-Firstly the ${href.authorization-response}
+Firstly, the ${href.authorization-response}
 object needs to be <i>decrypted</i> using a private key associated with the 
 supplied ${href.cef} <kbd>publicKey</kbd> or <kbd>keyId</kbd> attribute.
 In the sample, a <kbd>publicKey</kbd> attribute was used.

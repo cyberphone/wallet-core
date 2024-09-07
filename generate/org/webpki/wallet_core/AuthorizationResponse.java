@@ -21,8 +21,9 @@ public class AuthorizationResponse extends TableExecutor {
                 "completed authorization signature process." +
                 "<div style='padding-top:0.5em'>" +
                 "Note that the modified ${href.signed-authorization} " +
-                "<code>map</code> object <b>must</b> be updated (<i>before</i> being " +
-                "encrypted), to refect the removal of the ${href.pass-through-data} object.</div>")
+                "<code>map</code> object <b>must</b> be updated (<i>before</i> " +
+                "being encrypted), to reflect the removal of the " +
+                "${href.pass-through-data} object.</div>")
 
             .toString();
     }
