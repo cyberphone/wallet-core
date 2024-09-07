@@ -17,10 +17,11 @@ public class AuthorizationResponse extends TableExecutor {
             .add(CIPHER_TEXT_LABEL, CIPHER_TEXT_NAME, Types.BSTR,
                 "CEF: <i>encrypted</i> ${href.signed-authorization} where the " +
                 "${href.pass-through-data} object was removed <i>after</i> the " +
-                "authorizatioon signature process. " +
+                "authorization signature process. " +
+                "<div style='padding-top:0.5em'>" +
                 "Note that the modified ${href.signed-authorization} " +
                 "<code>map</code> object <b>must</b> be updated (<i>before</i> being " +
-                "encrypted), to refect the removal of the ${href.pass-through-data} object.")
+                "encrypted), to refect the removal of the ${href.pass-through-data} object.</div>")
 
             .toString();
     }

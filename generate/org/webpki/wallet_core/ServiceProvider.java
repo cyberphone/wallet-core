@@ -22,11 +22,7 @@ public class ServiceProvider extends TableExecutor {
 
     @Override
     String getTitle() {
-        return "Service Provider Information";
+        return "Service Provider";
     }
 
-    @Override
-    String getLink() {
-        return "service-provider";
-    }
 }

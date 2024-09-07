@@ -10,7 +10,7 @@
 <body>
 <h3 style="text-align:center;font-weight:normal;font-size:1.5em">Saturn - Payment Authorization Wallet</h3>
 <i>Disclaimer: this is a specification in an early state, subject to change without notice.</i>
-<h3 id='introduction'>1.&nbsp; Introduction</h3>
+${introduction}
 This document describes the core components of the Saturn wallet.
 Note that Saturn is a <i>payment authorization </i> system for end-users,
 not a payment system.  Saturn is heavily influenced by the current
@@ -35,14 +35,14 @@ potentially making the wallet software <i>universal</i>.
 </p>
 The sequence diagram below outlines the Saturn protocol: 
 <div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Sequence Diagram'></div>
-<h3 id='operation'>2.&nbsp; Detailed Operation</h3>
+${detailed-operation}
 To guide the reader, operation is described based on an example which
 in turn provides links to the formal definitions.
 <p>
 The Saturn protocol is based on CBOR [${href.rfc8949}] which is a <i>binary</i> interchange format.
 However, for documentation purposes, messages are shown in <i>diagnostic notation</i>.
 </p>
-<h5 id='wallet-initation'>2.1.&nbsp; Wallet Initiation</h5>
+${wallet-initiation}
 The payment proccess is initiated when the Payer hits a &quot;Pay&quot;
 button on the Web or scans a QR-code, returning a wallet activation URL.
 The wallet should then use the received URL for performing an HTTP&nbsp;GET
@@ -50,7 +50,7 @@ The wallet should then use the received URL for performing an HTTP&nbsp;GET
 This operation should return an ${href.authorization-request} object
 (step #2 in the sequence diagram) like the following:
 ${authz-req.txt}
-<h5 id='wallet-request-ui'>2.2.&nbsp; Wallet Request UI</h5>
+${wallet-request-ui}
 After receival of the ${href.authorization-request},
 the wallet should display a UI like the following:
 <div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0;width:25em' class='webpkibox'  title='Wallet UI'></div>
@@ -59,7 +59,7 @@ ${href.payment-credentials}
 matching the Payee
 request, the Payer needs to select (step #3 in the sequence diagram) a suitable
 credential, unless the default (or last used) is deamed suitable.
-<h5 id='payer-authorization'>2.3.&nbsp; Payer Authorization</h5>
+${payer-authorization}
 Assuming that the Payer accepts and subsequently authorizes 
 the request (step #4 in the sequence diagram),
 the wallet should perform an HTTP&nbsp;POST (step #5 in the sequence diagram)
@@ -68,14 +68,14 @@ ${href.authorization-response}
 object like the following: 
 ${authz-res.txt}
 Note that the POST <b>must</b> be directed to the same URL as
-used by the GET in ${href.wallet-initation}.
-<h5 id='wallet-termination'>2.4.&nbsp; Wallet Termination</h5>
+used by the GET in ${href.wallet-initiation}.
+${wallet-termination}
 After successful (or failed) authorization, the 
 ${href.authorization-response}
 should return a message (step #6 in the sequence diagram).
 This message depends on how the payment process was initiated,
 and is yet to be specified.
-<h3 id='message-reference'>3.&nbsp; Message Reference</h3>
+${message-reference}
 This section contains a reference to the components underpinning Saturn messages.
 The components are based on CBOR <code>map</code> objects.
 ${authorization-request}
@@ -84,7 +84,7 @@ ${pass-through-data}
 ${payment-request}
 ${service-provider}
 ${signed-authorization}
-<h3 id='payment-credentials'>4.&nbsp; Payment Credentials</h3>
+${payment-credentials}
 A fundamental part of the wallet is a local database holding
 enrolled payment credentials.
 Note that although credential data types are expressed as CBOR,
@@ -96,12 +96,12 @@ Each entry in the database contains a payment credential according
 to the following definition:
 </p>
 ${payment-credential}
-<h3 id='authorization-processing'>5.&nbsp; Authorization Processing</h3>
+${authorization-processing}
 This section describes how
 ${href.authorization-response} messages
 should be processed, using the ${href.payer-authorization} sample and
-associated ${href.#test-vectors}.
-<h5>5.1.&nbsp; Decryption</h5>
+associated ${href.test-vectors} as model data.
+${decryption}
 Firstly the ${href.authorization-response}
 object needs to be <i>decrypted</i> using a private key associated with the 
 supplied ${href.cef} <kbd>publicKey</kbd> or <kbd>keyId</kbd> attribute.
@@ -112,7 +112,7 @@ object which is supplied in clear:
 ${pass-through-data.txt}
 and another object which after decryption should read like the following:
 ${restored.txt}
-<h5>5.2.&nbsp; Signature Validation</h5>
+${signature-validation}
 Now combine the objects retrieved during the decryption phase
 by copying the first object (${href.pass-through-data})
 to a label <code>1</code> of the second object.
@@ -131,12 +131,12 @@ Unsurprisingly, authorization objects <b>must</b> also
 be checked for alignment with the specification.
 Missing, additional, or malformed elements <b>must</b> be rejected.
 </p>
-<h3 id='test-vectors'>6.&nbsp; Test Vectors</h3>
+${test-vectors}
 Equipped with an appropriate diagnostic notation parser like
 <a href='https://cyberphone.github.io/CBOR.js/doc/playground.html'>
 https://cyberphone.github.io/CBOR.js/doc/playground.html
-</a> and ${href.cef}/${href.csf} support, the <a href='#authz-res.txt'>Sample Authorization</a>
-should be possible to decrypt and verify, using the following sample keys.
+</a> and ${href.cef}/${href.csf} support, the ${href.payer-authorization} sample
+should be possible to decrypt and validate, using the following sample keys.
 <div style='margin-top:0.8em'>Authorization key in JWK format:</div>
 ${authorization-key.jwk}
 <div style='margin-top:0.8em'>Authorization key in COSE format:</div>
@@ -145,8 +145,8 @@ ${authorization-key.txt}
 ${encryption-key.jwk}
 <div style='margin-top:0.8em'>Encryption key in COSE format:</div>
 ${encryption-key.txt}
-<h3 id='version'>Version</h3>
+${version}
   API version: 1.0.0<br>
-  Document version: 2024-09-04
+  Document version: 2024-09-07
 </body>
 </html>

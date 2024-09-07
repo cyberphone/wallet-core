@@ -56,10 +56,44 @@ public class CreateDocument {
     String template;
     String docgenDirectory;
 
-    int outerCount = 3;
-    int innerCount;
+    int outerCount = 0;
+    int innerCount = 0;
 
-    ArrayList<TableExecutor> tableReferences = new ArrayList<>();
+    static class TocEntry {
+        String name;
+        String rawName;
+        String id;
+        String rawId;
+    }
+
+    ArrayList<TocEntry> toc = new ArrayList<>();
+
+    void addTocEntry(String name, String optional) {
+        TocEntry tocEntry = new TocEntry();
+        String prefix;
+        int h;
+        if (innerCount == 0) {
+            prefix = String.valueOf(++outerCount);
+            h = 3;
+        } else {
+            prefix = String.valueOf(outerCount) + "." + String.valueOf(innerCount++);
+            h = 5;
+        }
+        tocEntry.rawName = name.replace(" ", "&nbsp;");
+        tocEntry.name = prefix + ".&nbsp; " + tocEntry.rawName;
+        tocEntry.rawId = name.toLowerCase()
+                        .replace(' ', '-')
+                        .replace("&quot;", "");
+        tocEntry.id = prefix + "." + tocEntry.rawId;
+        updateTemplate(tocEntry.rawId, 
+                       "<h" + h + " id='" + tocEntry.id + "'>" + tocEntry.name + "</h" + h + ">" +
+                       (optional == null ? "" : optional));
+        toc.add(tocEntry);
+    }
+
+    void addTocEntry(String name) {
+        addTocEntry(name, null);
+    }
 
     KeyPair getKeyPair(String holder, String jwkFile) {
         JSONObjectReader jwk = JSONParser.parse(IO.readFile(jwkFile));
@@ -79,19 +113,10 @@ public class CreateDocument {
     }
 
     void replace(TableExecutor executor) {
-        executor.innerCount = ++innerCount;
-        executor.outerCount = outerCount;
-        updateTemplate(executor.getLink(),
-            "<h5 id='" +
-            executor.getTCLink() +
-            "'>" + outerCount + "." + innerCount + ".&nbsp; " +
-            executor.getTitle() +
-            "</h5>" +
+        addTocEntry(executor.getTitle(),
             (executor.getBeforeText() == null ? "" : executor.getBeforeText()) +
             executor.getTableString() +
             (executor.getAfterText() == null ? "" : executor.getAfterText()));
-
-        tableReferences.add(executor);
     }
 
     String htmlize(String text) {
@@ -126,6 +151,19 @@ public class CreateDocument {
         authorizationKey = getKeyPair("authorization-key", authKeyFile);
         encryptionKey = getKeyPair("encryption-key", encKeyFile);
 
+        addTocEntry("Introduction");
+        addTocEntry("Detailed Operation");
+ 
+        innerCount = 1;
+        addTocEntry("Wallet Initiation");
+        addTocEntry("Wallet Request UI");
+        addTocEntry("Payer Authorization");
+        addTocEntry("Wallet Termination");
+ 
+        innerCount = 0;
+        addTocEntry("Message Reference");
+  
+        innerCount = 1;
         replace(new AuthorizationRequest());
         replace(new AuthorizationResponse());
         replace(new PassThroughData());
@@ -133,9 +171,18 @@ public class CreateDocument {
         replace(new ServiceProvider());
         replace(new SignedAuthorization());
 
-        outerCount = 4;
         innerCount = 0;
+        addTocEntry("Payment Credentials");
         updateTemplate("payment-credential", new PaymentCredential().getTableString());
+        addTocEntry("Authorization Processing");
+
+        innerCount = 1;
+        addTocEntry("Decryption");
+        addTocEntry("Signature Validation");
+
+        innerCount = 0;
+        addTocEntry("Test Vectors");
+        addTocEntry("Version");
 
         // Create AuthorizationRequest
 
@@ -290,12 +337,13 @@ public class CreateDocument {
             template = template.replace(link.getHolder(), link.getHtml());
         }
 
-        for (TableExecutor tableExecutor : tableReferences) {
-            template = template.replace("${href." + tableExecutor.getLink() + "}", 
-                                        "<a href='#" + tableExecutor.getTCLink() +
+        for (TocEntry tocEntry : toc) {
+            template = template.replace("${href." + tocEntry.rawId + "}", 
+                                        "<a href='#" + tocEntry.id +
                                             "'>" + 
-                                            tableExecutor.getTCTitle() + "</a>"); 
+                                            tocEntry.rawName + "</a>"); 
         }
+                                    
  
         IO.writeFile(documentFileName, template);
     }

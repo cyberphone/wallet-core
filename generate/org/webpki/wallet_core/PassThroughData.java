@@ -28,9 +28,4 @@ public class PassThroughData extends TableExecutor {
         return "&quot;Pass Through&quot; Data";
     }
 
-    @Override
-    String getLink() {
-        return "pass-through-data";
-    }
-
 }

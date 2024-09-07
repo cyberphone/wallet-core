@@ -19,7 +19,7 @@ public class SignedAuthorization extends TableExecutor {
         return new Table()
 
             .add(PASS_THROUGH_LABEL, PASS_THROUGH_NAME, Types.MAP,
-                "Holds the ${href.pass-though-data} object.")
+                "Holds the ${href.pass-through-data} object.")
 
             .add(PAYEE_HOST_LABEL, PAYEE_HOST_NAME, Types.TSTR,
                 "Host name or IP address of the invoking Payee (merchant), " +
@@ -59,5 +59,10 @@ public class SignedAuthorization extends TableExecutor {
     @Override
     String getTitle() {
         return "Signed Authorization";
+    }
+
+    @Override
+    String getAfterText() {
+        return "For an example, see ${href.signature-validation}.";
     }
 }
