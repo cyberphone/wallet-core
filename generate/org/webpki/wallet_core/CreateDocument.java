@@ -3,7 +3,7 @@ package org.webpki.wallet_core;
 import static org.webpki.wallet_core.MessageCommon.*;
 
 import java.io.File;
-
+import java.io.IOException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -17,6 +17,7 @@ import org.webpki.cbor.CBORAsymKeySigner;
 import org.webpki.cbor.CBORAsymKeyValidator;
 import org.webpki.cbor.CBORCryptoUtils;
 import org.webpki.cbor.CBORDecoder;
+import org.webpki.cbor.CBORDiagnosticNotation;
 import org.webpki.cbor.CBORFloat;
 import org.webpki.cbor.CBORKeyPair;
 import org.webpki.cbor.CBORMap;
@@ -53,6 +54,8 @@ public class CreateDocument {
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected virtual card." +
         "<div style='padding-top:0.5em'>Also see ${href.payment-credentials}.</div>";
+
+    static final String AUTH_RESP_FILE = "authz-res.txt";
 
     KeyPair authorizationKey;
     KeyPair encryptionKey;
@@ -149,11 +152,11 @@ public class CreateDocument {
 
     CreateDocument(String templateFileName, 
                    String documentFileName,
-                   String docgenDirectory,
+                   String docgenDir,
                    String authKeyFile,
                    String encKeyFile) {
-        this.docgenDirectory = docgenDirectory;
-        template = UTF8.decode(IO.readFile(docgenDirectory + File.separator + templateFileName));
+        docgenDirectory = docgenDir + File.separator;
+        template = UTF8.decode(IO.readFile(docgenDirectory + templateFileName));
         authorizationKey = getKeyPair("authorization-key", authKeyFile);
         encryptionKey = getKeyPair("encryption-key", encKeyFile);
 
@@ -259,15 +262,28 @@ public class CreateDocument {
             })
             .setPublicKeyOption(true)
             .encrypt(signedAuthorization.encode()).encode();
-        CBORTag encrypted = CBORDecoder.decode(cbor).getTag();
+        CBORObject encrypted = CBORDecoder.decode(cbor);
 
 /* test verifying that the unencrypted data is protected by AEAD
-        encrypted.getTaggedObject().getArray().get(1).getMap()
-            .get(CBORCryptoConstants.CUSTOM_DATA_LABEL).getMap()
+        encrypted.getTag().getTaggedObject().getArray().get(1).getMap()
+            .get(org.webpki.cbor.CBORCryptoConstants.CUSTOM_DATA_LABEL).getMap()
             .get(PAYMENT_REQUEST_LABEL).getMap()
             .remove(ACCOUNT_ID_LABEL);
 */
-        codeTable("authz-res.txt", encrypted);
+        String refFile = docgenDirectory + AUTH_RESP_FILE;
+        CBORObject refCbor = null;
+        try {
+            refCbor = CBORDiagnosticNotation.convert(UTF8.decode(IO.readFile(refFile)));
+            if (refCbor.encode().length == encrypted.encode().length) {
+                encrypted = refCbor;
+            } else {
+                throw new IOException("changed");
+            }
+        } catch (Exception e) {
+            IO.writeFile(refFile, encrypted.toString());
+            System.out.println("*** WROTE ***=" + e.getMessage());
+        }
+        codeTable(AUTH_RESP_FILE, encrypted);
 
         // Now, decode/decrypt/verify AuthorizationResponse
         // Note: this is performed by the Issuer!
