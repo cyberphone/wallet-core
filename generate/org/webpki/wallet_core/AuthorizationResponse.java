@@ -12,12 +12,13 @@ public class AuthorizationResponse extends TableExecutor {
         return new Table()
             .add(CUSTOM_DATA_LABEL, CUSTOM_DATA_NAME, Types.MAP,
                 "CEF: custom (<i>unencrypted</i>) data in the form of a copy of the " +
-                "${href.pass-through-data} object.")
+                "${href.pass-through-data} object fetched from " +
+                "${href.signed-authorization} object.")
 
             .add(CIPHER_TEXT_LABEL, CIPHER_TEXT_NAME, Types.BSTR,
-                "CEF: <i>encrypted</i> ${href.signed-authorization} where the " +
-                "${href.pass-through-data} object was removed <i>after</i> the " +
-                "authorization signature process. " +
+                "CEF: <i>encrypted</i> version of the ${href.signed-authorization} object " +
+                "where the ${href.pass-through-data} object has been removed <i>after</i> the " +
+                "completed authorization signature process." +
                 "<div style='padding-top:0.5em'>" +
                 "Note that the modified ${href.signed-authorization} " +
                 "<code>map</code> object <b>must</b> be updated (<i>before</i> being " +

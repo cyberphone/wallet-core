@@ -43,10 +43,10 @@ The Saturn protocol is based on CBOR [${href.rfc8949}] which is a <i>binary</i> 
 However, for documentation purposes, messages are shown in <i>diagnostic notation</i>.
 </p>
 ${wallet-initiation}
-The payment proccess is initiated when the Payer hits a &quot;Pay&quot;
+The payment proccess is initiated when the <code style='color:darkgreen'>Payer</code> hits a &quot;Pay&quot;
 button on the Web or scans a QR-code, returning a wallet activation URL.
 The wallet should then use the received URL for performing an HTTP&nbsp;GET
-(step #1 in the sequence diagram) to the Payee service.
+(step #1 in the sequence diagram) to the <code style='color:darkgreen'>Payee</code> service.
 This operation should return an ${href.authorization-request} object
 (step #2 in the sequence diagram) like the following:
 ${authz-req.txt}
@@ -56,14 +56,15 @@ the wallet should display a UI like the following:
 <div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0;width:25em' class='webpkibox'  title='Wallet UI'></div>
 If the wallet contains multiple 
 ${href.payment-credentials}
-matching the Payee
-request, the Payer needs to select (step #3 in the sequence diagram) a suitable
+matching the <code style='color:darkgreen'>Payee</code>
+request, the <code style='color:darkgreen'>Payer</code> needs
+to select (step #3 in the sequence diagram) a suitable
 credential, unless the default (or last used) is deamed suitable.
 ${payer-authorization}
-Assuming that the Payer accepts and subsequently authorizes 
+Assuming that the <code style='color:darkgreen'>Payer</code> accepts and subsequently authorizes 
 the request (step #4 in the sequence diagram),
 the wallet should perform an HTTP&nbsp;POST (step #5 in the sequence diagram)
-to the Payee service containing an
+to the <code style='color:darkgreen'>Payee</code> service containing an
 ${href.authorization-response}
 object like the following: 
 ${authz-res.txt}

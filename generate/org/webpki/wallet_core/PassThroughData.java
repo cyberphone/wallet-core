@@ -12,7 +12,8 @@ public class PassThroughData extends TableExecutor {
         return new Table()
             .add(PAYMENT_REQUEST_LABEL, PAYMENT_REQUEST_NAME, Types.MAP,
                 "By including a copy of the ${href.payment-request} " +
-                "in the user authorization, this object remains <i>authoritative</i> " +
+                "in the <code style='color:darkgreen'>Payer</code> authorization, " +
+                "this object remains <i>authoritative</i> " +
                 "throughout the payment process (except for interbank operations).")
 
             .add(SERVICE_PROVIDER_LABEL, SERVICE_PROVIDER_NAME, Types.MAP,
