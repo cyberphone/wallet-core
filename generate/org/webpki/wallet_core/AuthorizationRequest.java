@@ -31,9 +31,9 @@ public class AuthorizationRequest extends TableExecutor {
  
     @Override
     String getAfterText() {
-        return getTitle() + " is the core " +
+        return "The " + getTitle() + " represents the core " +
             "<code class='entity'>Payee</code> to <code class='entity'>Wallet</code> message. " + 
             "In same-device Web contexts this message is also associated " +
-            "with the invocation of the <code class='entity'>Wallet</code> application.";
+            "with the invocation of the <code class='entity'>Wallet</code>.";
     }
 }
