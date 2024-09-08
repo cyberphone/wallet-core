@@ -22,6 +22,8 @@ enum ExternalLinks {
 
     ISO4217 ("https://www.iso.org/iso-4217-currency-codes.html"),
 
+    RECEIPTS ("https://cyberphone.github.io/doc/defensive-publications/e-receipts.pdf"),
+
     RFC8949 ("https://www.rfc-editor.org/rfc/rfc8949.html");
 
     String link;
@@ -37,7 +39,7 @@ enum ExternalLinks {
     String getHtml() {
         return "<a href='" + 
                link +
-               "'>" +
+               "' style='white-space:nowrap'>" +
                toString() +
                "<img src='xtl.svg' alt='" +
                toString().toLowerCase() + "'></a>";

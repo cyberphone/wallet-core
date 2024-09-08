@@ -110,10 +110,10 @@ ${message-reference}
 This section contains a reference to the components underpinning Saturn messages.
 The components are based on CBOR <code>map</code> objects.
 ${authorization-request}
+${payment-request}
 ${authorization-response}
 ${key-encryption}
 ${pass-through-data}
-${payment-request}
 ${provider-data}
 ${signed-authorization}
 ${credential-database}
@@ -143,6 +143,10 @@ Firstly, the ${href.authorization-response}
 object needs to be <i>decrypted</i> using a private key associated with the 
 supplied ${href.cef} <kbd>publicKey</kbd> or <kbd>keyId</kbd> attribute.
 In the sample, a <kbd>publicKey</kbd> attribute was used.
+<p>
+Note that enclosing ${href.cotx} object <b>must</b> be included in
+the decryption process.
+</p>
 The decryption process should return two CBOR objects:
 the ${href.pass-through-data}
 object which is already supplied in clear:

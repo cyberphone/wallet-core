@@ -97,7 +97,13 @@ public class CredentialDatabaseEntry {
 
         add(ENC_PUBLIC_KEY_NAME, Types.PS,
             "Encryption public key to use for creating " +
-            "${href.authorization-response} objects.");
+            "${href.authorization-response} objects." +
+            "<div style='padding-top:0.5em'>" +
+            "Note that <kbd>" + ENC_PUBLIC_KEY_NAME +
+            "</kbd> objects are provided by credential issuers. " +
+            "In order to serve their primary purpose, preserving privacy, <kbd>" +
+            ENC_PUBLIC_KEY_NAME + "</kbd> objects <b>must</b> be <i>shared</i> " +
+            "by multiple clients.</div>");
         
         add(ENC_KEY_ID_NAME, Types.ANY,
             "<i>Optional</i>: If the <kbd>" +

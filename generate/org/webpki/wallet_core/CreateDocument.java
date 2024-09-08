@@ -177,10 +177,10 @@ public class CreateDocument {
   
         innerCount = 1;
         replace(new AuthorizationRequest());
+        replace(new PaymentRequest());
         replace(new AuthorizationResponse());
         replace(new KeyEncryption());
         replace(new PassThroughData());
-        replace(new PaymentRequest());
         replace(new ProviderData());
         replace(new SignedAuthorization());
 

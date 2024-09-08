@@ -20,7 +20,7 @@ public class PassThroughData extends TableExecutor {
                 "Holds the ${href.provider-data} " +
                 "required by the <code class='entity'>Payee</code> for deriving " +
                 "which payment network " +
-                "to use and initiating a compatible payment transaction request.")
+                "to use and how to initiate a compatible payment transaction request.")
 
             .toString();
     }
