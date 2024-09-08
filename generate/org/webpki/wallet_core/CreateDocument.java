@@ -44,6 +44,8 @@ public class CreateDocument {
 
     static final String OBJECT_ID = "https://saturn.standard/v4";
 
+    static final String CREDENTIAL_VERSION = "https://saturn.standard/cr/v1";
+
     static final String PAYEE_HOST = "spaceshop.com";
 
     static final String TIME_STAMP = "2024-09-01T13:28:02-02:00";
@@ -184,6 +186,7 @@ public class CreateDocument {
         innerCount = 0;
         addTocEntry("Credential Database");
         updateTemplate("credential-database-entry", new CredentialDatabaseEntry().getTableString());
+        addTocEntry("Credential Enrollment");
         addTocEntry("Authorization Processing");
 
         innerCount = 1;

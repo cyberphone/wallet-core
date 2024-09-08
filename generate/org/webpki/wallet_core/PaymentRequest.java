@@ -21,7 +21,7 @@ public class PaymentRequest extends TableExecutor {
                 "custom for prices for the specific <kbd>currency</kbd>.</div>")
 
             .add(CURRENCY_LABEL, CURRENCY_NAME, Types.TSTR,
-                "Currency expressed in ${href.iso4217} <i>alphabetical</i> format.")
+                "Currency expressed in the ${href.iso4217} <i>alphabetical</i> format.")
 
             .add(COMMON_NAME_LABEL, COMMON_NAME_NAME, Types.TSTR,
                 "<code class='entity'>Payee</code> common name to be shown in UIs.")

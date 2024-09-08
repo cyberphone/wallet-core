@@ -11,7 +11,8 @@
 <h3 style="text-align:center;font-weight:normal;font-size:1.5em">Saturn - Payment Authorization Wallet</h3>
 <i>Disclaimer: this is a system in development, subject to change without notice.</i>
 <p>
-Copyright Notice: this document is furnished under the <a href='../LICENSE'>MIT license</a>.
+Copyright Notice: this document is furnished under an
+<a href='https://github.com/cyberphone/wallet-core/blob/main/LICENSE'>MIT license</a>.
 </p>
 <h3>Table of Contents</h3>
 <div class='webpkifloat'><div>
@@ -78,6 +79,13 @@ If there are no matching payment credentials, the <code class='entity'>Wallet</c
 <b>must</b> provide the <code class='entity'>Payer</code> with
 a suitable error message and a cancel button. 
 </p>
+<p>
+If the requested currency differs from the default (as defined by the
+locale settings of the operating system), it is <i>recommended</i> displaying
+ISO three-letter abbreviations (USD, EUR, SEK, etc.) rather than short-hand
+versions like <code>'$'</code> and <code>'&#x20ac;'</code>.
+See also ${href.payment-request}.
+</p>
 ${payer-authorization}
 Assuming that the <code class='entity'>Payer</code> accepts and subsequently authorizes 
 the request (step #4 in the sequence diagram),
@@ -110,15 +118,20 @@ ${signed-authorization}
 ${credential-database}
 A fundamental part of the <code class='entity'>Wallet</code> is a local database holding
 enrolled payment credentials.
-Note that although credential data types are expressed as CBOR,
+Note that although credential data types listed here are mainly expressed as CBOR,
 other representations may be used.
 The only requirement is that credential data types can be securely
 mapped back and forth to CBOR.
+<p>
+The data type <code>&quot;ps&quot;</code> denotes a platform-specific solution.
+</p>
 <p style='margin-bottom:0.5em;padding-bottom:0'>
 Each entry in the database contains a payment credential according
 to the following definition:
 </p>
 ${credential-database-entry}
+${credential-enrollment}
+TBD.
 ${authorization-processing}
 This section describes how
 ${href.authorization-response} messages
@@ -170,7 +183,7 @@ ${encryption-key.jwk}
 ${encryption-key.txt}
 ${version}
   API version: 0.5<br>
-  Document version: 2024-09-07<br>
+  Document version: 2024-09-08<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

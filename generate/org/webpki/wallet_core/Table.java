@@ -30,15 +30,15 @@ public class Table {
     public String toString() {
         StringBuilder s = new StringBuilder("<div class='webpkifloat'>" +
              "<table class='webpkitable' style='width:52em'>" +
-                "<tr><th>Label</th><th>Name</th><th>Type</th>" +
+                "<tr><th>Name</th><th>Label</th><th>Type</th>" +
                     "<th style='width:100%'>Description</th></tr>");
         for (CBORObject key : elements.keySet()) {
             TableElement te = elements.get(key);
-            s.append("<tr><td style='text-align:center'><code>")
-             .append(key.toString())
-             .append("</code></td><td><kbd>")
+            s.append("<tr><td><kbd>")
              .append(te.name)
              .append("</kbd></td><td style='text-align:center'><code>")
+             .append(key.toString())
+             .append("</code></td><td style='text-align:center'><code>")
              .append(te.type.getHTML())
              .append("</code></td><td>")
              .append(te.description)
