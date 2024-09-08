@@ -9,7 +9,10 @@
 </head>
 <body>
 <h3 style="text-align:center;font-weight:normal;font-size:1.5em">Saturn - Payment Authorization Wallet</h3>
-<i>Disclaimer: this is a specification in an early state, subject to change without notice.</i>
+<i>Disclaimer: this is a system in development, subject to change without notice.</i>
+<p>
+Copyright Notice: this document is furnished under the <a href='../LICENSE'>MIT license</a>.
+</p>
 <h3>Table of Contents</h3>
 <div class='webpkifloat'><div>
 ${toc}
@@ -47,7 +50,7 @@ The Saturn protocol is based on CBOR [${href.rfc8949}] which is a <i>binary</i> 
 However, for documentation purposes, messages are shown in <i>diagnostic notation</i>.
 </p>
 To support cryptographic operations requiring secure transformations of CBOR <code>map</code> objects,
-Saturn relies on an IETF standard in development [${href.cde}],
+Saturn relies on an IETF standard currently in development [${href.cde}],
 which defines <i>deterministic encoding</i> of CBOR.
 ${wallet-initiation}
 The payment process is initiated when the <code class='entity'>Payer</code> hits a &quot;Pay&quot;
@@ -58,13 +61,13 @@ This operation should return an ${href.authorization-request} object
 (step #2 in the sequence diagram) like the following:
 ${authz-req.txt}
 Note that the <code class='entity'>Payee</code> service <b>must</b> set the
-HTTP <code style='white-space:nowrap'>Content-Type</code> to <code>application/cbor</code>.
+HTTP <code style='white-space:nowrap'>Content-Type</code> header parameter
+to <code>application/cbor</code>.
 ${wallet-request-ui}
 After receival of the ${href.authorization-request},
 the <code class='entity'>Wallet</code> should display a UI like the following:
 <div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0;width:28em' class='webpkibox'  title='Wallet UI'></div>
-If the <code class='entity'>Wallet</code> contains multiple 
-${href.payment-credentials}
+If there are multiple ${href.credential-database} entries
 matching the <code class='entity'>Payee</code>
 request, the <code class='entity'>Payer</code> needs
 to select (step #3 in the sequence diagram) a suitable
@@ -87,7 +90,7 @@ ${authz-res.txt}
 Note that the POST <b>must</b> be directed to the same URL as
 used by the GET in ${href.wallet-initiation}.
 In addition, the HTTP <code style='white-space:nowrap'>Content-Type</code>
-<b>must</b> be set to <code>application/cbor</code>.
+header parameter <b>must</b> be set to <code>application/cbor</code>.
 ${wallet-termination}
 After successful (or failed) authorization, the 
 ${href.authorization-response}
@@ -102,9 +105,9 @@ ${authorization-request}
 ${authorization-response}
 ${pass-through-data}
 ${payment-request}
-${service-provider}
+${provider-data}
 ${signed-authorization}
-${payment-credentials}
+${credential-database}
 A fundamental part of the <code class='entity'>Wallet</code> is a local database holding
 enrolled payment credentials.
 Note that although credential data types are expressed as CBOR,
@@ -115,7 +118,7 @@ mapped back and forth to CBOR.
 Each entry in the database contains a payment credential according
 to the following definition:
 </p>
-${payment-credential}
+${credential-database-entry}
 ${authorization-processing}
 This section describes how
 ${href.authorization-response} messages
@@ -128,7 +131,7 @@ supplied ${href.cef} <kbd>publicKey</kbd> or <kbd>keyId</kbd> attribute.
 In the sample, a <kbd>publicKey</kbd> attribute was used.
 The decryption process should return two CBOR objects:
 the ${href.pass-through-data}
-object which is supplied in clear:
+object which is already supplied in clear:
 ${pass-through-data.txt}
 and another object which after decryption should read like the following:
 ${restored.txt}
@@ -166,7 +169,8 @@ ${encryption-key.jwk}
 <div style='margin-top:0.8em'>Encryption key in COSE format:</div>
 ${encryption-key.txt}
 ${version}
-  API version: 1.0.0<br>
-  Document version: 2024-09-07
+  API version: 0.5<br>
+  Document version: 2024-09-07<br>
+  Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

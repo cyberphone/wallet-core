@@ -4,6 +4,7 @@ import static org.webpki.wallet_core.MessageCommon.*;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -53,7 +54,7 @@ public class CreateDocument {
 
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected virtual card." +
-        "<div style='padding-top:0.5em'>Also see ${href.payment-credentials}.</div>";
+        "<div style='padding-top:0.5em'>Also see ${href.credential-database}.</div>";
 
     static final String AUTH_RESP_FILE = "authz-res.txt";
 
@@ -177,12 +178,12 @@ public class CreateDocument {
         replace(new AuthorizationResponse());
         replace(new PassThroughData());
         replace(new PaymentRequest());
-        replace(new ServiceProvider());
+        replace(new ProviderData());
         replace(new SignedAuthorization());
 
         innerCount = 0;
-        addTocEntry("Payment Credentials");
-        updateTemplate("payment-credential", new PaymentCredential().getTableString());
+        addTocEntry("Credential Database");
+        updateTemplate("credential-database-entry", new CredentialDatabaseEntry().getTableString());
         addTocEntry("Authorization Processing");
 
         innerCount = 1;
@@ -202,12 +203,12 @@ public class CreateDocument {
             .set(COMMON_NAME_LABEL, new CBORString("Space Shop"));
 
         CBORMap serviceProvider = new CBORMap()
-            .set(PAYMENT_NETWORK_LABEL, new CBORString(BANKNET2))
-            .set(SERVICE_PROVIDER_LABEL, new CBORString("mybank.com"));
+            .set(NETWORK_ID_LABEL, new CBORString(BANKNET2))
+            .set(PROVIDER_DATA_LABEL, new CBORString("mybank.com"));
 
         CBORMap authorizationRequest = new CBORMap()
             .set(PAYMENT_REQUEST_LABEL, paymentRequest)
-            .set(PAYMENT_NETWORKS_LABEL, new CBORArray()
+            .set(SUPPORTED_NETWORKS_LABEL, new CBORArray()
                 .add(new CBORString("https://cardnetwork.com"))
                 .add(new CBORString(BANKNET2)));
         codeTable("authz-req.txt", authorizationRequest);
@@ -216,7 +217,7 @@ public class CreateDocument {
 
         CBORMap passThrough = new CBORMap()
             .set(PAYMENT_REQUEST_LABEL, paymentRequest)
-            .set(SERVICE_PROVIDER_LABEL, serviceProvider);
+            .set(PROVIDER_DATA_LABEL, serviceProvider);
 
         CBORArray platformData = new CBORArray()
             .add(new CBORString("Android"))
@@ -270,6 +271,8 @@ public class CreateDocument {
             .get(PAYMENT_REQUEST_LABEL).getMap()
             .remove(ACCOUNT_ID_LABEL);
 */
+        // To avoid updating index.html each time we run the doc builder
+        // we keep a refernce to a previous build.
         String refFile = docgenDirectory + AUTH_RESP_FILE;
         CBORObject refCbor = null;
         try {
@@ -373,7 +376,13 @@ public class CreateDocument {
                    .append(tocEntry.name)
                    .append("</a></div>");
         }
-        updateTemplate("toc", tocHtml.toString());                          
+        updateTemplate("toc", tocHtml.toString());
+        
+        int macroPosition = template.indexOf("${");
+        if (macroPosition > 0) {
+            throw new RuntimeException("unresolved macro: " + 
+                template.substring(macroPosition, macroPosition + 10));
+        }
  
         IO.writeFile(documentFileName, template);
     }

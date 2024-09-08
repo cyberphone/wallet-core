@@ -39,4 +39,9 @@ public class AuthorizationResponse extends TableExecutor {
             "outermost element is a ${href.cotx} wrapper with ID=<code>" + 
             CreateDocument.OBJECT_ID + "</code>.  The CEF inner elements are as follows:";
     }
+
+    @Override
+    String getAfterText() {
+        return "See also ${href.authorization-processing}.";
+    }
 }

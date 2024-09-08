@@ -12,12 +12,12 @@ public class MessageCommon {
     static final CBORInt CURRENCY_LABEL         = new CBORInt(4); 
     static final CBORInt NON_DIRECT_LABEL       = new CBORInt(5); 
 
-    static final CBORInt PAYMENT_NETWORKS_LABEL = new CBORInt(2);
+    static final CBORInt SUPPORTED_NETWORKS_LABEL = new CBORInt(2);
 
-    static final CBORInt SERVICE_PROVIDER_LABEL = new CBORInt(2);
+    static final CBORInt PROVIDER_DATA_LABEL = new CBORInt(2);
 
-    static final CBORInt PAYMENT_NETWORK_LABEL  = new CBORInt(1); 
-    static final CBORInt PAYMENT_SERVICE_LABEL  = new CBORInt(2);
+    static final CBORInt NETWORK_ID_LABEL  = new CBORInt(1); 
+    static final CBORInt SERVICE_LOCATOR_LABEL  = new CBORInt(2);
 
     static final CBORInt PASS_THROUGH_LABEL     = new CBORInt(1);
     static final CBORInt PAYEE_HOST_LABEL       = new CBORInt(2);

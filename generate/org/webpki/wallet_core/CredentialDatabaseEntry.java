@@ -1,6 +1,6 @@
 package org.webpki.wallet_core;
 
-public class PaymentCredential {
+public class CredentialDatabaseEntry {
 
     static final String CARD_IMAGE_NAME = "cardImage";
 
@@ -21,7 +21,7 @@ public class PaymentCredential {
 
     String getTableString() {
 
-        add(ServiceProvider.PAYMENT_NETWORK_NAME, Types.TSTR,
+        add(ProviderData.NETWORK_ID_NAME, Types.TSTR,
             "Payment network/method identifier. " +
             "Since payment networks are likely to continue having unique message " +
             "solutions, the <code class='entity'>Payee</code> needs to " +
@@ -30,20 +30,20 @@ public class PaymentCredential {
             "Payment network identifiers may be expressed as URLs or as " +
             "simple names like \"VISA\".  Note that this concept does not " +
             "make a distinction between payment methods or \"schemes\".</div>" +
-            "<div style='padding-top:0.5em'>Also see ${href.service-provider}.</div>");
+            "<div style='padding-top:0.5em'>Also see ${href.provider-data}.</div>");
 
-        add(ServiceProvider.PAYMENT_SERVICE_NAME, Types.TSTR,
+        add(ProviderData.SERVICE_LOCATOR_NAME, Types.TSTR,
             "Payment service URL or host name. " +
             "This attribute enables the <code class='entity'>Payee</code> " +
             "to find the end-point of the specific payment service (like a bank), " +
             "associated with the payment credential." +
             "<div style='padding-top:0.5em'>" +
             "How to interpret this attribute is dictated by the <kbd>" +
-            ServiceProvider.PAYMENT_NETWORK_NAME + "</kbd> identifier. If <kbd>" + 
-            ServiceProvider.PAYMENT_SERVICE_NAME + "</kbd> is expressed as a host-name only, " +
+            ProviderData.NETWORK_ID_NAME + "</kbd> identifier. If <kbd>" + 
+            ProviderData.SERVICE_LOCATOR_NAME + "</kbd> is expressed as a host-name only, " +
             "a <code style='white-space:nowrap'>&quot;.well-known&quot;</code> " +
             "[${href.rfc8615}] extension would typically be used.</div>" +
-            "<div style='padding-top:0.5em'>Also see ${href.service-provider}.</div>");
+            "<div style='padding-top:0.5em'>Also see ${href.provider-data}.</div>");
 
         add(SignedAuthorization.ACCOUNT_ID_NAME, Types.TSTR,
             "Account identifier associated with the virtual card." +
