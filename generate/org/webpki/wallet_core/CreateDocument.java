@@ -194,6 +194,8 @@ public class CreateDocument {
         addTocEntry("Signature Validation");
 
         innerCount = 0;
+        addTocEntry("Algorithm Support");
+        addTocEntry("Security Considerations");
         addTocEntry("Test Vectors");
         addTocEntry("Version");
 
