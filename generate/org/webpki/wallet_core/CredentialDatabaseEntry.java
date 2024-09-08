@@ -100,10 +100,10 @@ public class CredentialDatabaseEntry {
             "${href.authorization-response} objects.");
         
         add(ENC_KEY_ID_NAME, Types.ANY,
-            "<i>Optional</i>: if the <kbd>" +
+            "<i>Optional</i>: If the <kbd>" +
             ENC_KEY_ID_NAME +
             "</kbd> attribute is defined, it <b>must</b> be " +
-            "featured in ${href.authorization-response} objects instead of <kbd>" +
+            "featured in ${href.key-encryption} objects instead of <kbd>" +
             ENC_PUBLIC_KEY_NAME + "</kbd>.");
  
         return table.append("</table></div>").toString();
