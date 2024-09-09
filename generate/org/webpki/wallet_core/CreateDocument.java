@@ -254,8 +254,8 @@ public class CreateDocument {
                 }
                 if (keyEncryptionAlgorithm != ENC_KEY || 
                     contentEncryptionAlgorithm != ENC_CONTENT) {
-                        throw new CryptoException("alg mismatch");
-                    }
+                    throw new CryptoException("alg mismatch");
+                }
                 return encryptionKey.getPrivate();
             }
     
