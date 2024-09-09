@@ -154,8 +154,86 @@ public class CreateDocument {
     void codeTable(String holder, CBORObject object) {
         codeTable(holder, htmlize(object.toString()));
     }
+  
+    CBORObject createAuthz() {
 
-    CBORObject authorize(CBORObject authorizationResponse, boolean update) {
+        // Create AuthorizationRequest
+
+        CBORMap paymentRequest = new CBORMap()
+            .set(AMOUNT_LABEL, new CBORString("600.00"))
+            .set(CURRENCY_LABEL, new CBORString("EUR"))
+            .set(REFERENCE_ID_LABEL, new CBORString(REFERENCE_ID))
+            .set(COMMON_NAME_LABEL, new CBORString("Space Shop"));
+
+        CBORMap serviceProvider = new CBORMap()
+            .set(NETWORK_ID_LABEL, new CBORString(BANKNET2))
+            .set(PROVIDER_DATA_LABEL, new CBORString("mybank.com"));
+
+        CBORMap authorizationRequest = new CBORMap()
+            .set(PAYMENT_REQUEST_LABEL, paymentRequest)
+            .set(SUPPORTED_NETWORKS_LABEL, new CBORArray()
+                .add(new CBORString("https://cardnetwork.com"))
+                .add(new CBORString(BANKNET2)))
+            .set(RECEIPT_URL_LABEL, new CBORString(
+                "https://" + PAYEE_HOST + 
+                "/receipts/" + REFERENCE_ID + ".MNloPyPahXxr43flXzufdQ"));
+        codeTable("authz-req.txt", authorizationRequest);
+
+        // Create a singned authorization response
+
+        CBORMap passThrough = new CBORMap()
+            .set(PAYMENT_REQUEST_LABEL, paymentRequest)
+            .set(PROVIDER_DATA_LABEL, serviceProvider);
+
+        CBORArray platformData = new CBORArray()
+            .add(new CBORString("Android"))
+            .add(new CBORString("14.1"));
+
+        CBORArray walletData = new CBORArray()
+            .add(new CBORString("Saturn"))
+            .add(new CBORString("1.0.0"));
+        
+        CBORArray location = new CBORArray()
+            .add(new CBORFloat(38.88820))
+            .add(new CBORFloat(-77.01988));
+
+        CBORMap signedAuthorization = new CBORMap()
+            .set(PASS_THROUGH_DATA_LABEL, passThrough)
+            .set(PAYEE_HOST_LABEL, new CBORString(PAYEE_HOST))
+            .set(ACCOUNT_ID_LABEL, new CBORString(PAYER_ACCOUNT))
+            .set(SERIAL_NUMBER_LABEL, new CBORString(SERIAL_NUMBER))
+            .set(PLATFORM_DATA_LABEL, platformData)
+            .set(LOCATION_LABEL, location)
+            .set(WALLET_DATA_LABEL, walletData)
+            .set(TIME_STAMP_LABEL, new CBORString(TIME_STAMP));
+        new CBORAsymKeySigner(authorizationKey.getPrivate())
+            .setPublicKey(authorizationKey.getPublic())
+            .sign(AUTHZ_SIGNATURE_LABEL, signedAuthorization);
+        codeTable("signed-authz.txt", signedAuthorization);
+
+        // Create the actual (encrypted) AuthorizationResponse
+
+        signedAuthorization.remove(PASS_THROUGH_DATA_LABEL);
+        byte[] cbor = new CBORAsymKeyEncrypter(encryptionKey.getPublic(), 
+                                               KeyEncryptionAlgorithms.ECDH_ES_A128KW,
+                                               ContentEncryptionAlgorithms.A256GCM)
+            .setIntercepter(new CBORCryptoUtils.Intercepter() {
+                @Override
+                public CBORObject getCustomData() {
+                    return passThrough;
+                }
+                @Override
+                public CBORObject wrap(CBORMap map) {
+                    return new CBORTag(OBJECT_ID, map);
+                }          
+            })
+            .setPublicKeyOption(true)
+            .encrypt(signedAuthorization.encode()).encode();
+        return CBORDecoder.decode(cbor);
+    }
+
+    CBORObject verifyAuthz(CBORObject authorizationResponse, boolean update) {
+
         // Now, decode/decrypt/verify AuthorizationResponse
         // Note: this is performed by the Issuer!
 
@@ -278,101 +356,29 @@ public class CreateDocument {
         addTocEntry("Test Vectors");
         addTocEntry("Version");
 
-        // Create AuthorizationRequest
-
-        CBORMap paymentRequest = new CBORMap()
-            .set(AMOUNT_LABEL, new CBORString("600.00"))
-            .set(CURRENCY_LABEL, new CBORString("EUR"))
-            .set(REFERENCE_ID_LABEL, new CBORString(REFERENCE_ID))
-            .set(COMMON_NAME_LABEL, new CBORString("Space Shop"));
-
-        CBORMap serviceProvider = new CBORMap()
-            .set(NETWORK_ID_LABEL, new CBORString(BANKNET2))
-            .set(PROVIDER_DATA_LABEL, new CBORString("mybank.com"));
-
-        CBORMap authorizationRequest = new CBORMap()
-            .set(PAYMENT_REQUEST_LABEL, paymentRequest)
-            .set(SUPPORTED_NETWORKS_LABEL, new CBORArray()
-                .add(new CBORString("https://cardnetwork.com"))
-                .add(new CBORString(BANKNET2)))
-            .set(RECEIPT_URL_LABEL, new CBORString(
-                "https://" + PAYEE_HOST + 
-                "/receipts/" + REFERENCE_ID + ".MNloPyPahXxr43flXzufdQ"));
-        codeTable("authz-req.txt", authorizationRequest);
-
-        // Create a singned authorization response
-
-        CBORMap passThrough = new CBORMap()
-            .set(PAYMENT_REQUEST_LABEL, paymentRequest)
-            .set(PROVIDER_DATA_LABEL, serviceProvider);
-
-        CBORArray platformData = new CBORArray()
-            .add(new CBORString("Android"))
-            .add(new CBORString("14.1"));
-
-        CBORArray walletData = new CBORArray()
-            .add(new CBORString("Saturn"))
-            .add(new CBORString("1.0.0"));
-        
-        CBORArray location = new CBORArray()
-            .add(new CBORFloat(38.88820))
-            .add(new CBORFloat(-77.01988));
-
-        CBORMap signedAuthorization = new CBORMap()
-            .set(PASS_THROUGH_DATA_LABEL, passThrough)
-            .set(PAYEE_HOST_LABEL, new CBORString(PAYEE_HOST))
-            .set(ACCOUNT_ID_LABEL, new CBORString(PAYER_ACCOUNT))
-            .set(SERIAL_NUMBER_LABEL, new CBORString(SERIAL_NUMBER))
-            .set(PLATFORM_DATA_LABEL, platformData)
-            .set(LOCATION_LABEL, location)
-            .set(WALLET_DATA_LABEL, walletData)
-            .set(TIME_STAMP_LABEL, new CBORString(TIME_STAMP));
-        new CBORAsymKeySigner(authorizationKey.getPrivate())
-            .setPublicKey(authorizationKey.getPublic())
-            .sign(AUTHZ_SIGNATURE_LABEL, signedAuthorization);
-        codeTable("signed-authz.txt", signedAuthorization);
-
-        // Create the actual (encrypted) AuthorizationResponse
-
-        signedAuthorization.remove(PASS_THROUGH_DATA_LABEL);
-        byte[] cbor = new CBORAsymKeyEncrypter(encryptionKey.getPublic(), 
-                                               KeyEncryptionAlgorithms.ECDH_ES_A128KW,
-                                               ContentEncryptionAlgorithms.A256GCM)
-            .setIntercepter(new CBORCryptoUtils.Intercepter() {
-                @Override
-                public CBORObject getCustomData() {
-                    return passThrough;
-                }
-                @Override
-                public CBORObject wrap(CBORMap map) {
-                    return new CBORTag(OBJECT_ID, map);
-                }          
-            })
-            .setPublicKeyOption(true)
-            .encrypt(signedAuthorization.encode()).encode();
-        CBORObject encrypted = CBORDecoder.decode(cbor);
+        CBORObject authz = createAuthz();
 
 /* test verifying that the unencrypted data is protected by AEAD
-        encrypted.getTag().getTaggedObject().getArray().get(1).getMap()
+        authz.getTag().getTaggedObject().getArray().get(1).getMap()
             .get(org.webpki.cbor.CBORCryptoConstants.CUSTOM_DATA_LABEL).getMap()
             .get(PAYMENT_REQUEST_LABEL).getMap()
             .remove(ACCOUNT_ID_LABEL);
 */
         // To avoid updating index.html each time we run the doc builder
-        // we keep a refernce to a previous build.
+        // we keep a reference to a previous build.
         String refFile = docgenDirectory + AUTH_RESP_FILE;
         try {
-            CBORObject refCbor = CBORDiagnosticNotation.convert(UTF8.decode(IO.readFile(refFile)));
-            if (authorize(encrypted, true).equals(authorize(refCbor, false))) {
-                encrypted = refCbor;
+            CBORObject refAuthz = CBORDiagnosticNotation.convert(UTF8.decode(IO.readFile(refFile)));
+            if (verifyAuthz(authz, true).equals(verifyAuthz(refAuthz, false))) {
+                authz = refAuthz;
             } else {
                 throw new IOException("changed");
             }
         } catch (Exception e) {
-            IO.writeFile(refFile, encrypted.toString());
+            IO.writeFile(refFile, authz.toString());
             System.out.println("*** WROTE ***=" + e.getMessage());
         }
-        codeTable(AUTH_RESP_FILE, encrypted);
+        codeTable(AUTH_RESP_FILE, authz);
 
         // Fill in external links
         for (ExternalLinks link : ExternalLinks.values()) {
