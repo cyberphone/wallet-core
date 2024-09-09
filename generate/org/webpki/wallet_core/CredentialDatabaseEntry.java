@@ -67,7 +67,8 @@ public class CredentialDatabaseEntry {
             "<div style='padding-top:0.5em'>Also see ${href.signed-authorization}.</div>");
 
         add(CARD_IMAGE_NAME, Types.BSTR,
-            "Card image that is used for aiding " +
+            "Card image associated with the payment credential. " +
+            "Cord images are used for aiding " +
             "<code class='entity'>Payer</code> administration of " +
             "payment credentials as well " +
             "as being featured in the ${href.wallet-request-ui}. " +
