@@ -24,7 +24,10 @@ public class PaymentRequest extends TableExecutor {
                 "Currency expressed in the ${href.iso4217} <i>alphabetical</i> format.")
 
             .add(COMMON_NAME_LABEL, COMMON_NAME_NAME, Types.TSTR,
-                "<code class='entity'>Payee</code> common name to be shown in UIs.")
+                "<code class='entity'>Payee</code> common name to be shown in the " +
+                "${href.wallet-request-ui}" +
+                "<div style='padding-top:0.5em'>" +
+                "Note that common and <i>legal</i> names often differ.</div>")
     
             .add(REFERENCE_ID_LABEL, REFERENCE_ID_NAME, Types.TSTR,
                 "<code class='entity'>Payee</code> reference Id. " +
