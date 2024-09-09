@@ -42,8 +42,12 @@ public class SignedAuthorization extends TableExecutor {
                 "CBOR strings (tstr).")
 
             .add(LOCATION_LABEL, LOCATION_NAME, Types.ARRAY,
-                "<i>Optional</i>: Array holding latitude <code>[0]</code> " +
-                "and longitude <code>[1]</code>, expressed as CBOR floating point values.")
+                "<i>Optional</i>: Array holding the current latitude <code>[0]</code> " +
+                "and longitude <code>[1]</code> of the <code class='entity'>Wallet</code> " +
+                "device, expressed as CBOR floating point values." +
+                "<div style='padding-top:0.5em'>" +
+                "This option depends on <code class='entity'>Payer</code> " +
+                "privacy settings.</div>")
 
             .add(TIME_STAMP_LABEL, TIME_STAMP_NAME, Types.TSTR,
                 "ISO date-time string [${href.rfc3339}] " +
