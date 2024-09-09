@@ -50,7 +50,7 @@ public class SignedAuthorization extends TableExecutor {
                 "using UTC (T) or local time (Z) format.")
 
             .add(SIGNATURE_LABEL, SIGNATURE_NAME, Types.MAP,
-                "Authorization signature.")
+                "Authorization signature using a ${href.csf} object.")
     
             .toString();
     }
