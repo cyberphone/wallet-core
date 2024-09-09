@@ -19,7 +19,7 @@ public class AuthorizationRequest extends TableExecutor {
                 "that the <code class='entity'>Payee</code> supports. " +
                 "Network identifiers are expressed as CBOR strings (tstr)." +
                 "<div style='padding-top:0.5em'>" +
-                "See also <kbd>" + ProviderData.NETWORK_ID_NAME + "</kbd> in " +
+                "See also <kbd>" + ProviderData.NETWORK_ID_NAME + "</kbd> in the " +
                 "${href.credential-database}.</div>")
 
             .add(RECEIPT_URL_LABEL, RECEIPT_URL_NAME, Types.TSTR,
