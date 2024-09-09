@@ -155,6 +155,82 @@ public class CreateDocument {
         codeTable(holder, htmlize(object.toString()));
     }
 
+    CBORObject authorize(CBORObject authorizationResponse, boolean update) {
+        // Now, decode/decrypt/verify AuthorizationResponse
+        // Note: this is performed by the Issuer!
+
+        final CBORMap saveCustomData[] = new CBORMap[1];
+        byte[] cbor = new CBORAsymKeyDecrypter(new CBORAsymKeyDecrypter.KeyLocator() {
+
+            @Override
+            public PrivateKey locate(PublicKey optionalPublicKey,
+                                     CBORObject optionalKeyId,
+                                     KeyEncryptionAlgorithms keyEncryptionAlgorithm,
+                                     ContentEncryptionAlgorithms contentEncryptionAlgorithm) {
+                // Simplistic key data base...
+                if (!encryptionKey.getPublic().equals(optionalPublicKey)) {
+                    throw new CryptoException("pubkey mismatch");
+                }
+                return encryptionKey.getPrivate();
+            }
+    
+        }).setTagPolicy(CBORCryptoUtils.POLICY.MANDATORY, new CBORCryptoUtils.Collector() {
+
+            @Override
+            public void foundData(CBORObject object) {
+                CBORTag cborTag = object.getTag();
+                if (cborTag.getTagNumber() != CBORTag.RESERVED_TAG_COTX ||
+                    !cborTag.getTaggedObject().getArray().get(0).getString().equals(OBJECT_ID)) {
+                        throw new CryptoException("Unknown tag:" + cborTag);
+                }
+            }
+
+        }).setCustomDataPolicy(CBORCryptoUtils.POLICY.MANDATORY, new CBORCryptoUtils.Collector() {
+
+            @Override
+            public void foundData(CBORObject customData) {
+                saveCustomData[0] = customData.getMap();
+            }
+                                
+        }).decrypt(authorizationResponse);
+        if (update) {
+            codeTable("pass-through-data.txt", saveCustomData[0]);
+        }
+
+        // Restore message and verify signature
+
+        CBORMap restored = CBORDecoder.decode(cbor).getMap();
+        if (update) {
+            codeTable("restored.txt", restored);
+        }
+        
+        restored.set(PASS_THROUGH_DATA_LABEL, saveCustomData[0]);
+
+        // We want to 1) enforce public key 2) check key for trust after validation
+        PublicKey[] suppliedPublicKey = new PublicKey[1];
+        CBORObject retVal = new CBORAsymKeyValidator(new CBORAsymKeyValidator.KeyLocator() {
+
+            @Override
+            public PublicKey locate(PublicKey optionalPublicKey, 
+                                    CBORObject optionalKeyId, 
+                                    AsymSignatureAlgorithms asymSignatureAlgorithm) {
+                if (optionalPublicKey == null) {
+                    throw new CryptoException("Missing public key");
+                }
+                if (asymSignatureAlgorithm != AsymSignatureAlgorithms.ED25519) {
+                    throw new CryptoException("Invalid algorithm: " + asymSignatureAlgorithm);
+                }
+                suppliedPublicKey[0] = optionalPublicKey;
+                return optionalPublicKey;
+            }
+
+        }).validate(AUTHZ_SIGNATURE_LABEL, restored);
+        if (!suppliedPublicKey[0].equals(authorizationKey.getPublic())) {
+            throw new CryptoException("Unknown public key");
+        }
+        return retVal;
+    }
+
     CreateDocument(String templateFileName, 
                    String documentFileName,
                    String docgenDir,
@@ -285,10 +361,9 @@ public class CreateDocument {
         // To avoid updating index.html each time we run the doc builder
         // we keep a refernce to a previous build.
         String refFile = docgenDirectory + AUTH_RESP_FILE;
-        CBORObject refCbor = null;
         try {
-            refCbor = CBORDiagnosticNotation.convert(UTF8.decode(IO.readFile(refFile)));
-            if (refCbor.encode().length == encrypted.encode().length) {
+            CBORObject refCbor = CBORDiagnosticNotation.convert(UTF8.decode(IO.readFile(refFile)));
+            if (authorize(encrypted, true).equals(authorize(refCbor, false))) {
                 encrypted = refCbor;
             } else {
                 throw new IOException("changed");
@@ -298,75 +373,6 @@ public class CreateDocument {
             System.out.println("*** WROTE ***=" + e.getMessage());
         }
         codeTable(AUTH_RESP_FILE, encrypted);
-
-        // Now, decode/decrypt/verify AuthorizationResponse
-        // Note: this is performed by the Issuer!
-
-        final CBORMap saveCustomData[] = new CBORMap[1];
-        cbor = new CBORAsymKeyDecrypter(new CBORAsymKeyDecrypter.KeyLocator() {
-
-            @Override
-            public PrivateKey locate(PublicKey optionalPublicKey,
-                                     CBORObject optionalKeyId,
-                                     KeyEncryptionAlgorithms keyEncryptionAlgorithm,
-                                     ContentEncryptionAlgorithms contentEncryptionAlgorithm) {
-                // Simplistic key data base...
-                if (!encryptionKey.getPublic().equals(optionalPublicKey)) {
-                    throw new CryptoException("pubkey mismatch");
-                }
-                return encryptionKey.getPrivate();
-            }
-    
-        }).setTagPolicy(CBORCryptoUtils.POLICY.MANDATORY, new CBORCryptoUtils.Collector() {
-
-            @Override
-            public void foundData(CBORObject object) {
-                CBORTag cborTag = object.getTag();
-                if (cborTag.getTagNumber() != CBORTag.RESERVED_TAG_COTX ||
-                    !cborTag.getTaggedObject().getArray().get(0).getString().equals(OBJECT_ID)) {
-                        throw new CryptoException("Unknown tag:" + cborTag);
-                }
-            }
-
-        }).setCustomDataPolicy(CBORCryptoUtils.POLICY.MANDATORY, new CBORCryptoUtils.Collector() {
-
-            @Override
-            public void foundData(CBORObject customData) {
-                saveCustomData[0] = customData.getMap();
-            }
-                                
-        }).decrypt(encrypted);
-        codeTable("pass-through-data.txt", saveCustomData[0]);
-
-        // Restore message and verify signature
-
-        CBORMap restored = CBORDecoder.decode(cbor).getMap();
-        codeTable("restored.txt", restored);
-        
-        restored.set(PASS_THROUGH_DATA_LABEL, saveCustomData[0]);
-
-        // We want to 1) enforce public key 2) check key for trust after validation
-        PublicKey[] suppliedPublicKey = new PublicKey[1];
-        new CBORAsymKeyValidator(new CBORAsymKeyValidator.KeyLocator() {
-
-            @Override
-            public PublicKey locate(PublicKey optionalPublicKey, 
-                                    CBORObject optionalKeyId, 
-                                    AsymSignatureAlgorithms asymSignatureAlgorithm) {
-                if (optionalPublicKey == null) {
-                    throw new CryptoException("Missing public key");
-                }
-                if (asymSignatureAlgorithm != AsymSignatureAlgorithms.ED25519) {
-                    throw new CryptoException("Invalid algorithm: " + asymSignatureAlgorithm);
-                }
-                suppliedPublicKey[0] = optionalPublicKey;
-                return optionalPublicKey;
-            }
-
-        }).validate(AUTHZ_SIGNATURE_LABEL, restored);
-        if (!suppliedPublicKey[0].equals(authorizationKey.getPublic())) {
-            throw new CryptoException("Unknown public key");
-        }
 
         // Fill in external links
         for (ExternalLinks link : ExternalLinks.values()) {
