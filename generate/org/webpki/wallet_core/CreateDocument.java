@@ -54,6 +54,8 @@ public class CreateDocument {
 
     static final String SERIAL_NUMBER = "010049255";
 
+    static final String REFERENCE_ID = "722385402";
+
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected payment credential." +
         "<div style='padding-top:0.5em'>Also see ${href.credential-database}.</div>";
@@ -205,7 +207,7 @@ public class CreateDocument {
         CBORMap paymentRequest = new CBORMap()
             .set(AMOUNT_LABEL, new CBORString("600.00"))
             .set(CURRENCY_LABEL, new CBORString("EUR"))
-            .set(REFERENCE_ID_LABEL, new CBORString("722385402"))
+            .set(REFERENCE_ID_LABEL, new CBORString(REFERENCE_ID))
             .set(COMMON_NAME_LABEL, new CBORString("Space Shop"));
 
         CBORMap serviceProvider = new CBORMap()
@@ -216,7 +218,10 @@ public class CreateDocument {
             .set(PAYMENT_REQUEST_LABEL, paymentRequest)
             .set(SUPPORTED_NETWORKS_LABEL, new CBORArray()
                 .add(new CBORString("https://cardnetwork.com"))
-                .add(new CBORString(BANKNET2)));
+                .add(new CBORString(BANKNET2)))
+            .set(RECEIPT_URL_LABEL, new CBORString(
+                "https://" + PAYEE_HOST + 
+                "/receipts/" + REFERENCE_ID + ".MNloPyPahXxr43flXzufdQ"));
         codeTable("authz-req.txt", authorizationRequest);
 
         // Create a singned authorization response

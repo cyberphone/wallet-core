@@ -61,7 +61,7 @@ The <code class='entity'>Wallet</code> should then use the received URL for perf
 (step #1 in the sequence diagram) to the <code class='entity'>Payee</code> service.
 This operation should return an <a href='#3.1.authorization-request'>Authorization&nbsp;Request</a> object
 (step #2 in the sequence diagram) like the following:
-<div class='webpkifloat'><div class='webpkibox' id='authz-req.txt' style='width:50em'>{<br>&nbsp;&nbsp;1:&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;&quot;Space&nbsp;Shop&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;&quot;722385402&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;3:&nbsp;&quot;600.00&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;4:&nbsp;&quot;EUR&quot;<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;2:&nbsp;[&quot;https://cardnetwork.com&quot;,&nbsp;&quot;https://banknet2.org&quot;]<br>}</div></div>
+<div class='webpkifloat'><div class='webpkibox' id='authz-req.txt' style='width:50em'>{<br>&nbsp;&nbsp;1:&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;&quot;Space&nbsp;Shop&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;&quot;722385402&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;3:&nbsp;&quot;600.00&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;4:&nbsp;&quot;EUR&quot;<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;2:&nbsp;[&quot;https://cardnetwork.com&quot;,&nbsp;&quot;https://banknet2.org&quot;],<br>&nbsp;&nbsp;3:&nbsp;&quot;https://spaceshop.com/receipts/722385402.MNloPyPahXxr43flXzufdQ&quot;<br>}</div></div>
 Note that the <code class='entity'>Payee</code> service <b>must</b> set the
 HTTP <code style='white-space:nowrap'>Content-Type</code> header parameter
 to <code>application/cbor</code>.
