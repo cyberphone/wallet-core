@@ -60,6 +60,9 @@ public class CreateDocument {
         "Copy of the same attribute of the selected payment credential." +
         "<div style='padding-top:0.5em'>Also see ${href.credential-database}.</div>";
 
+    static final ContentEncryptionAlgorithms ENC_CONTENT = ContentEncryptionAlgorithms.A256GCM;
+    static final KeyEncryptionAlgorithms ENC_KEY = KeyEncryptionAlgorithms.ECDH_ES_A128KW;
+
     static final String AUTH_RESP_FILE = "authz-res.txt";
 
     KeyPair authorizationKey;
@@ -215,8 +218,8 @@ public class CreateDocument {
 
         signedAuthorization.remove(PASS_THROUGH_DATA_LABEL);
         byte[] cbor = new CBORAsymKeyEncrypter(encryptionKey.getPublic(), 
-                                               KeyEncryptionAlgorithms.ECDH_ES_A128KW,
-                                               ContentEncryptionAlgorithms.A256GCM)
+                                               ENC_KEY,
+                                               ENC_CONTENT)
             .setIntercepter(new CBORCryptoUtils.Intercepter() {
                 @Override
                 public CBORObject getCustomData() {
