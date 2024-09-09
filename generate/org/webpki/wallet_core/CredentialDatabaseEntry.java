@@ -59,18 +59,18 @@ public class CredentialDatabaseEntry {
             "<div style='padding-top:0.5em'>Also see ${href.provider-data}.</div>");
 
         add(SignedAuthorization.ACCOUNT_ID_NAME, Types.TSTR,
-            "Account identifier associated with the virtual card." +
+            "Account identifier associated with the payment credential." +
             "<div style='padding-top:0.5em'>Also see ${href.signed-authorization}.</div>");
 
         add(SignedAuthorization.SERIAL_NUMBER_NAME, Types.TSTR,
-            "Serial number of the virtual card." +
+            "Serial number of the payment credential." +
             "<div style='padding-top:0.5em'>Also see ${href.signed-authorization}.</div>");
 
         add(CARD_IMAGE_NAME, Types.BSTR,
-            "Virtual card image. Card images are used for " +
+            "Card image that is used for aiding " +
             "<code class='entity'>Payer</code> administration of " +
-            "<code class='entity'>Wallet</code> credentials as well as displayed in the " +
-            "${href.wallet-request-ui}. " +
+            "payment credentials as well " +
+            "as being featured in the ${href.wallet-request-ui}. " +
             "<div style='padding-top:0.5em'>" +
             "Card images <b>must</b> be in ${href.svg} format and tentatively having " +
             "a size of <code>300&times;180</code> pixels.</div>");

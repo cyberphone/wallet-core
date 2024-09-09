@@ -55,7 +55,7 @@ public class CreateDocument {
     static final String SERIAL_NUMBER = "010049255";
 
     static final String COPY_ATTRIBUTE =
-        "Copy of the same attribute of the selected virtual card." +
+        "Copy of the same attribute of the selected payment credential." +
         "<div style='padding-top:0.5em'>Also see ${href.credential-database}.</div>";
 
     static final String AUTH_RESP_FILE = "authz-res.txt";
