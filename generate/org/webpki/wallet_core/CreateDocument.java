@@ -252,6 +252,10 @@ public class CreateDocument {
                 if (!encryptionKey.getPublic().equals(optionalPublicKey)) {
                     throw new CryptoException("pubkey mismatch");
                 }
+                if (keyEncryptionAlgorithm != ENC_KEY || 
+                    contentEncryptionAlgorithm != ENC_CONTENT) {
+                        throw new CryptoException("alg mismatch");
+                    }
                 return encryptionKey.getPrivate();
             }
     
