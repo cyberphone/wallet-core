@@ -68,7 +68,7 @@ public class CredentialDatabaseEntry {
 
         add(CARD_IMAGE_NAME, Types.BSTR,
             "Card image associated with the payment credential. " +
-            "Cord images are used for aiding " +
+            "Card images are used for aiding " +
             "<code class='entity'>Payer</code> administration of " +
             "payment credentials as well " +
             "as being featured in the ${href.wallet-request-ui}. " +
