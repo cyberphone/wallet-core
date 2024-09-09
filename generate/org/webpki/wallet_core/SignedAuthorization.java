@@ -4,21 +4,21 @@ import static org.webpki.wallet_core.MessageCommon.*;
 
 public class SignedAuthorization extends TableExecutor {
 
-    static final String PASS_THROUGH_NAME    = "passThrough";
-    static final String PAYEE_HOST_NAME      = "payeeHost";
-    static final String ACCOUNT_ID_NAME      = "accountId";
-    static final String SERIAL_NUMBER_NAME   = "serialNumber";
-    static final String PLATFORM_DATA_NAME   = "platformData";
-    static final String WALLET_DATA_NAME     = "walletData";
-    static final String LOCATION_NAME        = "location";
-    static final String TIME_STAMP_NAME      = "timeStamp";
-    static final String SIGNATURE_NAME       = "signature";
+    static final String PASS_THROUGH_DATA_NAME = "passThroughData";
+    static final String PAYEE_HOST_NAME        = "payeeHost";
+    static final String ACCOUNT_ID_NAME        = "accountId";
+    static final String SERIAL_NUMBER_NAME     = "serialNumber";
+    static final String PLATFORM_DATA_NAME     = "platformData";
+    static final String WALLET_DATA_NAME       = "walletData";
+    static final String LOCATION_NAME          = "location";
+    static final String TIME_STAMP_NAME        = "timeStamp";
+    static final String AUTHZ_SIGNATURE_NAME   = "authzSignature";
 
     @Override
     public String getTableString() {
         return new Table()
 
-            .add(PASS_THROUGH_LABEL, PASS_THROUGH_NAME, Types.MAP,
+            .add(PASS_THROUGH_DATA_LABEL, PASS_THROUGH_DATA_NAME, Types.MAP,
                 "Holds the ${href.pass-through-data} object.")
 
             .add(PAYEE_HOST_LABEL, PAYEE_HOST_NAME, Types.TSTR,
@@ -53,7 +53,7 @@ public class SignedAuthorization extends TableExecutor {
                 "ISO date-time string [${href.rfc3339}] " +
                 "using UTC (T) or local time (Z) format.")
 
-            .add(SIGNATURE_LABEL, SIGNATURE_NAME, Types.MAP,
+            .add(AUTHZ_SIGNATURE_LABEL, AUTHZ_SIGNATURE_NAME, Types.MAP,
                 "Authorization signature using a ${href.csf} object.")
     
             .toString();

@@ -238,7 +238,7 @@ public class CreateDocument {
             .add(new CBORFloat(-77.01988));
 
         CBORMap signedAuthorization = new CBORMap()
-            .set(PASS_THROUGH_LABEL, passThrough)
+            .set(PASS_THROUGH_DATA_LABEL, passThrough)
             .set(PAYEE_HOST_LABEL, new CBORString(PAYEE_HOST))
             .set(ACCOUNT_ID_LABEL, new CBORString(PAYER_ACCOUNT))
             .set(SERIAL_NUMBER_LABEL, new CBORString(SERIAL_NUMBER))
@@ -248,12 +248,12 @@ public class CreateDocument {
             .set(TIME_STAMP_LABEL, new CBORString(TIME_STAMP));
         new CBORAsymKeySigner(authorizationKey.getPrivate())
             .setPublicKey(authorizationKey.getPublic())
-            .sign(SIGNATURE_LABEL, signedAuthorization);
+            .sign(AUTHZ_SIGNATURE_LABEL, signedAuthorization);
         codeTable("signed-authz.txt", signedAuthorization);
 
         // Create the actual (encrypted) AuthorizationResponse
 
-        signedAuthorization.remove(PASS_THROUGH_LABEL);
+        signedAuthorization.remove(PASS_THROUGH_DATA_LABEL);
         byte[] cbor = new CBORAsymKeyEncrypter(encryptionKey.getPublic(), 
                                                KeyEncryptionAlgorithms.ECDH_ES_A128KW,
                                                ContentEncryptionAlgorithms.A256GCM)
@@ -338,7 +338,7 @@ public class CreateDocument {
         CBORMap restored = CBORDecoder.decode(cbor).getMap();
         codeTable("restored.txt", restored);
         
-        restored.set(PASS_THROUGH_LABEL, saveCustomData[0]);
+        restored.set(PASS_THROUGH_DATA_LABEL, saveCustomData[0]);
 
         // We want to 1) enforce public key 2) check key for trust after validation
         PublicKey[] suppliedPublicKey = new PublicKey[1];
@@ -358,7 +358,7 @@ public class CreateDocument {
                 return optionalPublicKey;
             }
 
-        }).validate(SIGNATURE_LABEL, restored);
+        }).validate(AUTHZ_SIGNATURE_LABEL, restored);
         if (!suppliedPublicKey[0].equals(authorizationKey.getPublic())) {
             throw new CryptoException("Unknown public key");
         }

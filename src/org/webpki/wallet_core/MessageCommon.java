@@ -21,7 +21,7 @@ public class MessageCommon {
     static final CBORInt SERVICE_LOCATOR_LABEL    = new CBORInt(2);
 
     // Signed Authorization
-    static final CBORInt PASS_THROUGH_LABEL       = new CBORInt(1);
+    static final CBORInt PASS_THROUGH_DATA_LABEL  = new CBORInt(1);
     static final CBORInt PAYEE_HOST_LABEL         = new CBORInt(2);
     static final CBORInt ACCOUNT_ID_LABEL         = new CBORInt(3);
     static final CBORInt SERIAL_NUMBER_LABEL      = new CBORInt(4);
@@ -30,6 +30,6 @@ public class MessageCommon {
     static final CBORInt LOCATION_LABEL           = new CBORInt(7);
     static final CBORInt TIME_STAMP_LABEL         = new CBORInt(8);
 
-    static final CBORInt SIGNATURE_LABEL          = new CBORInt(-1); 
+    static final CBORInt AUTHZ_SIGNATURE_LABEL    = new CBORInt(-1); 
 
 }
