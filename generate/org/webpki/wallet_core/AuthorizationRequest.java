@@ -24,7 +24,8 @@ public class AuthorizationRequest extends TableExecutor {
 
             .add(RECEIPT_URL_LABEL, RECEIPT_URL_NAME, Types.TSTR,
                 "<i>Optional</i>: URL to a <code class='entity'>Payee</code> " +
-                "receipt service.  See also ${href.receipts}.")
+                "receipt service." +
+                "<div style='padding-top:0.5em'>See also ${href.receipts}.</div>")
 
             .toString();
     }

@@ -4,11 +4,11 @@ import static org.webpki.wallet_core.MessageCommon.*;
 
 public class PaymentRequest extends TableExecutor {
 
-    static final String AMOUNT_NAME      = "amount";
-    static final String COMMON_NAME_NAME = "commonName";
-    static final String CURRENCY_NAME    = "currency";
-    static final String INSTANCE_ID_NAME = "instanceId";
-    static final String NON_DIRECT_NAME  = "nonDirect";
+    static final String AMOUNT_NAME       = "amount";
+    static final String COMMON_NAME_NAME  = "commonName";
+    static final String CURRENCY_NAME     = "currency";
+    static final String REFERENCE_ID_NAME = "referenceId";
+    static final String NON_DIRECT_NAME   = "nonDirect";
 
     @Override
     String getTableString() {
@@ -26,10 +26,10 @@ public class PaymentRequest extends TableExecutor {
             .add(COMMON_NAME_LABEL, COMMON_NAME_NAME, Types.TSTR,
                 "<code class='entity'>Payee</code> common name to be shown in UIs.")
     
-            .add(INSTANCE_ID_LABEL, INSTANCE_ID_NAME, Types.TSTR,
-                "<code class='entity'>Payee</code> instance Id. " +
+            .add(REFERENCE_ID_LABEL, REFERENCE_ID_NAME, Types.TSTR,
+                "<code class='entity'>Payee</code> reference Id. " +
                 "<div style='padding-top:0.5em'>" +
-                "Instance Ids <b>must</b> be unique with respect to the " +
+                "Reference Ids <b>must</b> be unique with respect to the " +
                 "<code class='entity'>Payee</code>.</div>")
 
             .add(NON_DIRECT_LABEL, NON_DIRECT_NAME, Types.MAP,

@@ -10,7 +10,7 @@ public class MessageCommon {
     static final CBORInt RECEIPT_URL_LABEL        = new CBORInt(3);
 
     static final CBORInt COMMON_NAME_LABEL        = new CBORInt(1); 
-    static final CBORInt INSTANCE_ID_LABEL        = new CBORInt(2);
+    static final CBORInt REFERENCE_ID_LABEL       = new CBORInt(2);
     static final CBORInt AMOUNT_LABEL             = new CBORInt(3); 
     static final CBORInt CURRENCY_LABEL           = new CBORInt(4); 
     static final CBORInt NON_DIRECT_LABEL         = new CBORInt(5); 

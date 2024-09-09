@@ -205,7 +205,7 @@ public class CreateDocument {
         CBORMap paymentRequest = new CBORMap()
             .set(AMOUNT_LABEL, new CBORString("600.00"))
             .set(CURRENCY_LABEL, new CBORString("EUR"))
-            .set(INSTANCE_ID_LABEL, new CBORString("722385402"))
+            .set(REFERENCE_ID_LABEL, new CBORString("722385402"))
             .set(COMMON_NAME_LABEL, new CBORString("Space Shop"));
 
         CBORMap serviceProvider = new CBORMap()
