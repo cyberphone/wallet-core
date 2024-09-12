@@ -27,7 +27,7 @@ public class AuthorizationRequest extends TableExecutor {
                 "receipt service." +
                 "<div style='padding-top:0.5em'>See also ${href.receipts}.</div>")
 
-            .toString();
+            .getTableString();
     }
 
     @Override

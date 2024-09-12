@@ -22,7 +22,7 @@ public class PassThroughData extends TableExecutor {
                 "which payment network " +
                 "to use and how to initiate a compatible payment transaction request.")
 
-            .toString();
+            .getTableString();
     }
 
     @Override

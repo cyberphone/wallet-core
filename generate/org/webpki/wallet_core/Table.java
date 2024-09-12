@@ -27,7 +27,7 @@ public class Table {
         return this;
     }
 
-    public String toString() {
+    String getTableString() {
         StringBuilder s = new StringBuilder("<div class='webpkifloat'>" +
              "<table class='webpkitable' style='width:52em'>" +
                 "<tr><th>Name</th><th>Label</th><th>Type</th>" +

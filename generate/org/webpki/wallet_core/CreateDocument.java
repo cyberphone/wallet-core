@@ -349,7 +349,8 @@ public class CreateDocument {
 
         innerCount = 0;
         addTocEntry("Credential Database");
-        updateTemplate("credential-database-entry", new CredentialDatabaseEntry().getTableString());
+        updateTemplate("credential-database-entry", 
+                       new CredentialDatabaseEntry().getHtml());
         addTocEntry("Credential Enrollment");
         addTocEntry("Authorization Processing");
 
@@ -357,6 +358,12 @@ public class CreateDocument {
         addTocEntry("Decryption");
         addTocEntry("Signature Validation");
 
+        innerCount = 0;
+        addTocEntry("Non-direct Payments");
+        innerCount = 1;
+        addTocEntry("Gas Station Payments");
+        updateTemplate("gas-station-payments-profile", 
+                       new GasStationPaymentsProfile().getHtml());
         innerCount = 0;
         addTocEntry("Algorithm Support");
         addTocEntry("Security Considerations");

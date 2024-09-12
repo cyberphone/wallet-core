@@ -44,7 +44,7 @@ public class AuthorizationResponse extends TableExecutor {
                 "being encrypted), to reflect the removal of the " +
                 "${href.pass-through-data} object.</div>")
 
-            .toString();
+            .getTableString();
     }
 
     @Override

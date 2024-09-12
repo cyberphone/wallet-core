@@ -16,7 +16,7 @@ public class ProviderData extends TableExecutor {
             .add(SERVICE_LOCATOR_LABEL, SERVICE_LOCATOR_NAME, Types.TSTR,
                 CreateDocument.COPY_ATTRIBUTE)
 
-            .toString();
+            .getTableString();
     }
 
     @Override

@@ -30,6 +30,8 @@ public class MessageCommon {
     static final CBORInt LOCATION_LABEL           = new CBORInt(7);
     static final CBORInt TIME_STAMP_LABEL         = new CBORInt(8);
 
+    static final CBORInt NON_DIR_PAY_ID_LABEL     = new CBORInt(1);
+
     static final CBORInt AUTHZ_SIGNATURE_LABEL    = new CBORInt(-1); 
 
 }

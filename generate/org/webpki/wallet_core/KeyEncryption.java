@@ -40,7 +40,7 @@ public class KeyEncryption extends TableExecutor {
                  Types.BSTR,
                 "<i>Optional</i>: Encrypted key for <i>key&nbsp;wrapping</i> algorithms.")
 
-            .toString();
+            .getTableString();
     }
 
     @Override

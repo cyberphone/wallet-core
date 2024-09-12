@@ -173,6 +173,25 @@ Unsurprisingly, authorization objects <b>must</b> also
 be checked for alignment with the specification.
 Missing, additional, or malformed elements <b>must</b> be rejected.
 </p>
+${non-direct-payments}
+Non-direct payments represent a group of payment-related
+scenarios where an initial <code class='entity'>Payer</code>
+authorization is followed by one 
+or more operations performed by the <code class='entity'>Payee</code>,
+usually without further intervention by the <code class='entity'>Payer</code>.
+Here we find gas-station payments, 
+subscriptions, BNPL (Buy Now Pay Later), and deposits.
+<p>
+Non-direct payments typically involve 
+reservation of funds.  Subscriptions and BNPL may also be subject
+to <code class='entity'>Payer</code> <i>credit considerations</i>.
+</p>
+<p>
+Although this specification only defines a single non-direct payment scenario, 
+this is intended to serve as a model for additional variants as well.
+</p>
+${gas-station-payments}
+${gas-station-payments-profile}
 ${algorithm-support}
 TBD.
 ${security-considerations}
@@ -192,8 +211,8 @@ ${encryption-key.jwk}
 <div style='margin-top:0.8em'>Encryption key in COSE format:</div>
 ${encryption-key.txt}
 ${version}
-  API version: 0.5<br>
-  Document version: 2024-09-09<br>
+  API version: 0.51<br>
+  Document version: 2024-09-12<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

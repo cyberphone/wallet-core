@@ -12,6 +12,8 @@ public class CredentialDatabaseEntry {
     static final String ENC_PUBLIC_KEY_NAME    = "encPublicKey";
     static final String ENC_KEY_ID_NAME        = "encKeyId";
 
+    CredentialDatabaseEntry() {}
+
     StringBuilder table = new StringBuilder("<div class='webpkifloat'>" +
              "<table class='webpkitable' style='width:52em'>" +
                 "<tr><th>Name</th><th>Type</th>" +
@@ -27,7 +29,7 @@ public class CredentialDatabaseEntry {
         .append("</td></tr>");
     }
 
-    String getTableString() {
+    String getHtml() {
 
         add(VERSION_NAME, Types.TSTR,
             "Since credential data may evolve over time, versioning is necessary. " +

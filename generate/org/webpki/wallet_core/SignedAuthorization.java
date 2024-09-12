@@ -56,7 +56,7 @@ public class SignedAuthorization extends TableExecutor {
             .add(AUTHZ_SIGNATURE_LABEL, AUTHZ_SIGNATURE_NAME, Types.MAP,
                 "Authorization signature using a ${href.csf} object.")
     
-            .toString();
+            .getTableString();
     }
 
     @Override

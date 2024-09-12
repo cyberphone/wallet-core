@@ -36,9 +36,9 @@ public class PaymentRequest extends TableExecutor {
                 "<code class='entity'>Payee</code>.</div>")
 
             .add(NON_DIRECT_LABEL, NON_DIRECT_NAME, Types.MAP,
-                "<i>Optional</i>: Non-direct payment request. TBD.")
+                "<i>Optional</i>: Also see ${href.non-direct-payments}.")
 
-           .toString();
+           .getTableString();
     }
 
     @Override
