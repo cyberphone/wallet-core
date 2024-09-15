@@ -18,8 +18,8 @@ class GasStationPaymentsProfile extends NonDirectPaymentProfile {
 A gas station payment consists of two operations: 1) Reservation of a <i>maximum
 amount</i> of money to be used. 2) Resolving the reservation by debiting the 
 <code class='entity'>Payer</code> for the actual cost of the fill-up.
-Both operations require specific support between the
-<code class='entity'>Payee</code> and the associated payment network. 
+Note that a valid receipt (step #7 in the ${href.sequence-diagram}) can only
+be made available after the second phase has been executed.
 """ +
 "<p style='padding-bottom:0; margin-bottom:0'>" +
 "All non-direct payment profiles <b>must</b> feature a <kbd>" +
@@ -31,8 +31,8 @@ NON_DIR_PAY_ID_NAME +
 "</p>"
 + getTableString() +
 """
-Since non-direct payment differ from one-off payments, the 
-<code class='entity'>Wallet</code> UI should also reflect the request in
+Since non-direct payments differ from one-off payments, the 
+<code class='entity'>Wallet</code> UI should also reflect such requests in
 a <i>meaningful</i> way.
 <p style='padding-bottom:0; margin-bottom:0'>
 For gas station payments, the following appears like

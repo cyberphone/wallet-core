@@ -42,8 +42,6 @@ This data is provided in the associated payment credentials
 (virtual payment cards),
 potentially making the wallet software <i>universal</i>.
 </p>
-The sequence diagram below outlines the Saturn protocol: 
-<div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Sequence Diagram'></div>
 ${detailed-operation}
 To guide the reader, this document is based on an example which
 in turn provides links to the formal definitions.
@@ -54,13 +52,16 @@ However, for documentation purposes, messages are shown in <i>diagnostic notatio
 To support cryptographic operations requiring secure transformations of CBOR <code>map</code> objects,
 Saturn relies on an IETF standard currently in development [${href.cde}],
 which defines <i>deterministic encoding</i> of CBOR.
+${sequence-diagram}
+The sequence diagram below outlines the Saturn protocol: 
+<div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Sequence Diagram'></div>
 ${wallet-initiation}
 The payment process is initiated when the <code class='entity'>Payer</code> hits a &quot;Pay&quot;
 button on the Web or scans a QR-code, returning a <code class='entity'>Wallet</code> activation URL.
 The <code class='entity'>Wallet</code> should then use the received URL for performing an HTTP&nbsp;GET
-(step #1 in the sequence diagram) to the <code class='entity'>Payee</code> service.
+(step #1 in the ${href.sequence-diagram}) to the <code class='entity'>Payee</code> service.
 This operation should return an ${href.authorization-request} object
-(step #2 in the sequence diagram) like the following:
+(step #2 in the ${href.sequence-diagram}) like the following:
 ${authz-req.txt}
 Note that the <code class='entity'>Payee</code> service <b>must</b> set the
 HTTP <code style='white-space:nowrap'>Content-Type</code> header parameter
@@ -72,7 +73,7 @@ the <code class='entity'>Wallet</code> should display a UI like the following:
 If there are multiple ${href.credential-database} entries
 matching the <code class='entity'>Payee</code>
 request, the <code class='entity'>Payer</code> needs
-to select (step #3 in the sequence diagram) a suitable
+to select (step #3 in the ${href.sequence-diagram}) a suitable
 credential, unless the default (or last used) credential already meet
 the preferences of the <code class='entity'>Payer</code>.
 <p>
@@ -89,9 +90,9 @@ See also ${href.payment-request}.
 </p>
 ${payer-authorization}
 Assuming that the <code class='entity'>Payer</code> accepts and subsequently authorizes 
-the request (step #4 in the sequence diagram) using a biometric operation or PIN,
+the request (step #4 in the ${href.sequence-diagram}) using a biometric operation or PIN,
 the <code class='entity'>Wallet</code> should perform an HTTP&nbsp;POST
-(step #5 in the sequence diagram)
+(step #5 in the ${href.sequence-diagram})
 to the <code class='entity'>Payee</code> service containing an
 ${href.authorization-response}
 object like the following: 
@@ -104,7 +105,7 @@ ${wallet-termination}
 After successful (or failed) authorization, the 
 ${href.authorization-response}
 should return a <code class='entity'>Wallet</code> termination
-message (step #6 in the sequence diagram).
+message (step #6 in the ${href.sequence-diagram}).
 This message depends on how the payment process was initiated,
 and is currently TBD.
 ${message-reference}
@@ -212,7 +213,7 @@ ${encryption-key.jwk}
 ${encryption-key.txt}
 ${version}
   API version: 0.51<br>
-  Document version: 2024-09-12<br>
+  Document version: 2024-09-15<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

@@ -330,6 +330,7 @@ public class CreateDocument {
         addTocEntry("Detailed Operation");
  
         innerCount = 1;
+        addTocEntry("Sequence Diagram");
         addTocEntry("Wallet Initiation");
         addTocEntry("Wallet Request UI");
         addTocEntry("Payer Authorization");
