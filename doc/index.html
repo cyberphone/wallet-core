@@ -6,6 +6,18 @@
   <meta charset='UTF-8'>
   <title>Wallet Core</title>
   <link rel='stylesheet' type='text/css' href='style.css'>
+  <script>
+    function tocSwitch(ip) {
+      console.log(ip.parentNode.nextSibling);
+      if (ip.src.indexOf('closed.svg') > 0) {
+        ip.src = 'open.svg';
+        ip.parentNode.nextSibling.style = 'display:block';
+      } else {
+        ip.src = 'closed.svg';
+        ip.parentNode.nextSibling.style = 'display:none';
+      }
+    }
+  </script>
 </head>
 <body>
 <h3 style="text-align:center;font-weight:normal;font-size:1.5em">Saturn - Payment Authorization Wallet</h3>
@@ -16,7 +28,33 @@ Copyright Notice: this document is furnished under an
 </p>
 <h3>Table of Contents</h3>
 <div class='webpkifloat'><div>
-<div style='padding-left:2em'><a href='#1.introduction'>1.&nbsp; Introduction</a></div><div style='padding-left:2em'><a href='#2.detailed-operation'>2.&nbsp; Detailed&nbsp;Operation</a></div><div style='padding-left:4em'><a href='#2.1.sequence-diagram'>2.1.&nbsp; Sequence&nbsp;Diagram</a></div><div style='padding-left:4em'><a href='#2.2.wallet-initiation'>2.2.&nbsp; Wallet&nbsp;Initiation</a></div><div style='padding-left:4em'><a href='#2.3.wallet-request-ui'>2.3.&nbsp; Wallet&nbsp;Request&nbsp;UI</a></div><div style='padding-left:4em'><a href='#2.4.payer-authorization'>2.4.&nbsp; Payer&nbsp;Authorization</a></div><div style='padding-left:4em'><a href='#2.5.wallet-termination'>2.5.&nbsp; Wallet&nbsp;Termination</a></div><div style='padding-left:2em'><a href='#3.message-reference'>3.&nbsp; Message&nbsp;Reference</a></div><div style='padding-left:4em'><a href='#3.1.authorization-request'>3.1.&nbsp; Authorization&nbsp;Request</a></div><div style='padding-left:4em'><a href='#3.2.payment-request'>3.2.&nbsp; Payment&nbsp;Request</a></div><div style='padding-left:4em'><a href='#3.3.authorization-response'>3.3.&nbsp; Authorization&nbsp;Response</a></div><div style='padding-left:4em'><a href='#3.4.key-encryption'>3.4.&nbsp; Key&nbsp;Encryption</a></div><div style='padding-left:4em'><a href='#3.5.pass-through-data'>3.5.&nbsp; &quot;Pass&nbsp;Through&quot;&nbsp;Data</a></div><div style='padding-left:4em'><a href='#3.6.provider-data'>3.6.&nbsp; Provider&nbsp;Data</a></div><div style='padding-left:4em'><a href='#3.7.signed-authorization'>3.7.&nbsp; Signed&nbsp;Authorization</a></div><div style='padding-left:2em'><a href='#4.credential-database'>4.&nbsp; Credential&nbsp;Database</a></div><div style='padding-left:2em'><a href='#5.credential-enrollment'>5.&nbsp; Credential&nbsp;Enrollment</a></div><div style='padding-left:2em'><a href='#6.authorization-processing'>6.&nbsp; Authorization&nbsp;Processing</a></div><div style='padding-left:4em'><a href='#6.1.decryption'>6.1.&nbsp; Decryption</a></div><div style='padding-left:4em'><a href='#6.2.signature-validation'>6.2.&nbsp; Signature&nbsp;Validation</a></div><div style='padding-left:2em'><a href='#7.non-direct-payments'>7.&nbsp; Non-direct&nbsp;Payments</a></div><div style='padding-left:4em'><a href='#7.1.gas-station-payments'>7.1.&nbsp; Gas&nbsp;Station&nbsp;Payments</a></div><div style='padding-left:2em'><a href='#8.algorithm-support'>8.&nbsp; Algorithm&nbsp;Support</a></div><div style='padding-left:2em'><a href='#9.security-considerations'>9.&nbsp; Security&nbsp;Considerations</a></div><div style='padding-left:2em'><a href='#10.test-vectors'>10.&nbsp; Test&nbsp;Vectors</a></div><div style='padding-left:2em'><a href='#11.version'>11.&nbsp; Version</a></div>
+<div style='padding-left:2em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#1.introduction'>1.&nbsp; Introduction</a></div>
+<div style='padding-left:2em'><img alt='n/a' src='closed.svg' onclick='tocSwitch(this)' style='height:1em;margin-right:1em;cursor:pointer'><a href='#2.detailed-operation'>2.&nbsp; Detailed&nbsp;Operation</a></div><div style='display:none'>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.1.sequence-diagram'>2.1.&nbsp; Sequence&nbsp;Diagram</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.2.wallet-initiation'>2.2.&nbsp; Wallet&nbsp;Initiation</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.3.wallet-request-ui'>2.3.&nbsp; Wallet&nbsp;Request&nbsp;UI</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.4.payer-authorization'>2.4.&nbsp; Payer&nbsp;Authorization</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.5.wallet-termination'>2.5.&nbsp; Wallet&nbsp;Termination</a></div></div>
+<div style='padding-left:2em'><img alt='n/a' src='closed.svg' onclick='tocSwitch(this)' style='height:1em;margin-right:1em;cursor:pointer'><a href='#3.message-reference'>3.&nbsp; Message&nbsp;Reference</a></div><div style='display:none'>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#3.1.authorization-request'>3.1.&nbsp; Authorization&nbsp;Request</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#3.2.payment-request'>3.2.&nbsp; Payment&nbsp;Request</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#3.3.authorization-response'>3.3.&nbsp; Authorization&nbsp;Response</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#3.4.key-encryption'>3.4.&nbsp; Key&nbsp;Encryption</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#3.5.pass-through-data'>3.5.&nbsp; &quot;Pass&nbsp;Through&quot;&nbsp;Data</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#3.6.provider-data'>3.6.&nbsp; Provider&nbsp;Data</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#3.7.signed-authorization'>3.7.&nbsp; Signed&nbsp;Authorization</a></div></div>
+<div style='padding-left:2em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#4.credential-database'>4.&nbsp; Credential&nbsp;Database</a></div>
+<div style='padding-left:2em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#5.credential-enrollment'>5.&nbsp; Credential&nbsp;Enrollment</a></div>
+<div style='padding-left:2em'><img alt='n/a' src='closed.svg' onclick='tocSwitch(this)' style='height:1em;margin-right:1em;cursor:pointer'><a href='#6.authorization-processing'>6.&nbsp; Authorization&nbsp;Processing</a></div><div style='display:none'>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#6.1.decryption'>6.1.&nbsp; Decryption</a></div>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#6.2.signature-validation'>6.2.&nbsp; Signature&nbsp;Validation</a></div></div>
+<div style='padding-left:2em'><img alt='n/a' src='closed.svg' onclick='tocSwitch(this)' style='height:1em;margin-right:1em;cursor:pointer'><a href='#7.non-direct-payments'>7.&nbsp; Non-direct&nbsp;Payments</a></div><div style='display:none'>
+<div style='padding-left:4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#7.1.gas-station-payments'>7.1.&nbsp; Gas&nbsp;Station&nbsp;Payments</a></div></div>
+<div style='padding-left:2em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#8.algorithm-support'>8.&nbsp; Algorithm&nbsp;Support</a></div>
+<div style='padding-left:2em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#9.security-considerations'>9.&nbsp; Security&nbsp;Considerations</a></div>
+<div style='padding-left:2em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#10.test-vectors'>10.&nbsp; Test&nbsp;Vectors</a></div>
+<div style='padding-left:2em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#11.version'>11.&nbsp; Version</a></div>
+
 </div></div>
 <h3 id='1.introduction'>1.&nbsp; Introduction</h3>
 This document describes the core components of the Saturn wallet.
@@ -229,7 +267,7 @@ should be possible to decrypt and validate, using the following sample keys.
 <div class='webpkifloat'><div class='webpkibox' id='encryption-key.txt' style='width:50em'>{<br>&nbsp;&nbsp;1:&nbsp;2,<br>&nbsp;&nbsp;-1:&nbsp;1,<br>&nbsp;&nbsp;-2:&nbsp;h'e812b1a6dcbc708f9ec43cc2921fa0a14e9d5eadcc6dc63471dd4b680c6236b5',<br>&nbsp;&nbsp;-3:&nbsp;h'9826dcbd4ce6e388f72edd9be413f2425a10f75b5fd83d95fa0cde53159a51d8',<br>&nbsp;&nbsp;-4:&nbsp;h'e97c4c15785c613e5037dc394c88366922ac6dc8fea63e019d990aed93ade01f'<br>}</div></div>
 <h3 id='11.version'>11.&nbsp; Version</h3>
   API version: 0.51<br>
-  Document version: 2024-09-15<br>
+  Document version: 2024-09-26<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

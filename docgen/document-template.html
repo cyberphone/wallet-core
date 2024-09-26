@@ -6,6 +6,18 @@
   <meta charset='UTF-8'>
   <title>Wallet Core</title>
   <link rel='stylesheet' type='text/css' href='style.css'>
+  <script>
+    function tocSwitch(ip) {
+      console.log(ip.parentNode.nextSibling);
+      if (ip.src.indexOf('closed.svg') > 0) {
+        ip.src = 'open.svg';
+        ip.parentNode.nextSibling.style = 'display:block';
+      } else {
+        ip.src = 'closed.svg';
+        ip.parentNode.nextSibling.style = 'display:none';
+      }
+    }
+  </script>
 </head>
 <body>
 <h3 style="text-align:center;font-weight:normal;font-size:1.5em">Saturn - Payment Authorization Wallet</h3>
@@ -215,7 +227,7 @@ ${encryption-key.jwk}
 ${encryption-key.txt}
 ${version}
   API version: 0.51<br>
-  Document version: 2024-09-15<br>
+  Document version: 2024-09-26<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

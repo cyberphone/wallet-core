@@ -74,7 +74,7 @@ public class CreateDocument {
     int outerCount = 0;
     int innerCount = 0;
 
-    static class TocEntry {
+    static class TOCEntry {
         String name;
         String rawName;
         String id;
@@ -82,10 +82,10 @@ public class CreateDocument {
         boolean indent;
     }
 
-    ArrayList<TocEntry> toc = new ArrayList<>();
+    ArrayList<TOCEntry> tocEntries = new ArrayList<>();
 
     void addTocEntry(String name, String optional) {
-        TocEntry tocEntry = new TocEntry();
+        TOCEntry tocEntry = new TOCEntry();
         String prefix;
         int h;
         if (innerCount == 0) {
@@ -105,7 +105,7 @@ public class CreateDocument {
         updateTemplate(tocEntry.rawId, 
                        "<h" + h + " id='" + tocEntry.id + "'>" + tocEntry.name + "</h" + h + ">" +
                        (optional == null ? "" : optional));
-        toc.add(tocEntry);
+        tocEntries.add(tocEntry);
     }
 
     void addTocEntry(String name) {
@@ -400,21 +400,36 @@ public class CreateDocument {
             template = template.replace(link.getHolder(), link.getHtml());
         }
 
-        StringBuilder tocHtml = new StringBuilder();
-        for (TocEntry tocEntry : toc) {
+        StringBuilder s = new StringBuilder();
+        int length = tocEntries.size();    
+        for (int i = 0; i < length; i++) {
+            TOCEntry tocEntry = tocEntries.get(i);
+            boolean next = tocEntries.get((i < length - 1) ? i + 1 : i).indent;
+            String image = "empty.svg' style='height:1em;margin-right:1em";
+            if (next && !tocEntry.indent) {
+              image = "closed.svg' onclick='tocSwitch(this)' style='height:1em;margin-right:1em;cursor:pointer";
+            }
             template = template.replace("${href." + tocEntry.rawId + "}", 
                                         "<a href='#" + tocEntry.id +
                                             "'>" + 
                                             tocEntry.rawName + "</a>");
-            tocHtml.append("<div style='padding-left:")
-                   .append(tocEntry.indent ? 4 : 2)
-                   .append("em'><a href='#")
-                   .append(tocEntry.id)
-                   .append("'>")
-                   .append(tocEntry.name)
-                   .append("</a></div>");
+            s.append("<div style='padding-left:")
+             .append(tocEntry.indent ? 4 : 2)
+             .append("em'><img alt='n/a' src='")                   
+             .append(image)
+             .append("'><a href='#")
+             .append(tocEntry.id)
+             .append("'>")
+             .append(tocEntry.name)
+             .append("</a></div>");
+            if (next && !tocEntry.indent) {
+                s.append("<div style='display:none'>");
+            } else if (!next && tocEntry.indent) {
+                s.append("</div>");                
+            }
+            s.append('\n');
         }
-        updateTemplate("toc", tocHtml.toString());
+        updateTemplate("toc", s.toString());
         
         int macroPosition = template.indexOf("${");
         if (macroPosition > 0) {
