@@ -413,7 +413,7 @@ public class CreateDocument {
                                         "<a href='#" + tocEntry.id +
                                             "'>" + 
                                             tocEntry.rawName + "</a>");
-            s.append("<div style='padding-left:")
+            s.append("<div style='padding: 0 0 0.4em ")
              .append(tocEntry.indent ? 4 : 2)
              .append("em'><img alt='n/a' src='")                   
              .append(image)
