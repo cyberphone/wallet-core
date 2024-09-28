@@ -117,11 +117,11 @@ used by the GET in ${href.wallet-initiation}.
 In addition, the HTTP <code style='white-space:nowrap'>Content-Type</code>
 header parameter <b>must</b> be set to <code>application/cbor</code>.
 ${calling-the-payment-network}
-In this phase the <code class='entity'>Payee</code> uses the received
-${href.authorization-response} in one or more
-<i>payment-network-specific</i> requests to the designated
-<code class='entity'>Payment</code>&nbsp;<code class='entity'>Network</code>
+After receiving the ${href.authorization-response}, the <code class='entity'>Payee</code>
+includes this object in a <i>payment-network-specific</i> request to the designated
+<code class='entity'>Payment</code>&#8201;<code class='entity'>Network</code>
 (provided by the selected payment credential).
+Note that this phase may constitute of <i>multiple</i> request-response pairs.
 ${wallet-termination}
 After successful (or failed) authorization, the 
 ${href.authorization-response}

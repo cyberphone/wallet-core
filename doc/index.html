@@ -144,11 +144,11 @@ used by the GET in <a href='#2.2.wallet-initiation'>Wallet&nbsp;Initiation</a>.
 In addition, the HTTP <code style='white-space:nowrap'>Content-Type</code>
 header parameter <b>must</b> be set to <code>application/cbor</code>.
 <h5 id='2.5.calling-the-payment-network'>2.5.&nbsp; Calling&nbsp;the&nbsp;Payment&nbsp;Network</h5>
-In this phase the <code class='entity'>Payee</code> uses the received
-<a href='#3.3.authorization-response'>Authorization&nbsp;Response</a> in one or more
-<i>payment-network-specific</i> requests to the designated
-<code class='entity'>Payment</code>&nbsp;<code class='entity'>Network</code>
+After receiving the <a href='#3.3.authorization-response'>Authorization&nbsp;Response</a>, the <code class='entity'>Payee</code>
+includes this object in a <i>payment-network-specific</i> request to the designated
+<code class='entity'>Payment</code>&#8201;<code class='entity'>Network</code>
 (provided by the selected payment credential).
+Note that this phase may constitute of <i>multiple</i> request-response pairs.
 <h5 id='2.6.wallet-termination'>2.6.&nbsp; Wallet&nbsp;Termination</h5>
 After successful (or failed) authorization, the 
 <a href='#3.3.authorization-response'>Authorization&nbsp;Response</a>
