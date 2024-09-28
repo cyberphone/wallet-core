@@ -35,7 +35,8 @@ Copyright Notice: this document is furnished under an
 <div style='padding: 0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.2.wallet-initiation'>2.2.&nbsp; Wallet&nbsp;Initiation</a></div>
 <div style='padding: 0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.3.wallet-request-ui'>2.3.&nbsp; Wallet&nbsp;Request&nbsp;UI</a></div>
 <div style='padding: 0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.4.payer-authorization'>2.4.&nbsp; Payer&nbsp;Authorization</a></div>
-<div style='padding: 0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.5.wallet-termination'>2.5.&nbsp; Wallet&nbsp;Termination</a></div></div>
+<div style='padding: 0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.5.calling-the-payment-network'>2.5.&nbsp; Calling&nbsp;the&nbsp;Payment&nbsp;Network</a></div>
+<div style='padding: 0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#2.6.wallet-termination'>2.6.&nbsp; Wallet&nbsp;Termination</a></div></div>
 <div style='padding: 0 0 0.4em 2em'><img alt='n/a' src='closed.svg' onclick='tocSwitch(this)' style='height:1em;margin-right:1em;cursor:pointer'><a href='#3.message-reference'>3.&nbsp; Message&nbsp;Reference</a></div><div style='display:none'>
 <div style='padding: 0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#3.1.authorization-request'>3.1.&nbsp; Authorization&nbsp;Request</a></div>
 <div style='padding: 0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#3.2.payment-request'>3.2.&nbsp; Payment&nbsp;Request</a></div>
@@ -142,7 +143,13 @@ Note that the POST <b>must</b> be directed to the same URL as
 used by the GET in <a href='#2.2.wallet-initiation'>Wallet&nbsp;Initiation</a>.
 In addition, the HTTP <code style='white-space:nowrap'>Content-Type</code>
 header parameter <b>must</b> be set to <code>application/cbor</code>.
-<h5 id='2.5.wallet-termination'>2.5.&nbsp; Wallet&nbsp;Termination</h5>
+<h5 id='2.5.calling-the-payment-network'>2.5.&nbsp; Calling&nbsp;the&nbsp;Payment&nbsp;Network</h5>
+In this phase the <code class='entity'>Payee</code> uses the received
+<a href='#3.3.authorization-response'>Authorization&nbsp;Response</a> in one or more
+<i>payment-network-specific</i> requests to the designated
+<code class='entity'>Payment</code>&nbsp;<code class='entity'>Network</code>
+(provided by the selected payment credential).
+<h5 id='2.6.wallet-termination'>2.6.&nbsp; Wallet&nbsp;Termination</h5>
 After successful (or failed) authorization, the 
 <a href='#3.3.authorization-response'>Authorization&nbsp;Response</a>
 should return a <code class='entity'>Wallet</code> termination
@@ -268,7 +275,7 @@ should be possible to decrypt and validate, using the following sample keys.
 <div class='webpkifloat'><div class='webpkibox' id='encryption-key.txt' style='width:50em'>{<br>&nbsp;&nbsp;1:&nbsp;2,<br>&nbsp;&nbsp;-1:&nbsp;1,<br>&nbsp;&nbsp;-2:&nbsp;h'e812b1a6dcbc708f9ec43cc2921fa0a14e9d5eadcc6dc63471dd4b680c6236b5',<br>&nbsp;&nbsp;-3:&nbsp;h'9826dcbd4ce6e388f72edd9be413f2425a10f75b5fd83d95fa0cde53159a51d8',<br>&nbsp;&nbsp;-4:&nbsp;h'e97c4c15785c613e5037dc394c88366922ac6dc8fea63e019d990aed93ade01f'<br>}</div></div>
 <h3 id='11.version'>11.&nbsp; Version</h3>
   API version: 0.51<br>
-  Document version: 2024-09-27<br>
+  Document version: 2024-09-28<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

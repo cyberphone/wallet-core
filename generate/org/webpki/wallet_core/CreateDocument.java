@@ -334,6 +334,7 @@ public class CreateDocument {
         addTocEntry("Wallet Initiation");
         addTocEntry("Wallet Request UI");
         addTocEntry("Payer Authorization");
+        addTocEntry("Calling the Payment Network");
         addTocEntry("Wallet Termination");
  
         innerCount = 0;

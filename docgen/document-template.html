@@ -116,6 +116,12 @@ Note that the POST <b>must</b> be directed to the same URL as
 used by the GET in ${href.wallet-initiation}.
 In addition, the HTTP <code style='white-space:nowrap'>Content-Type</code>
 header parameter <b>must</b> be set to <code>application/cbor</code>.
+${calling-the-payment-network}
+In this phase the <code class='entity'>Payee</code> uses the received
+${href.authorization-response} in one or more
+<i>payment-network-specific</i> requests to the designated
+<code class='entity'>Payment</code>&nbsp;<code class='entity'>Network</code>
+(provided by the selected payment credential).
 ${wallet-termination}
 After successful (or failed) authorization, the 
 ${href.authorization-response}
@@ -228,7 +234,7 @@ ${encryption-key.jwk}
 ${encryption-key.txt}
 ${version}
   API version: 0.51<br>
-  Document version: 2024-09-27<br>
+  Document version: 2024-09-28<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>
