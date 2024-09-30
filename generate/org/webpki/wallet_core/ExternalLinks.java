@@ -24,7 +24,9 @@ enum ExternalLinks {
 
     RECEIPTS ("https://cyberphone.github.io/doc/defensive-publications/e-receipts.pdf"),
 
-    RFC8949 ("https://www.rfc-editor.org/rfc/rfc8949.html");
+    RFC8949 ("https://www.rfc-editor.org/rfc/rfc8949.html"),
+
+    EUIDW ("https://ec.europa.eu/digital-building-blocks/sites/display/EUDIGITALIDENTITYWALLET/EU+Digital+Identity+Wallet+Home");
 
     String link;
 
