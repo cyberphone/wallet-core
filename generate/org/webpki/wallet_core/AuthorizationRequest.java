@@ -11,10 +11,10 @@ public class AuthorizationRequest extends TableExecutor {
     public String getTableString() {
         return new Table()
 
-            .add(PAYMENT_REQUEST_LABEL, PassThroughData.PAYMENT_REQUEST_NAME, Types.MAP,
+            .add(PAYMENT_REQUEST_LBL, PassThroughData.PAYMENT_REQUEST_NAME, Types.MAP,
                 "The core object, ${href.payment-request}.")
 
-            .add(SUPPORTED_NETWORKS_LABEL, SUPPORTED_NETWORKS_NAME, Types.ARRAY,
+            .add(SUPPORTED_NETWORKS_LBL, SUPPORTED_NETWORKS_NAME, Types.ARRAY,
                 "Non-empty list of payment network/method identifiers " +
                 "that the <code class='entity'>Payee</code> supports. " +
                 "Network identifiers are expressed as CBOR strings (tstr)." +
@@ -22,7 +22,7 @@ public class AuthorizationRequest extends TableExecutor {
                 "See also <kbd>" + ProviderData.NETWORK_ID_NAME + "</kbd> in the " +
                 "${href.credential-database}.</div>")
 
-            .add(RECEIPT_URL_LABEL, RECEIPT_URL_NAME, Types.TSTR,
+            .add(RECEIPT_URL_LBL, RECEIPT_URL_NAME, Types.TSTR,
                 "<i>Optional</i>: URL to a <code class='entity'>Payee</code> " +
                 "receipt service." +
                 "<div style='padding-top:0.5em'>See also ${href.receipts}.</div>")

@@ -14,27 +14,27 @@ public class AuthorizationResponse extends TableExecutor {
     @Override
     String getTableString() {
         return new Table()
-            .add(CBORCryptoConstants.CUSTOM_DATA_LABEL, CUSTOM_DATA_NAME, Types.MAP,
+            .add(CBORCryptoConstants.CXF_CUSTOM_DATA_LBL, CUSTOM_DATA_NAME, Types.MAP,
                 "CEF custom (<i>unencrypted</i>) data in the form of a copy of the " +
                 "${href.pass-through-data} object fetched from the " +
                 "${href.signed-authorization} object.")
 
-            .add(CBORCryptoConstants.ALGORITHM_LABEL, ALGORITHM_NAME, Types.INT,
+            .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, ALGORITHM_NAME, Types.INT,
                 "Copy of the <kbd>" +
                 CredentialDatabaseEntry.ENC_CONTENT_ALG_NAME +
                 "</kbd> attribute of the selected payment credential in the " +
                 "${href.credential-database}.")
 
-            .add(CBORCryptoConstants.IV_LABEL, IV_NAME, Types.BSTR,
+            .add(CBORCryptoConstants.CEF_IV_LBL, IV_NAME, Types.BSTR,
                 "Encryption algorithm initialization vector (IV).")
 
-            .add(CBORCryptoConstants.TAG_LABEL, TAG_NAME, Types.BSTR,
+            .add(CBORCryptoConstants.CEF_TAG_LBL, TAG_NAME, Types.BSTR,
                 "Encryption algorithm tag.")
 
-            .add(CBORCryptoConstants.KEY_ENCRYPTION_LABEL, KEY_ENCRYPTION_NAME, Types.MAP,
+            .add(CBORCryptoConstants.CEF_KEY_ENCRYPTION_LBL, KEY_ENCRYPTION_NAME, Types.MAP,
                 "Holds the CEF ${href.key-encryption} object.")
 
-            .add(CBORCryptoConstants.CIPHER_TEXT_LABEL, CIPHER_TEXT_NAME, Types.BSTR,
+            .add(CBORCryptoConstants.CEF_CIPHER_TEXT_LBL, CIPHER_TEXT_NAME, Types.BSTR,
                 "Encrypted data containing a version of the ${href.signed-authorization} object " +
                 "where the ${href.pass-through-data} object has been removed <i>after</i> the " +
                 "completed authorization signature process." +

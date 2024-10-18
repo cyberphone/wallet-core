@@ -6,7 +6,7 @@ public class NonDirectPaymentProfile extends Table {
 
     NonDirectPaymentProfile(String id) {
         super();
-        add(MessageCommon.NON_DIR_PAY_ID_LABEL, 
+        add(MessageCommon.NON_DIR_PAY_ID_LBL, 
             NON_DIR_PAY_ID_NAME,
             Types.TSTR,
             "Unique Id: <code>" + id + "</code>"); 

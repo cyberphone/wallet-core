@@ -163,21 +163,21 @@ public class CreateDocument {
         // Create AuthorizationRequest
 
         CBORMap paymentRequest = new CBORMap()
-            .set(AMOUNT_LABEL, new CBORString("600.00"))
-            .set(CURRENCY_LABEL, new CBORString("EUR"))
-            .set(REFERENCE_ID_LABEL, new CBORString(REFERENCE_ID))
-            .set(COMMON_NAME_LABEL, new CBORString("Space Shop"));
+            .set(AMOUNT_LBL, new CBORString("600.00"))
+            .set(CURRENCY_LBL, new CBORString("EUR"))
+            .set(REFERENCE_ID_LBL, new CBORString(REFERENCE_ID))
+            .set(COMMON_NAME_LBL, new CBORString("Space Shop"));
 
         CBORMap serviceProvider = new CBORMap()
-            .set(NETWORK_ID_LABEL, new CBORString(BANKNET2))
-            .set(PROVIDER_DATA_LABEL, new CBORString("mybank.com"));
+            .set(NETWORK_ID_LBL, new CBORString(BANKNET2))
+            .set(PROVIDER_DATA_LBL, new CBORString("mybank.com"));
 
         CBORMap authorizationRequest = new CBORMap()
-            .set(PAYMENT_REQUEST_LABEL, paymentRequest)
-            .set(SUPPORTED_NETWORKS_LABEL, new CBORArray()
+            .set(PAYMENT_REQUEST_LBL, paymentRequest)
+            .set(SUPPORTED_NETWORKS_LBL, new CBORArray()
                 .add(new CBORString("https://cardnetwork.com"))
                 .add(new CBORString(BANKNET2)))
-            .set(RECEIPT_URL_LABEL, new CBORString(
+            .set(RECEIPT_URL_LBL, new CBORString(
                 "https://" + PAYEE_HOST + 
                 "/receipts/" + REFERENCE_ID + ".MNloPyPahXxr43flXzufdQ"));
         codeTable("authz-req.txt", authorizationRequest);
@@ -185,8 +185,8 @@ public class CreateDocument {
         // Create a singned authorization response
 
         CBORMap passThrough = new CBORMap()
-            .set(PAYMENT_REQUEST_LABEL, paymentRequest)
-            .set(PROVIDER_DATA_LABEL, serviceProvider);
+            .set(PAYMENT_REQUEST_LBL, paymentRequest)
+            .set(PROVIDER_DATA_LBL, serviceProvider);
 
         CBORArray platformData = new CBORArray()
             .add(new CBORString("Android"))
@@ -201,22 +201,22 @@ public class CreateDocument {
             .add(new CBORFloat(-77.01988));
 
         CBORMap signedAuthorization = new CBORMap()
-            .set(PASS_THROUGH_DATA_LABEL, passThrough)
-            .set(PAYEE_HOST_LABEL, new CBORString(PAYEE_HOST))
-            .set(ACCOUNT_ID_LABEL, new CBORString(PAYER_ACCOUNT))
-            .set(SERIAL_NUMBER_LABEL, new CBORString(SERIAL_NUMBER))
-            .set(PLATFORM_DATA_LABEL, platformData)
-            .set(LOCATION_LABEL, location)
-            .set(WALLET_DATA_LABEL, walletData)
-            .set(TIME_STAMP_LABEL, new CBORString(TIME_STAMP));
+            .set(PASS_THROUGH_DATA_LBL, passThrough)
+            .set(PAYEE_HOST_LBL, new CBORString(PAYEE_HOST))
+            .set(ACCOUNT_ID_LBL, new CBORString(PAYER_ACCOUNT))
+            .set(SERIAL_NUMBER_LBL, new CBORString(SERIAL_NUMBER))
+            .set(PLATFORM_DATA_LBL, platformData)
+            .set(LOCATION_LBL, location)
+            .set(WALLET_DATA_LBL, walletData)
+            .set(TIME_STAMP_LBL, new CBORString(TIME_STAMP));
         new CBORAsymKeySigner(authorizationKey.getPrivate())
             .setPublicKey(authorizationKey.getPublic())
-            .sign(AUTHZ_SIGNATURE_LABEL, signedAuthorization);
+            .sign(AUTHZ_SIGNATURE_LBL, signedAuthorization);
         codeTable("signed-authz.txt", signedAuthorization);
 
         // Create the actual (encrypted) AuthorizationResponse
 
-        signedAuthorization.remove(PASS_THROUGH_DATA_LABEL);
+        signedAuthorization.remove(PASS_THROUGH_DATA_LBL);
         byte[] cbor = new CBORAsymKeyEncrypter(encryptionKey.getPublic(), 
                                                ENC_KEY,
                                                ENC_CONTENT)
@@ -289,7 +289,7 @@ public class CreateDocument {
             codeTable("restored.txt", restored);
         }
         
-        restored.set(PASS_THROUGH_DATA_LABEL, saveCustomData[0]);
+        restored.set(PASS_THROUGH_DATA_LBL, saveCustomData[0]);
 
         // We want to 1) enforce public key 2) check key for trust after validation
         PublicKey[] suppliedPublicKey = new PublicKey[1];
@@ -309,7 +309,7 @@ public class CreateDocument {
                 return optionalPublicKey;
             }
 
-        }).validate(AUTHZ_SIGNATURE_LABEL, restored);
+        }).validate(AUTHZ_SIGNATURE_LBL, restored);
         if (!suppliedPublicKey[0].equals(authorizationKey.getPublic())) {
             throw new CryptoException("Unknown public key");
         }

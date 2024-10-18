@@ -11,7 +11,7 @@ public class KeyEncryption extends TableExecutor {
     @Override
     String getTableString() {
         return new Table()
-            .add(CBORCryptoConstants.ALGORITHM_LABEL, 
+            .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, 
                  AuthorizationResponse.ALGORITHM_NAME,
                  Types.INT,
                 "Copy of the <kbd>" +
@@ -19,15 +19,15 @@ public class KeyEncryption extends TableExecutor {
                 "</kbd> attribute of the selected payment credential in the " +
                 "${href.credential-database}.")
 
-            .add(CBORCryptoConstants.EPHEMERAL_KEY_LABEL, EPHEMERAL_KEY_NAME, Types.MAP,
+            .add(CBORCryptoConstants.CEF_EPHEMERAL_KEY_LBL, EPHEMERAL_KEY_NAME, Types.MAP,
                 "Ephemeral ECDH public key.")
 
-            .add(CBORCryptoConstants.KEY_ID_LABEL, KEY_ID_NAME, Types.ANY,
+            .add(CBORCryptoConstants.CXF_KEY_ID_LBL, KEY_ID_NAME, Types.ANY,
                 "<i>Optional</i>: Copy of the <kbd>" + CredentialDatabaseEntry.ENC_KEY_ID_NAME +
                 "</kbd> attribute of the selected payment credential in the " +
                 "${href.credential-database}.")
 
-            .add(CBORCryptoConstants.PUBLIC_KEY_LABEL, PUBLIC_KEY_NAME, Types.MAP,
+            .add(CBORCryptoConstants.CXF_PUBLIC_KEY_LBL, PUBLIC_KEY_NAME, Types.MAP,
                 "<i>Optional</i>: Copy of the <kbd>" + CredentialDatabaseEntry.ENC_PUBLIC_KEY_NAME +
                 "</kbd> object of the selected payment credential in the " +
                 "${href.credential-database}." +
@@ -35,7 +35,7 @@ public class KeyEncryption extends TableExecutor {
                 "Note that <kbd>" + KEY_ID_NAME + "</kbd> and <kbd>" + PUBLIC_KEY_NAME +
                 "</kbd> are <i>mutually exclusive</i>.</div>")
 
-            .add(CBORCryptoConstants.CIPHER_TEXT_LABEL, 
+            .add(CBORCryptoConstants.CEF_CIPHER_TEXT_LBL, 
                  AuthorizationResponse.CIPHER_TEXT_NAME, 
                  Types.BSTR,
                 "<i>Optional</i>: Encrypted key for <i>key&nbsp;wrapping</i> algorithms.")

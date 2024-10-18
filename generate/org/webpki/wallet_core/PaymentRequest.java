@@ -13,29 +13,29 @@ public class PaymentRequest extends TableExecutor {
     @Override
     String getTableString() {
         return new Table()
-            .add(AMOUNT_LABEL, AMOUNT_NAME, Types.TSTR,
+            .add(AMOUNT_LBL, AMOUNT_NAME, Types.TSTR,
                 "Monetary amount compatible with the regular expression: " +
                 "<code style='white-space:nowrap'>^(0|[1-9][0-9]*)(\\.[0-9]+)?$</code>. " +
                 "<div style='padding-top:0.5em'>" +
                 "Amounts <b>must&nbsp;not</b> use more decimals than is " +
                 "custom for prices for the specific <kbd>currency</kbd>.</div>")
 
-            .add(CURRENCY_LABEL, CURRENCY_NAME, Types.TSTR,
+            .add(CURRENCY_LBL, CURRENCY_NAME, Types.TSTR,
                 "Currency expressed in the ${href.iso4217} <i>alphabetical</i> format.")
 
-            .add(COMMON_NAME_LABEL, COMMON_NAME_NAME, Types.TSTR,
+            .add(COMMON_NAME_LBL, COMMON_NAME_NAME, Types.TSTR,
                 "<code class='entity'>Payee</code> common name to be shown in the " +
                 "${href.wallet-request-ui}" +
                 "<div style='padding-top:0.5em'>" +
                 "Note that common and <i>legal</i> names often differ.</div>")
     
-            .add(REFERENCE_ID_LABEL, REFERENCE_ID_NAME, Types.TSTR,
+            .add(REFERENCE_ID_LBL, REFERENCE_ID_NAME, Types.TSTR,
                 "<code class='entity'>Payee</code> reference Id. " +
                 "<div style='padding-top:0.5em'>" +
                 "Reference Ids <b>must</b> be unique with respect to the " +
                 "<code class='entity'>Payee</code>.</div>")
 
-            .add(NON_DIRECT_LABEL, NON_DIRECT_NAME, Types.MAP,
+            .add(NON_DIRECT_LBL, NON_DIRECT_NAME, Types.MAP,
                 "<i>Optional</i>: Also see ${href.non-direct-payments}.")
 
            .getTableString();

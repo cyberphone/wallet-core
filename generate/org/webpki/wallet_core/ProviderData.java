@@ -10,10 +10,10 @@ public class ProviderData extends TableExecutor {
     @Override
     String getTableString() {
         return new Table()
-            .add(NETWORK_ID_LABEL, NETWORK_ID_NAME, Types.TSTR,
+            .add(NETWORK_ID_LBL, NETWORK_ID_NAME, Types.TSTR,
                 CreateDocument.COPY_ATTRIBUTE)
 
-            .add(SERVICE_LOCATOR_LABEL, SERVICE_LOCATOR_NAME, Types.TSTR,
+            .add(SERVICE_LOCATOR_LBL, SERVICE_LOCATOR_NAME, Types.TSTR,
                 CreateDocument.COPY_ATTRIBUTE)
 
             .getTableString();
