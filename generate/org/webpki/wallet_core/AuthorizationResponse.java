@@ -16,7 +16,7 @@ public class AuthorizationResponse extends TableExecutor {
         return new Table()
             .add(CBORCryptoConstants.CXF_CUSTOM_DATA_LBL, CUSTOM_DATA_NAME, Types.MAP,
                 "CEF custom (<i>unencrypted</i>) data in the form of a copy of the " +
-                "${href.pass-through-data} object fetched from the " +
+                "${href.unencrypted-data} object fetched from the " +
                 "${href.signed-authorization} object.")
 
             .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, ALGORITHM_NAME, Types.INT,
@@ -36,13 +36,13 @@ public class AuthorizationResponse extends TableExecutor {
 
             .add(CBORCryptoConstants.CEF_CIPHER_TEXT_LBL, CIPHER_TEXT_NAME, Types.BSTR,
                 "Encrypted data containing a version of the ${href.signed-authorization} object " +
-                "where the ${href.pass-through-data} object has been removed <i>after</i> the " +
+                "where the ${href.unencrypted-data} object has been removed <i>after</i> the " +
                 "completed authorization signature process." +
                 "<div style='padding-top:0.5em'>" +
                 "Note that the modified ${href.signed-authorization} " +
                 "<code>map</code> object <b>must</b> be updated (<i>before</i> " +
                 "being encrypted), to reflect the removal of the " +
-                "${href.pass-through-data} object.</div>")
+                "${href.unencrypted-data} object.</div>")
 
             .getTableString();
     }

@@ -2,7 +2,7 @@ package org.webpki.wallet_core;
 
 import static org.webpki.wallet_core.MessageCommon.*;
 
-public class ProviderData extends TableExecutor {
+public class ProviderInfo extends TableExecutor {
 
     static final String NETWORK_ID_NAME      = "networkId";
     static final String SERVICE_LOCATOR_NAME = "serviceLocator";
@@ -21,7 +21,7 @@ public class ProviderData extends TableExecutor {
 
     @Override
     String getTitle() {
-        return "Provider Data";
+        return "Provider Info";
     }
 
 }

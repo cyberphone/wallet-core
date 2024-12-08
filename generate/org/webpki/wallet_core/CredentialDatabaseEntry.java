@@ -36,7 +36,7 @@ public class CredentialDatabaseEntry {
             "This specification covers version: " +
             "<code style='white-space:nowrap'>" + CreateDocument.CREDENTIAL_VERSION + "</code>.");
 
-        add(ProviderData.NETWORK_ID_NAME, Types.TSTR,
+        add(ProviderInfo.NETWORK_ID_NAME, Types.TSTR,
             "Payment network/method identifier. " +
             "Since payment networks are likely to continue having unique message " +
             "solutions, the <code class='entity'>Payee</code> needs to " +
@@ -45,28 +45,28 @@ public class CredentialDatabaseEntry {
             "Payment network identifiers may be expressed as URLs or as " +
             "simple names like \"VISA\".  Note that this concept does not " +
             "make a distinction between payment methods or \"schemes\".</div>" +
-            "<div style='padding-top:0.5em'>Also see ${href.provider-data}.</div>");
+            "<div style='padding-top:0.5em'>See also ${href.provider-info}.</div>");
 
-        add(ProviderData.SERVICE_LOCATOR_NAME, Types.TSTR,
+        add(ProviderInfo.SERVICE_LOCATOR_NAME, Types.TSTR,
             "Payment service URL or host name. " +
             "This attribute enables the <code class='entity'>Payee</code> " +
             "to find the end-point of the specific payment service (like a bank), " +
             "associated with the payment credential." +
             "<div style='padding-top:0.5em'>" +
             "How to interpret this attribute is dictated by the <kbd>" +
-            ProviderData.NETWORK_ID_NAME + "</kbd> identifier. If <kbd>" + 
-            ProviderData.SERVICE_LOCATOR_NAME + "</kbd> is expressed as a host-name only, " +
+            ProviderInfo.NETWORK_ID_NAME + "</kbd> identifier. If <kbd>" + 
+            ProviderInfo.SERVICE_LOCATOR_NAME + "</kbd> is expressed as a host-name only, " +
             "a <code style='white-space:nowrap'>&quot;.well-known&quot;</code> " +
             "[${href.rfc8615}] extension would typically be used.</div>" +
-            "<div style='padding-top:0.5em'>Also see ${href.provider-data}.</div>");
+            "<div style='padding-top:0.5em'>See also ${href.provider-info}.</div>");
 
         add(SignedAuthorization.ACCOUNT_ID_NAME, Types.TSTR,
             "Account identifier associated with the payment credential." +
-            "<div style='padding-top:0.5em'>Also see ${href.signed-authorization}.</div>");
+            "<div style='padding-top:0.5em'>See also ${href.signed-authorization}.</div>");
 
         add(SignedAuthorization.SERIAL_NUMBER_NAME, Types.TSTR,
             "Serial number of the payment credential." +
-            "<div style='padding-top:0.5em'>Also see ${href.signed-authorization}.</div>");
+            "<div style='padding-top:0.5em'>See also ${href.signed-authorization}.</div>");
 
         add(CARD_IMAGE_NAME, Types.BSTR,
             "Card image associated with the payment credential. " +

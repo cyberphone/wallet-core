@@ -1,4 +1,4 @@
-<project name="CBOR Node.js module builder" default="help">
+<project name="Wallet Core builder" default="help">
 
   <!-- set properties for this build -->
   <property name="src.file" location="../src/cbor.js"/>

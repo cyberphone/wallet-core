@@ -58,7 +58,7 @@ public class CreateDocument {
 
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected payment credential." +
-        "<div style='padding-top:0.5em'>Also see ${href.credential-database}.</div>";
+        "<div style='padding-top:0.5em'>See also ${href.credential-database}.</div>";
 
     static final ContentEncryptionAlgorithms ENC_CONTENT = ContentEncryptionAlgorithms.A256GCM;
     static final KeyEncryptionAlgorithms ENC_KEY = KeyEncryptionAlgorithms.ECDH_ES_A128KW;
@@ -170,7 +170,7 @@ public class CreateDocument {
 
         CBORMap serviceProvider = new CBORMap()
             .set(NETWORK_ID_LBL, new CBORString(BANKNET2))
-            .set(PROVIDER_DATA_LBL, new CBORString("mybank.com"));
+            .set(PROVIDER_INFO_LBL, new CBORString("mybank.com"));
 
         CBORMap authorizationRequest = new CBORMap()
             .set(PAYMENT_REQUEST_LBL, paymentRequest)
@@ -184,9 +184,9 @@ public class CreateDocument {
 
         // Create a singned authorization response
 
-        CBORMap passThrough = new CBORMap()
+        CBORMap unencryptedData = new CBORMap()
             .set(PAYMENT_REQUEST_LBL, paymentRequest)
-            .set(PROVIDER_DATA_LBL, serviceProvider);
+            .set(PROVIDER_INFO_LBL, serviceProvider);
 
         CBORArray platformData = new CBORArray()
             .add(new CBORString("Android"))
@@ -201,7 +201,7 @@ public class CreateDocument {
             .add(new CBORFloat(-77.01988));
 
         CBORMap signedAuthorization = new CBORMap()
-            .set(PASS_THROUGH_DATA_LBL, passThrough)
+            .set(UNENCRYPTED_DATA_LBL, unencryptedData)
             .set(PAYEE_HOST_LBL, new CBORString(PAYEE_HOST))
             .set(ACCOUNT_ID_LBL, new CBORString(PAYER_ACCOUNT))
             .set(SERIAL_NUMBER_LBL, new CBORString(SERIAL_NUMBER))
@@ -216,14 +216,14 @@ public class CreateDocument {
 
         // Create the actual (encrypted) AuthorizationResponse
 
-        signedAuthorization.remove(PASS_THROUGH_DATA_LBL);
+        signedAuthorization.remove(UNENCRYPTED_DATA_LBL);
         byte[] cbor = new CBORAsymKeyEncrypter(encryptionKey.getPublic(), 
                                                ENC_KEY,
                                                ENC_CONTENT)
             .setIntercepter(new CBORCryptoUtils.Intercepter() {
                 @Override
                 public CBORObject getCustomData() {
-                    return passThrough;
+                    return unencryptedData;
                 }
                 @Override
                 public CBORObject wrap(CBORMap map) {
@@ -279,7 +279,7 @@ public class CreateDocument {
                                 
         }).decrypt(authorizationResponse);
         if (update) {
-            codeTable("pass-through-data.txt", saveCustomData[0]);
+            codeTable("unencrypted-data.txt", saveCustomData[0]);
         }
 
         // Restore message and verify signature
@@ -289,7 +289,7 @@ public class CreateDocument {
             codeTable("restored.txt", restored);
         }
         
-        restored.set(PASS_THROUGH_DATA_LBL, saveCustomData[0]);
+        restored.set(UNENCRYPTED_DATA_LBL, saveCustomData[0]);
 
         // We want to 1) enforce public key 2) check key for trust after validation
         PublicKey[] suppliedPublicKey = new PublicKey[1];
@@ -345,8 +345,8 @@ public class CreateDocument {
         replace(new PaymentRequest());
         replace(new AuthorizationResponse());
         replace(new KeyEncryption());
-        replace(new PassThroughData());
-        replace(new ProviderData());
+        replace(new UnencryptedData());
+        replace(new ProviderInfo());
         replace(new SignedAuthorization());
 
         innerCount = 0;
@@ -435,7 +435,7 @@ public class CreateDocument {
         int macroPosition = template.indexOf("${");
         if (macroPosition > 0) {
             throw new RuntimeException("unresolved macro: " + 
-                template.substring(macroPosition, macroPosition + 10));
+                template.substring(macroPosition, macroPosition + 20));
         }
  
         IO.writeFile(documentFileName, template);

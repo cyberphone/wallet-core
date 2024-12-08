@@ -138,8 +138,8 @@ ${authorization-request}
 ${payment-request}
 ${authorization-response}
 ${key-encryption}
-${pass-through-data}
-${provider-data}
+${unencrypted-data}
+${provider-info}
 ${signed-authorization}
 ${credential-database}
 A fundamental part of the <code class='entity'>Wallet</code> is a local database holding
@@ -173,14 +173,14 @@ Note that enclosing ${href.cotx} object <b>must</b> be included in
 the decryption process.
 </p>
 The decryption process should return two CBOR objects:
-the ${href.pass-through-data}
+the ${href.unencrypted-data}
 object which is already supplied in clear:
-${pass-through-data.txt}
+${unencrypted-data.txt}
 and another object which after decryption should read like the following:
 ${restored.txt}
 ${signature-validation}
 Now combine the objects retrieved during the decryption phase
-by copying the first object (${href.pass-through-data})
+by copying the first object (${href.unencrypted-data})
 to a label <code>1</code> of the second object.
 Note that the length of the resulting <code>map</code> object
 <b>must</b> be updated to reflect the addition of an item.
@@ -235,8 +235,8 @@ ${encryption-key.jwk}
 <div style='margin-top:0.8em'>Encryption key in COSE format:</div>
 ${encryption-key.txt}
 ${version}
-  API version: 0.51<br>
-  Document version: 2024-09-30<br>
+  API version: 0.52<br>
+  Document version: 2024-12-07<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

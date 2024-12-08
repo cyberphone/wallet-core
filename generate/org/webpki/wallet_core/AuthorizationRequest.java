@@ -11,7 +11,7 @@ public class AuthorizationRequest extends TableExecutor {
     public String getTableString() {
         return new Table()
 
-            .add(PAYMENT_REQUEST_LBL, PassThroughData.PAYMENT_REQUEST_NAME, Types.MAP,
+            .add(PAYMENT_REQUEST_LBL, UnencryptedData.PAYMENT_REQUEST_NAME, Types.MAP,
                 "The core object, ${href.payment-request}.")
 
             .add(SUPPORTED_NETWORKS_LBL, SUPPORTED_NETWORKS_NAME, Types.ARRAY,
@@ -19,7 +19,7 @@ public class AuthorizationRequest extends TableExecutor {
                 "that the <code class='entity'>Payee</code> supports. " +
                 "Network identifiers are expressed as CBOR strings (tstr)." +
                 "<div style='padding-top:0.5em'>" +
-                "See also <kbd>" + ProviderData.NETWORK_ID_NAME + "</kbd> in the " +
+                "See also <kbd>" + ProviderInfo.NETWORK_ID_NAME + "</kbd> in the " +
                 "${href.credential-database}.</div>")
 
             .add(RECEIPT_URL_LBL, RECEIPT_URL_NAME, Types.TSTR,

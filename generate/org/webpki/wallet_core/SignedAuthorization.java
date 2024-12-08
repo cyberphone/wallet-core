@@ -4,7 +4,7 @@ import static org.webpki.wallet_core.MessageCommon.*;
 
 public class SignedAuthorization extends TableExecutor {
 
-    static final String PASS_THROUGH_DATA_NAME = "passThroughData";
+    static final String UNENCRYPTED_DATA_NAME  = "unencryptedData";
     static final String PAYEE_HOST_NAME        = "payeeHost";
     static final String ACCOUNT_ID_NAME        = "accountId";
     static final String SERIAL_NUMBER_NAME     = "serialNumber";
@@ -18,8 +18,8 @@ public class SignedAuthorization extends TableExecutor {
     public String getTableString() {
         return new Table()
 
-            .add(PASS_THROUGH_DATA_LBL, PASS_THROUGH_DATA_NAME, Types.MAP,
-                "Holds the ${href.pass-through-data} object.")
+            .add(UNENCRYPTED_DATA_LBL, UNENCRYPTED_DATA_NAME, Types.MAP,
+                "Holds the ${href.unencrypted-data} object.")
 
             .add(PAYEE_HOST_LBL, PAYEE_HOST_NAME, Types.TSTR,
                 "Host name or IP address of the invoking <code class='entity'>Payee</code>, " +
