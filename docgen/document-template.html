@@ -197,7 +197,7 @@ Unsurprisingly, authorization objects <b>must</b> also
 be checked for alignment with the specification.
 Missing, additional, or malformed elements <b>must</b> be rejected.
 </p>
-${non-direct-payments}
+${non-direct-payments-(ndp)}
 Non-direct payments represent a group of payment-related
 scenarios where an initial <code class='entity'>Payer</code>
 authorization is followed by one 
@@ -214,6 +214,15 @@ to <code class='entity'>Payer</code> <i>credit considerations</i>.
 Although this specification only defines a single non-direct payment scenario, 
 this is intended to serve as a model for additional variants as well.
 </p>
+${ndp-objects}
+NDP objects are denoted by a ${href.cotx} object as follows:
+<div class='webpkifloat'><div style='padding:1em 2em'>
+  <code>1010([</code><kbd>ndpObjectId</kbd><code>,</code><br>
+  <div style='padding:1em 0 1em 2em'><i>Additional Parameters</i></div>
+  <code>])</code></div></div>
+<p>
+Note that <kbd>ndpObjectId</kbd> URLs <b>must</b> be unique 
+and expressed as CBOR strings (<code>tstr</code>).
 ${gas-station-payments}
 ${gas-station-payments-profile}
 ${algorithm-support}
@@ -235,8 +244,8 @@ ${encryption-key.jwk}
 <div style='margin-top:0.8em'>Encryption key in COSE format:</div>
 ${encryption-key.txt}
 ${version}
-  API version: 0.52<br>
-  Document version: 2024-12-07<br>
+  API version: 0.53<br>
+  Document version: 2024-12-08<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

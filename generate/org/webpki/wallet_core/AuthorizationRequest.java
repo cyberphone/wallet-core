@@ -12,7 +12,8 @@ public class AuthorizationRequest extends TableExecutor {
         return new Table()
 
             .add(PAYMENT_REQUEST_LBL, UnencryptedData.PAYMENT_REQUEST_NAME, Types.MAP,
-                "The core object, ${href.payment-request}.")
+                "${href.payment-request} is the core " +
+                "<code class='entity'>Payee</code> request object.")
 
             .add(SUPPORTED_NETWORKS_LBL, SUPPORTED_NETWORKS_NAME, Types.ARRAY,
                 "Non-empty list of payment network/method identifiers " +

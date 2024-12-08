@@ -8,6 +8,7 @@ enum Types {
     BSTR  ("bstr"), 
     ANY   ("&quot;</code><i>Any</i><code>&quot;"), 
     PS    ("&quot;ps&quot;"),
+    COTX  ("cotx"),
     INT   ("int");
 
     String html;

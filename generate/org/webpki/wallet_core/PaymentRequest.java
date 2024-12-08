@@ -4,11 +4,11 @@ import static org.webpki.wallet_core.MessageCommon.*;
 
 public class PaymentRequest extends TableExecutor {
 
-    static final String AMOUNT_NAME       = "amount";
-    static final String COMMON_NAME_NAME  = "commonName";
-    static final String CURRENCY_NAME     = "currency";
-    static final String REFERENCE_ID_NAME = "referenceId";
-    static final String NON_DIRECT_NAME   = "nonDirect";
+    static final String AMOUNT_NAME              = "amount";
+    static final String COMMON_NAME_NAME         = "commonName";
+    static final String CURRENCY_NAME            = "currency";
+    static final String REFERENCE_ID_NAME        = "referenceId";
+    static final String NON_DIRECT_PAYMENT_NAME  = "nonDirectPayment";
 
     @Override
     String getTableString() {
@@ -35,8 +35,8 @@ public class PaymentRequest extends TableExecutor {
                 "Reference Ids <b>must</b> be unique with respect to the " +
                 "<code class='entity'>Payee</code>.</div>")
 
-            .add(NON_DIRECT_LBL, NON_DIRECT_NAME, Types.MAP,
-                "<i>Optional</i>: See also ${href.non-direct-payments}.")
+            .add(NON_DIRECT_PAYMENT_LBL, NON_DIRECT_PAYMENT_NAME, Types.COTX,
+                "<i>Optional</i>: See also ${href.non-direct-payments-(ndp)}.")
 
            .getTableString();
     }

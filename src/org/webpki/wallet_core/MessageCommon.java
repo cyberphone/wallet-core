@@ -13,7 +13,7 @@ public class MessageCommon {
     static final CBORInt REFERENCE_ID_LBL       = new CBORInt(2);
     static final CBORInt AMOUNT_LBL             = new CBORInt(3); 
     static final CBORInt CURRENCY_LBL           = new CBORInt(4); 
-    static final CBORInt NON_DIRECT_LBL         = new CBORInt(5); 
+    static final CBORInt NON_DIRECT_PAYMENT_LBL = new CBORInt(5); 
  
     static final CBORInt PROVIDER_INFO_LBL      = new CBORInt(2);
 

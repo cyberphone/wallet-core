@@ -361,8 +361,9 @@ public class CreateDocument {
         addTocEntry("Signature Validation");
 
         innerCount = 0;
-        addTocEntry("Non-direct Payments");
+        addTocEntry("Non-direct Payments (NDP)");
         innerCount = 1;
+        addTocEntry("NDP Objects");
         addTocEntry("Gas Station Payments");
         updateTemplate("gas-station-payments-profile", 
                        new GasStationPaymentsProfile().getHtml());
