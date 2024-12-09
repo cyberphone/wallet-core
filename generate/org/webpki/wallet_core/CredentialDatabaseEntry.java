@@ -56,8 +56,8 @@ public class CredentialDatabaseEntry {
             "How to interpret this attribute is dictated by the <kbd>" +
             ProviderInfo.NETWORK_ID_NAME + "</kbd> identifier. If <kbd>" + 
             ProviderInfo.SERVICE_LOCATOR_NAME + "</kbd> is expressed as a host-name only, " +
-            "a <code style='white-space:nowrap'>&quot;.well-known&quot;</code> " +
-            "[${href.rfc8615}] extension would typically be used.</div>" +
+            "a <code style='white-space:nowrap'>&quot;/.well-known/&quot;</code> " +
+            "[${href.rfc8615}] URL extension would typically be used.</div>" +
             "<div style='padding-top:0.5em'>See also ${href.provider-info}.</div>");
 
         add(SignedAuthorization.ACCOUNT_ID_NAME, Types.TSTR,
