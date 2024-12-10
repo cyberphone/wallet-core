@@ -187,6 +187,7 @@ public class CreateDocument {
         CBORMap unencryptedData = new CBORMap()
             .set(PAYMENT_REQUEST_LBL, paymentRequest)
             .set(PROVIDER_INFO_LBL, serviceProvider)
+            .set(PAYEE_HOST_LBL, new CBORString(PAYEE_HOST))
             .set(TIME_STAMP_LBL, new CBORString(TIME_STAMP));
 
         CBORArray platformData = new CBORArray()
@@ -203,7 +204,6 @@ public class CreateDocument {
 
         CBORMap signedAuthorization = new CBORMap()
             .set(UNENCRYPTED_DATA_LBL, unencryptedData)
-            .set(PAYEE_HOST_LBL, new CBORString(PAYEE_HOST))
             .set(ACCOUNT_ID_LBL, new CBORString(PAYER_ACCOUNT))
             .set(SERIAL_NUMBER_LBL, new CBORString(SERIAL_NUMBER))
             .set(PLATFORM_DATA_LBL, platformData)

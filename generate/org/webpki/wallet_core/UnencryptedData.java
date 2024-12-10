@@ -6,6 +6,7 @@ public class UnencryptedData extends TableExecutor {
 
     static final String PAYMENT_REQUEST_NAME  = "paymentRequest";
     static final String PROVIDER_INFO_NAME    = "providerInfo";
+    static final String PAYEE_HOST_NAME       = "payeeHost";
     static final String TIME_STAMP_NAME       = "timeStamp";
 
     @Override
@@ -22,6 +23,10 @@ public class UnencryptedData extends TableExecutor {
                 "required by the <code class='entity'>Payee</code> for deriving " +
                 "which payment network " +
                 "to use and how to initiate a compatible payment transaction request.")
+
+            .add(PAYEE_HOST_LBL, PAYEE_HOST_NAME, Types.TSTR,
+                "Host name or IP address of the invoking <code class='entity'>Payee</code>, " +
+                "derived from step #1 in the sequence diagram.")
 
             .add(TIME_STAMP_LBL, TIME_STAMP_NAME, Types.TSTR,
                 "ISO date-time string [${href.rfc3339}] " +
