@@ -11,7 +11,6 @@ public class SignedAuthorization extends TableExecutor {
     static final String PLATFORM_DATA_NAME     = "platformData";
     static final String WALLET_DATA_NAME       = "walletData";
     static final String LOCATION_NAME          = "location";
-    static final String TIME_STAMP_NAME        = "timeStamp";
     static final String AUTHZ_SIGNATURE_NAME   = "authzSignature";
 
     @Override
@@ -48,10 +47,6 @@ public class SignedAuthorization extends TableExecutor {
                 "<div style='padding-top:0.5em'>" +
                 "This option depends on <code class='entity'>Payer</code> " +
                 "privacy settings.</div>")
-
-            .add(TIME_STAMP_LBL, TIME_STAMP_NAME, Types.TSTR,
-                "ISO date-time string [${href.rfc3339}] " +
-                "using UTC (T) or local time (Z) format.")
 
             .add(AUTHZ_SIGNATURE_LBL, AUTHZ_SIGNATURE_NAME, Types.MAP,
                 "Authorization signature using a ${href.csf} object.")

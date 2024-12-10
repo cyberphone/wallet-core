@@ -48,13 +48,13 @@ public class CreateDocument {
 
     static final String PAYEE_HOST = "spaceshop.com";
 
-    static final String TIME_STAMP = "2024-09-01T13:28:02-02:00";
+    static final String TIME_STAMP = "2024-12-10T13:28:02-01:00";
 
     static final String PAYER_ACCOUNT = "FR7630002111110020050014382";
 
     static final String SERIAL_NUMBER = "010049255";
 
-    static final String REFERENCE_ID = "722385402";
+    static final String REFERENCE_ID = "20241210.00079";
 
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected payment credential." +
@@ -186,7 +186,8 @@ public class CreateDocument {
 
         CBORMap unencryptedData = new CBORMap()
             .set(PAYMENT_REQUEST_LBL, paymentRequest)
-            .set(PROVIDER_INFO_LBL, serviceProvider);
+            .set(PROVIDER_INFO_LBL, serviceProvider)
+            .set(TIME_STAMP_LBL, new CBORString(TIME_STAMP));
 
         CBORArray platformData = new CBORArray()
             .add(new CBORString("Android"))
@@ -207,8 +208,7 @@ public class CreateDocument {
             .set(SERIAL_NUMBER_LBL, new CBORString(SERIAL_NUMBER))
             .set(PLATFORM_DATA_LBL, platformData)
             .set(LOCATION_LBL, location)
-            .set(WALLET_DATA_LBL, walletData)
-            .set(TIME_STAMP_LBL, new CBORString(TIME_STAMP));
+            .set(WALLET_DATA_LBL, walletData);
         new CBORAsymKeySigner(authorizationKey.getPrivate())
             .setPublicKey(authorizationKey.getPublic())
             .sign(AUTHZ_SIGNATURE_LBL, signedAuthorization);

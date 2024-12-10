@@ -6,6 +6,7 @@ public class UnencryptedData extends TableExecutor {
 
     static final String PAYMENT_REQUEST_NAME  = "paymentRequest";
     static final String PROVIDER_INFO_NAME    = "providerInfo";
+    static final String TIME_STAMP_NAME       = "timeStamp";
 
     @Override
     String getTableString() {
@@ -22,6 +23,9 @@ public class UnencryptedData extends TableExecutor {
                 "which payment network " +
                 "to use and how to initiate a compatible payment transaction request.")
 
+            .add(TIME_STAMP_LBL, TIME_STAMP_NAME, Types.TSTR,
+                "ISO date-time string [${href.rfc3339}] " +
+                "using UTC (T) or local time (Z) format.")
             .getTableString();
     }
 

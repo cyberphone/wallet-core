@@ -10,12 +10,15 @@ public class MessageCommon {
     static final CBORInt RECEIPT_URL_LBL        = new CBORInt(3);
 
     static final CBORInt COMMON_NAME_LBL        = new CBORInt(1); 
-    static final CBORInt REFERENCE_ID_LBL       = new CBORInt(2);
-    static final CBORInt AMOUNT_LBL             = new CBORInt(3); 
-    static final CBORInt CURRENCY_LBL           = new CBORInt(4); 
+    static final CBORInt AMOUNT_LBL             = new CBORInt(2); 
+    static final CBORInt CURRENCY_LBL           = new CBORInt(3);
+    static final CBORInt REFERENCE_ID_LBL       = new CBORInt(4);
     static final CBORInt NON_DIRECT_PAYMENT_LBL = new CBORInt(5); 
  
+    // Unencryptef Data
+    // PAYMENT_REQUEST_LBL
     static final CBORInt PROVIDER_INFO_LBL      = new CBORInt(2);
+    static final CBORInt TIME_STAMP_LBL         = new CBORInt(3);
 
     static final CBORInt NETWORK_ID_LBL         = new CBORInt(1); 
     static final CBORInt SERVICE_LOCATOR_LBL    = new CBORInt(2);
@@ -28,9 +31,6 @@ public class MessageCommon {
     static final CBORInt PLATFORM_DATA_LBL      = new CBORInt(5);   
     static final CBORInt WALLET_DATA_LBL        = new CBORInt(6);
     static final CBORInt LOCATION_LBL           = new CBORInt(7);
-    static final CBORInt TIME_STAMP_LBL         = new CBORInt(8);
-
-    static final CBORInt NON_DIR_PAY_ID_LBL     = new CBORInt(1);
 
     static final CBORInt AUTHZ_SIGNATURE_LBL    = new CBORInt(-1); 
 

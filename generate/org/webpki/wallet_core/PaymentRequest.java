@@ -13,6 +13,13 @@ public class PaymentRequest extends TableExecutor {
     @Override
     String getTableString() {
         return new Table()
+
+            .add(COMMON_NAME_LBL, COMMON_NAME_NAME, Types.TSTR,
+                "<code class='entity'>Payee</code> common name to be shown in the " +
+                "${href.wallet-request-ui}" +
+                "<div style='padding-top:0.5em'>" +
+                "Note that common and <i>legal</i> names often differ.</div>")
+
             .add(AMOUNT_LBL, AMOUNT_NAME, Types.TSTR,
                 "Monetary amount compatible with the regular expression: " +
                 "<code style='white-space:nowrap'>^(0|[1-9][0-9]*)(\\.[0-9]+)?$</code>. " +
@@ -22,12 +29,6 @@ public class PaymentRequest extends TableExecutor {
 
             .add(CURRENCY_LBL, CURRENCY_NAME, Types.TSTR,
                 "Currency expressed in the ${href.iso4217} <i>alphabetical</i> format.")
-
-            .add(COMMON_NAME_LBL, COMMON_NAME_NAME, Types.TSTR,
-                "<code class='entity'>Payee</code> common name to be shown in the " +
-                "${href.wallet-request-ui}" +
-                "<div style='padding-top:0.5em'>" +
-                "Note that common and <i>legal</i> names often differ.</div>")
     
             .add(REFERENCE_ID_LBL, REFERENCE_ID_NAME, Types.TSTR,
                 "<code class='entity'>Payee</code> reference Id. " +
