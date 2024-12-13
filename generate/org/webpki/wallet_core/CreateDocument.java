@@ -299,8 +299,8 @@ public class CreateDocument {
         // It helps having a potent CBOR implementation...
         
         CBORTag signedData = saveCustomData[0];
-        CBORObject unencryptedData = signedData.get().getArray().get(1);
-        signedData.get().getArray().update(1, decryptedData.set(UNENCRYPTED_DATA_LBL, unencryptedData));
+        CBORArray object = signedData.get().getArray();
+        object.update(1, decryptedData.set(UNENCRYPTED_DATA_LBL, object.get(1)));
         return signedData;
     }
 
