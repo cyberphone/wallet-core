@@ -281,7 +281,7 @@ public class CreateDocument {
 
             @Override
             public void foundData(CBORObject customData) {
-                saveCustomData[0] = customData.getTag();
+                saveCustomData[0] = customData.clone().getTag();
             }
                                 
         }).decrypt(authorizationResponse);
@@ -426,6 +426,7 @@ public class CreateDocument {
             IO.writeFile(refFile, authz.toString());
             System.out.println("*** WROTE ***=" + e.getMessage());
         }
+        System.out.println("Au=" + authz.toString());
         codeTable(AUTH_RESP_FILE, authz);
 
         // Fill in external links
