@@ -42,9 +42,11 @@ public class CreateDocument {
 
     static final String BANKNET2 = "https://banknet2.org"; 
 
-    static final String OBJECT_ID = "https://saturn.standard/v4";
+    static final String ENCRYPTED_OBJECT_ID = "https://saturn.standard/enc/v1";
 
-    static final String CREDENTIAL_VERSION = "https://saturn.standard/cr/v1";
+    static final String SIGNED_OBJECT_ID = "https://saturn.standard/sig/v1";
+
+    static final String CREDENTIAL_VERSION = "https://saturn.standard/cred/v1";
 
     static final String PAYEE_HOST = "spaceshop.com";
 
@@ -182,7 +184,7 @@ public class CreateDocument {
                 "/receipts/" + REFERENCE_ID + ".MNloPyPahXxr43flXzufdQ"));
         codeTable("authz-req.txt", authorizationRequest);
 
-        // Create a singned authorization response
+        // Create a signed authorization response
 
         CBORMap unencryptedData = new CBORMap()
             .set(PAYMENT_REQUEST_LBL, paymentRequest)
@@ -202,45 +204,50 @@ public class CreateDocument {
             .add(new CBORFloat(38.88820))
             .add(new CBORFloat(-77.01988));
 
-        CBORMap signedAuthorization = new CBORMap()
-            .set(UNENCRYPTED_DATA_LBL, unencryptedData)
-            .set(ACCOUNT_ID_LBL, new CBORString(PAYER_ACCOUNT))
-            .set(SERIAL_NUMBER_LBL, new CBORString(SERIAL_NUMBER))
-            .set(PLATFORM_DATA_LBL, platformData)
-            .set(LOCATION_LBL, location)
-            .set(WALLET_DATA_LBL, walletData);
-        new CBORAsymKeySigner(authorizationKey.getPrivate())
+            CBORObject signedAuthorization = new CBORAsymKeySigner(authorizationKey.getPrivate())
             .setPublicKey(authorizationKey.getPublic())
-            .sign(AUTHZ_SIGNATURE_LBL, signedAuthorization);
+            .setIntercepter(new CBORCryptoUtils.Intercepter() {
+                @Override
+                public CBORObject wrap(CBORMap map) {
+                    return new CBORTag(SIGNED_OBJECT_ID, map);
+                }         
+            })
+            .sign(AUTHZ_SIGNATURE_LBL, new CBORMap()
+                .set(UNENCRYPTED_DATA_LBL, unencryptedData)
+                .set(ACCOUNT_ID_LBL, new CBORString(PAYER_ACCOUNT))
+                .set(SERIAL_NUMBER_LBL, new CBORString(SERIAL_NUMBER))
+                .set(PLATFORM_DATA_LBL, platformData)
+                .set(LOCATION_LBL, location)
+                .set(WALLET_DATA_LBL, walletData));
+
         codeTable("signed-authz.txt", signedAuthorization);
 
         // Create the actual (encrypted) AuthorizationResponse
 
-        signedAuthorization.remove(UNENCRYPTED_DATA_LBL);
+        CBORTag signatureTag = signedAuthorization.getTag();
+        CBORMap dataToBeEncrypted = signatureTag.get().getArray().get(1).getMap();
+        signatureTag.get().getArray().update(1, dataToBeEncrypted.remove(UNENCRYPTED_DATA_LBL));
+ 
         byte[] cbor = new CBORAsymKeyEncrypter(encryptionKey.getPublic(), 
                                                ENC_KEY,
                                                ENC_CONTENT)
             .setIntercepter(new CBORCryptoUtils.Intercepter() {
                 @Override
                 public CBORObject getCustomData() {
-                    return unencryptedData;
+                    return signatureTag;
                 }
                 @Override
                 public CBORObject wrap(CBORMap map) {
-                    return new CBORTag(OBJECT_ID, map);
+                    return new CBORTag(ENCRYPTED_OBJECT_ID, map);
                 }          
             })
             .setPublicKeyOption(true)
-            .encrypt(signedAuthorization.encode()).encode();
+            .encrypt(dataToBeEncrypted.encode()).encode();
         return CBORDecoder.decode(cbor);
     }
 
-    CBORObject verifyAuthz(CBORObject authorizationResponse, boolean update) {
-
-        // Now, decode/decrypt/verify AuthorizationResponse
-        // Note: this is performed by the Issuer!
-
-        final CBORMap saveCustomData[] = new CBORMap[1];
+    CBORTag issuerDecrypt(CBORObject authorizationResponse, boolean update) {
+        final CBORTag saveCustomData[] = new CBORTag[1];
         byte[] cbor = new CBORAsymKeyDecrypter(new CBORAsymKeyDecrypter.KeyLocator() {
 
             @Override
@@ -265,7 +272,7 @@ public class CreateDocument {
             public void foundData(CBORObject object) {
                 CBORTag cborTag = object.getTag();
                 if (cborTag.getTagNumber() != CBORTag.RESERVED_TAG_COTX ||
-                    !cborTag.getTaggedObject().getArray().get(0).getString().equals(OBJECT_ID)) {
+                    !cborTag.get().getArray().get(0).getString().equals(ENCRYPTED_OBJECT_ID)) {
                         throw new CryptoException("Unknown tag:" + cborTag);
                 }
             }
@@ -274,7 +281,7 @@ public class CreateDocument {
 
             @Override
             public void foundData(CBORObject customData) {
-                saveCustomData[0] = customData.getMap();
+                saveCustomData[0] = customData.getTag();
             }
                                 
         }).decrypt(authorizationResponse);
@@ -282,14 +289,26 @@ public class CreateDocument {
             codeTable("unencrypted-data.txt", saveCustomData[0]);
         }
 
-        // Restore message and verify signature
+        // Restore signed message
 
-        CBORMap restored = CBORDecoder.decode(cbor).getMap();
+        CBORMap decryptedData = CBORDecoder.decode(cbor).getMap();
         if (update) {
-            codeTable("restored.txt", restored);
+            codeTable("restored.txt", decryptedData);
         }
+
+        // It helps having a potent CBOR implementation...
         
-        restored.set(UNENCRYPTED_DATA_LBL, saveCustomData[0]);
+        CBORTag signedData = saveCustomData[0];
+        CBORObject unencryptedData = signedData.get().getArray().get(1);
+        signedData.get().getArray().update(1, decryptedData.set(UNENCRYPTED_DATA_LBL, unencryptedData));
+        return signedData;
+    }
+
+    CBORObject verifyAuthz(CBORObject authorizationResponse, boolean update) {
+
+        // Now, decode/decrypt/verify AuthorizationResponse
+        // Note: this is performed by the Issuer!
+
 
         // We want to 1) enforce public key 2) check key for trust after validation
         PublicKey[] suppliedPublicKey = new PublicKey[1];
@@ -309,7 +328,19 @@ public class CreateDocument {
                 return optionalPublicKey;
             }
 
-        }).validate(AUTHZ_SIGNATURE_LBL, restored);
+        })
+        .setTagPolicy(CBORCryptoUtils.POLICY.MANDATORY, new CBORCryptoUtils.Collector() {
+
+            @Override
+            public void foundData(CBORObject object) {
+                CBORTag cborTag = object.getTag();
+                if (cborTag.getTagNumber() != CBORTag.RESERVED_TAG_COTX ||
+                    !cborTag.get().getArray().get(0).getString().equals(SIGNED_OBJECT_ID)) {
+                        throw new CryptoException("Unknown tag:" + cborTag);
+                }
+            }
+        })
+        .validate(AUTHZ_SIGNATURE_LBL, issuerDecrypt(authorizationResponse, update));
         if (!suppliedPublicKey[0].equals(authorizationKey.getPublic())) {
             throw new CryptoException("Unknown public key");
         }

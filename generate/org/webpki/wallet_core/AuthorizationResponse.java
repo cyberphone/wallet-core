@@ -57,7 +57,7 @@ public class AuthorizationResponse extends TableExecutor {
         return "An " + getTitle() + " consists of a single ${href.cef} object, where the " +
             "outermost element is a ${href.cotx} wrapper as follows:" +
             "<div class='webpkifloat'><div style='padding:1em 2em'>" +
-            "<code>1010([&quot;" + CreateDocument.OBJECT_ID + "&quot;,&nbsp;{<br></code>" +
+            "<code>1010([&quot;" + CreateDocument.ENCRYPTED_OBJECT_ID + "&quot;,&nbsp;{<br></code>" +
             "<div style='padding:1em 0 1em 2em'><i>CEF container...</i></div>" +
             "<code>}])</code>" +
             "</div></div>" +
