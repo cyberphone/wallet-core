@@ -54,8 +54,25 @@ public class SignedAuthorization extends TableExecutor {
         return "Signed Authorization";
     }
 
+
+    @Override
+    String getBeforeText() {
+        return "An " + getTitle() + " consists of a CBOR map wrapped in " +
+            "a ${href.cotx} container as follows:" +
+            "<div class='webpkifloat'><div style='padding:1em 2em'>" +
+            "<code>1010([&quot;" + MessageCommon.SIGNED_AUTHZ_ID + "&quot;,&nbsp;{<br></code>" +
+            "<div style='padding:1em 0 1em 2em'><i>CBOR map...</i></div>" +
+            "<code>}])</code>" +
+            "</div></div>" +
+            "Note that the COTX wrapper is included in the signature process as well." +
+            "<div style='padding-top:0.5em'>" +
+            "The CBOR <code>map</code> keys are as follows:</div>";
+    }
+
     @Override
     String getAfterText() {
-        return "For an example, see ${href.signature-validation}.";
+        return "For an example, see ${href.signature-validation}." +
+            "<p>Note that <code>&quot;" + MessageCommon.SIGNED_AUTHZ_ID + "&quot;</code> " +
+            "represents a temporary name allocation.</p>";
     }
 }

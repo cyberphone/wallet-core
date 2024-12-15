@@ -88,12 +88,14 @@ After receival of the ${href.authorization-request},
 the <code class='entity'>Wallet</code> should display a UI like the following:
 <div class='webpkifloat'><img src='wallet-ui.svg' style='padding:0;width:28em' class='webpkibox'  title='Wallet UI'></div>
 If there are multiple ${href.credential-database} entries
-matching the <code class='entity'>Payee</code>
-request, the <code class='entity'>Payer</code> needs
+matching the ${href.authorization-request},
+the <code class='entity'>Payer</code> needs
 to select (step #3 in the ${href.sequence-diagram}) a suitable
 credential, unless the default (or last used) credential already meets
 the preferences of the <code class='entity'>Payer</code>.
 <p>
+In the <i>non-normative</i> sample UI, credential selection is performed through swiping the card images.
+</p><p>
 If there are no matching payment credentials, the <code class='entity'>Wallet</code>
 <b>must</b> provide the <code class='entity'>Payer</code> with
 a suitable error message and a cancel button. 
@@ -244,8 +246,8 @@ ${encryption-key.jwk}
 <div style='margin-top:0.8em'>Encryption key in COSE format:</div>
 ${encryption-key.txt}
 ${version}
-  API version: 0.54<br>
-  Document version: 2024-12-10<br>
+  API version: 0.55<br>
+  Document version: 2024-12-15<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

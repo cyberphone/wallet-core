@@ -42,10 +42,6 @@ public class CreateDocument {
 
     static final String BANKNET2 = "https://banknet2.org"; 
 
-    static final String ENCRYPTED_OBJECT_ID = "https://saturn.standard/enc/v1";
-
-    static final String SIGNED_OBJECT_ID = "https://saturn.standard/sig/v1";
-
     static final String CREDENTIAL_VERSION = "https://saturn.standard/cred/v1";
 
     static final String PAYEE_HOST = "spaceshop.com";
@@ -209,7 +205,7 @@ public class CreateDocument {
             .setIntercepter(new CBORCryptoUtils.Intercepter() {
                 @Override
                 public CBORObject wrap(CBORMap map) {
-                    return new CBORTag(SIGNED_OBJECT_ID, map);
+                    return new CBORTag(SIGNED_AUTHZ_ID, map);
                 }         
             })
             .sign(AUTHZ_SIGNATURE_LBL, new CBORMap()
@@ -238,7 +234,7 @@ public class CreateDocument {
                 }
                 @Override
                 public CBORObject wrap(CBORMap map) {
-                    return new CBORTag(ENCRYPTED_OBJECT_ID, map);
+                    return new CBORTag(ENCRYPTED_AUTHZ_ID, map);
                 }          
             })
             .setPublicKeyOption(true)
@@ -272,7 +268,7 @@ public class CreateDocument {
             public void foundData(CBORObject object) {
                 CBORTag cborTag = object.getTag();
                 if (cborTag.getTagNumber() != CBORTag.RESERVED_TAG_COTX ||
-                    !cborTag.get().getArray().get(0).getString().equals(ENCRYPTED_OBJECT_ID)) {
+                    !cborTag.get().getArray().get(0).getString().equals(ENCRYPTED_AUTHZ_ID)) {
                         throw new CryptoException("Unknown tag:" + cborTag);
                 }
             }
@@ -335,7 +331,7 @@ public class CreateDocument {
             public void foundData(CBORObject object) {
                 CBORTag cborTag = object.getTag();
                 if (cborTag.getTagNumber() != CBORTag.RESERVED_TAG_COTX ||
-                    !cborTag.get().getArray().get(0).getString().equals(SIGNED_OBJECT_ID)) {
+                    !cborTag.get().getArray().get(0).getString().equals(SIGNED_AUTHZ_ID)) {
                         throw new CryptoException("Unknown tag:" + cborTag);
                 }
             }
