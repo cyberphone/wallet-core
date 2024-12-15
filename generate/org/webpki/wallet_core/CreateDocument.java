@@ -16,10 +16,12 @@ import org.webpki.cbor.CBORAsymKeyDecrypter;
 import org.webpki.cbor.CBORAsymKeyEncrypter;
 import org.webpki.cbor.CBORAsymKeySigner;
 import org.webpki.cbor.CBORAsymKeyValidator;
+import org.webpki.cbor.CBORBytes;
 import org.webpki.cbor.CBORCryptoUtils;
 import org.webpki.cbor.CBORDecoder;
 import org.webpki.cbor.CBORDiagnosticNotation;
 import org.webpki.cbor.CBORFloat;
+import org.webpki.cbor.CBORInt;
 import org.webpki.cbor.CBORKeyPair;
 import org.webpki.cbor.CBORMap;
 import org.webpki.cbor.CBORObject;
@@ -34,7 +36,7 @@ import org.webpki.crypto.KeyEncryptionAlgorithms;
 import org.webpki.jose.JOSEKeyWords;
 import org.webpki.json.JSONObjectReader;
 import org.webpki.json.JSONParser;
-
+import org.webpki.util.HexaDecimal;
 import org.webpki.util.IO;
 import org.webpki.util.UTF8;
 
@@ -57,6 +59,9 @@ public class CreateDocument {
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected payment credential." +
         "<div style='padding-top:0.5em'>See also ${href.credential-database}.</div>";
+
+    static final byte[] INSTANCE_KEY = HexaDecimal.decode(
+        "7fdd851a3b9d2dafc5f0d00030e22b9343900cd42ede4948568a4a2ee655291a");
 
     static final ContentEncryptionAlgorithms ENC_CONTENT = ContentEncryptionAlgorithms.A256GCM;
     static final KeyEncryptionAlgorithms ENC_KEY = KeyEncryptionAlgorithms.ECDH_ES_A128KW;
@@ -166,9 +171,13 @@ public class CreateDocument {
             .set(REFERENCE_ID_LBL, new CBORString(REFERENCE_ID))
             .set(COMMON_NAME_LBL, new CBORString("Space Shop"));
 
-        CBORMap serviceProvider = new CBORMap()
+        CBORMap providerInfo = new CBORMap()
             .set(NETWORK_ID_LBL, new CBORString(BANKNET2))
             .set(PROVIDER_INFO_LBL, new CBORString("mybank.com"));
+
+        CBORMap responseEncryption = new CBORMap()
+            .set(ALGORITHM_LBL, new CBORInt(ENC_CONTENT.getCoseAlgorithmId()))
+            .set(INSTANCE_KEY_LBL, new CBORBytes(INSTANCE_KEY));
 
         CBORMap authorizationRequest = new CBORMap()
             .set(PAYMENT_REQUEST_LBL, paymentRequest)
@@ -184,7 +193,7 @@ public class CreateDocument {
 
         CBORMap unencryptedData = new CBORMap()
             .set(PAYMENT_REQUEST_LBL, paymentRequest)
-            .set(PROVIDER_INFO_LBL, serviceProvider)
+            .set(PROVIDER_INFO_LBL, providerInfo)
             .set(PAYEE_HOST_LBL, new CBORString(PAYEE_HOST))
             .set(TIME_STAMP_LBL, new CBORString(TIME_STAMP));
 
@@ -210,6 +219,7 @@ public class CreateDocument {
             })
             .sign(AUTHZ_SIGNATURE_LBL, new CBORMap()
                 .set(UNENCRYPTED_DATA_LBL, unencryptedData)
+                .set(RESPONSE_ENCRYPTION_LBL, responseEncryption)
                 .set(ACCOUNT_ID_LBL, new CBORString(PAYER_ACCOUNT))
                 .set(SERIAL_NUMBER_LBL, new CBORString(SERIAL_NUMBER))
                 .set(PLATFORM_DATA_LBL, platformData)
@@ -374,6 +384,7 @@ public class CreateDocument {
         replace(new KeyEncryption());
         replace(new UnencryptedData());
         replace(new ProviderInfo());
+        replace(new ResponseEncryption());
         replace(new SignedAuthorization());
 
         innerCount = 0;

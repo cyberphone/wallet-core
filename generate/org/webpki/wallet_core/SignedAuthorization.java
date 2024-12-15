@@ -4,13 +4,14 @@ import static org.webpki.wallet_core.MessageCommon.*;
 
 public class SignedAuthorization extends TableExecutor {
 
-    static final String UNENCRYPTED_DATA_NAME  = "unencryptedData";
-    static final String ACCOUNT_ID_NAME        = "accountId";
-    static final String SERIAL_NUMBER_NAME     = "serialNumber";
-    static final String PLATFORM_DATA_NAME     = "platformData";
-    static final String WALLET_DATA_NAME       = "walletData";
-    static final String LOCATION_NAME          = "location";
-    static final String AUTHZ_SIGNATURE_NAME   = "authzSignature";
+    static final String UNENCRYPTED_DATA_NAME     = "unencryptedData";
+    static final String RESPONSE_ENCRYPTION__NAME = "responseEncryption";
+    static final String ACCOUNT_ID_NAME           = "accountId";
+    static final String SERIAL_NUMBER_NAME        = "serialNumber";
+    static final String PLATFORM_DATA_NAME        = "platformData";
+    static final String WALLET_DATA_NAME          = "walletData";
+    static final String LOCATION_NAME             = "location";
+    static final String AUTHZ_SIGNATURE_NAME      = "authzSignature";
 
     @Override
     public String getTableString() {
@@ -18,6 +19,9 @@ public class SignedAuthorization extends TableExecutor {
 
             .add(UNENCRYPTED_DATA_LBL, UNENCRYPTED_DATA_NAME, Types.MAP,
                 "Holds the ${href.unencrypted-data} object.")
+
+            .add(RESPONSE_ENCRYPTION_LBL, RESPONSE_ENCRYPTION__NAME, Types.MAP,
+                "Holds the ${href.response-encryption} object.")
 
             .add(ACCOUNT_ID_LBL, ACCOUNT_ID_NAME, Types.TSTR,
                 CreateDocument.COPY_ATTRIBUTE)

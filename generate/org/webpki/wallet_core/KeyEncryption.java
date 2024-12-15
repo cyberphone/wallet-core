@@ -8,16 +8,18 @@ public class KeyEncryption extends TableExecutor {
     static final String PUBLIC_KEY_NAME    = "publicKey";
     static final String EPHEMERAL_KEY_NAME = "ephemeralKey";
 
+    static final String ENCRYPTION_ALGORITHM_COPY = 
+        "Copy of the <kbd>" +
+        CredentialDatabaseEntry.ENC_KEY_ALG_NAME +
+        "</kbd> attribute of the selected payment credential in the " +
+        "${href.credential-database}.";
+
     @Override
     String getTableString() {
         return new Table()
             .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, 
                  AuthorizationResponse.ALGORITHM_NAME,
-                 Types.INT,
-                "Copy of the <kbd>" +
-                CredentialDatabaseEntry.ENC_KEY_ALG_NAME +
-                "</kbd> attribute of the selected payment credential in the " +
-                "${href.credential-database}.")
+                 Types.INT, ENCRYPTION_ALGORITHM_COPY)
 
             .add(CBORCryptoConstants.CEF_EPHEMERAL_KEY_LBL, EPHEMERAL_KEY_NAME, Types.MAP,
                 "Ephemeral ECDH public key.")

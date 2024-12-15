@@ -26,7 +26,7 @@ enum ExternalLinks {
 
     RFC8949 ("https://www.rfc-editor.org/rfc/rfc8949.html"),
 
-    EUIDW ("https://ec.europa.eu/digital-building-blocks/sites/display/EUDIGITALIDENTITYWALLET/EU+Digital+Identity+Wallet+Home");
+    EUDIW ("https://ec.europa.eu/digital-building-blocks/sites/display/EUDIGITALIDENTITYWALLET/EU+Digital+Identity+Wallet+Home");
 
     String link;
 
