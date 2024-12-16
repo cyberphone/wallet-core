@@ -120,16 +120,33 @@ Note that the POST <b>must</b> be directed to the same URL as
 used by the GET in ${href.wallet-initiation}.
 In addition, the HTTP <code style='white-space:nowrap'>Content-Type</code>
 header parameter <b>must</b> be set to <code>application/cbor</code>.
+${payee-processing}
+After receiving the ${href.authorization-response} the <code class='entity'>Payee</code>
+<b>must</b> perform a number of validation checks
+on the ${href.unencrypted-data} object including:
+<p>
+<ul style='padding-top:0;margin-top:0'>
+  <li style='padding-top:0'>Verify that the
+    <kbd>paymentRequest</kbd> object is identical to the original request.</li>
+  <li>Verify that the <kbd>providerInfo</kbd> object contains a supported
+    <kbd>networkId</kbd>.</li>
+  <li>Verify that the <kbd>timeStamp</kbd> deviates less than &pm;60 seconds from
+    the current time.</li>
+</ul>
+</p>
+If any validation step fails, the authorization process <b>must</b> be aborted
+including providing the <code class='entity'>Payer</code> with
+a suitable error message,
 ${calling-the-payment-network}
-After receiving the ${href.authorization-response}, the <code class='entity'>Payee</code>
+After successful validation of the ${href.authorization-response},
+the <code class='entity'>Payee</code>
 includes this object in a <i>payment-network-specific</i> request to the designated
 <code class='entity'>Payment</code>&#8201;<code class='entity'>Network</code>
 (provided by the selected payment credential).
 Note that this phase may constitute of <i>multiple</i> request-response pairs.
 ${wallet-termination}
-After successful (or failed) authorization, the 
-${href.authorization-response}
-should return a <code class='entity'>Wallet</code> termination
+After successful (or failed) authorization, the <code class='entity'>Payee</code>
+<b>must</b> return a <code class='entity'>Wallet</code> termination
 message (step #6 in the ${href.sequence-diagram}).
 This message depends on how the payment process was initiated,
 and is currently TBD.

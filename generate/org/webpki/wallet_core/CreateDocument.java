@@ -54,7 +54,7 @@ public class CreateDocument {
 
     static final String SERIAL_NUMBER = "010049255";
 
-    static final String REFERENCE_ID = "20241210.00079";
+    static final String REFERENCE_ID = "20241216.00079";
 
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected payment credential." +
@@ -371,6 +371,7 @@ public class CreateDocument {
         addTocEntry("Wallet Initiation");
         addTocEntry("Wallet Request UI");
         addTocEntry("Payer Authorization");
+        addTocEntry("Payee Processing");
         addTocEntry("Calling the Payment Network");
         addTocEntry("Wallet Termination");
  
