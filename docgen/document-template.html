@@ -175,11 +175,15 @@ In the sample, a <kbd>publicKey</kbd> attribute was used.
 Note that enclosing ${href.cotx} object <b>must</b> be included in
 the decryption process.
 </p>
-The decryption process should return two CBOR objects:
-the ${href.unencrypted-data}
-object which is already supplied in clear:
+<p>
+The decryption process should return two CBOR objects.
+</p>
+1. The ${href.signed-authorization} object where all <code>map</code> objects
+except for the ${href.unencrypted-data} object have been removed.
+Note that this item is already supplied in clear:
 ${unencrypted-data.txt}
-and another object which after decryption should read like the following:
+2. The remaing part of the ${href.signed-authorization} object
+which after decryption should read like the following:
 ${restored.txt}
 ${signature-validation}
 Now combine the objects retrieved during the decryption phase

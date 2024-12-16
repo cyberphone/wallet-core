@@ -16,8 +16,9 @@ public class AuthorizationResponse extends TableExecutor {
         return new Table()
             .add(CBORCryptoConstants.CXF_CUSTOM_DATA_LBL, CUSTOM_DATA_NAME, Types.MAP,
                 "CEF custom (<i>unencrypted</i>) data in the form of a copy of the " +
-                "${href.unencrypted-data} object fetched from the " +
-                "${href.signed-authorization} object.")
+                "${href.signed-authorization} object where all <code>map</code> objects " +
+                "except for the ${href.unencrypted-data} object have been removed." +
+                "<div style='padding-top:0.5em'>Also see ${href.decryption}.</div>")
 
             .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, ALGORITHM_NAME, Types.INT,
                 "Copy of the <kbd>" +
@@ -35,14 +36,10 @@ public class AuthorizationResponse extends TableExecutor {
                 "Holds the CEF ${href.key-encryption} object.")
 
             .add(CBORCryptoConstants.CEF_CIPHER_TEXT_LBL, CIPHER_TEXT_NAME, Types.BSTR,
-                "Encrypted data containing a version of the ${href.signed-authorization} object " +
-                "where the ${href.unencrypted-data} object has been removed <i>after</i> the " +
-                "completed authorization signature process." +
-                "<div style='padding-top:0.5em'>" +
-                "Note that the modified ${href.signed-authorization} " +
-                "<code>map</code> object <b>must</b> be updated (<i>before</i> " +
-                "being encrypted), to reflect the removal of the " +
-                "${href.unencrypted-data} object.</div>")
+                "Encrypted version of the outermost <code>map</code> object " +
+                "of the ${href.signed-authorization} object " +
+                "where the ${href.unencrypted-data} object has been removed." +
+                "<div style='padding-top:0.5em'>Also see ${href.decryption}.</div>")
 
             .getTableString();
     }
