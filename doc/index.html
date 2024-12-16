@@ -154,8 +154,7 @@ header parameter <b>must</b> be set to <code>application/cbor</code>.
 After receiving the <a href='#3.3.authorization-response'>Authorization&nbsp;Response</a> the <code class='entity'>Payee</code>
 <b>must</b> perform a number of validation checks
 on the <a href='#3.5.unencrypted-data'>Unencrypted&nbsp;Data</a> object including:
-<p>
-<ul style='padding-top:0;margin-top:0'>
+<ul style='padding-top:0;margin-top:0.5em'>
   <li style='padding-top:0'>Verify that the
     <kbd>paymentRequest</kbd> object is identical to the original request.</li>
   <li>Verify that the <kbd>providerInfo</kbd> object contains a supported
@@ -163,7 +162,6 @@ on the <a href='#3.5.unencrypted-data'>Unencrypted&nbsp;Data</a> object includin
   <li>Verify that the <kbd>timeStamp</kbd> deviates less than &pm;60 seconds from
     the current time.</li>
 </ul>
-</p>
 If any validation step fails, the authorization process <b>must</b> be aborted
 including providing the <code class='entity'>Payer</code> with
 a suitable error message,
@@ -273,7 +271,6 @@ NDP objects are denoted by a <a href='https://www.ietf.org/archive/id/draft-rund
   <code>1010([</code><kbd>ndpObjectId</kbd><code>,</code><br>
   <div style='padding:1em 0 1em 2em'><i>Additional Parameters</i></div>
   <code>])</code></div></div>
-<p>
 Note that <kbd>ndpObjectId</kbd> URLs <b>must</b> be unique 
 and expressed as CBOR strings (<code>tstr</code>).
 <h5 id='7.2.gas-station-payments'>7.2.&nbsp; Gas&nbsp;Station&nbsp;Payments</h5>
