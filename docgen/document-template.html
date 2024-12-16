@@ -183,8 +183,7 @@ and another object which after decryption should read like the following:
 ${restored.txt}
 ${signature-validation}
 Now combine the objects retrieved during the decryption phase
-by copying the first object (${href.unencrypted-data})
-to a label <code>1</code> of the second object.
+by <i>merging</i> the second <code>map</code> with the first <code>map</code> (${href.unencrypted-data}).
 Note that the length of the resulting <code>map</code> object
 <b>must</b> be updated to reflect the addition of an item.
 This operation effectively <i>recreates</i> the ${href.signed-authorization} object:
@@ -247,8 +246,8 @@ ${encryption-key.jwk}
 <div style='margin-top:0.8em'>Encryption key in COSE format:</div>
 ${encryption-key.txt}
 ${version}
-  API version: 0.55<br>
-  Document version: 2024-12-15<br>
+  API version: 0.56<br>
+  Document version: 2024-12-16<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

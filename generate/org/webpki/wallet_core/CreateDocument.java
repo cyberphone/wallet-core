@@ -199,7 +199,7 @@ public class CreateDocument {
 
         CBORArray platformData = new CBORArray()
             .add(new CBORString("Android"))
-            .add(new CBORString("14.1"));
+            .add(new CBORString("15"));
 
         CBORArray walletData = new CBORArray()
             .add(new CBORString("Saturn"))
@@ -232,7 +232,8 @@ public class CreateDocument {
 
         CBORTag signatureTag = signedAuthorization.getTag();
         CBORMap dataToBeEncrypted = signatureTag.get().getArray().get(1).getMap();
-        signatureTag.get().getArray().update(1, dataToBeEncrypted.remove(UNENCRYPTED_DATA_LBL));
+        signatureTag.get().getArray().update(1, 
+            new CBORMap().set(UNENCRYPTED_DATA_LBL, dataToBeEncrypted.remove(UNENCRYPTED_DATA_LBL)));
  
         byte[] cbor = new CBORAsymKeyEncrypter(encryptionKey.getPublic(), 
                                                ENC_KEY,
@@ -253,7 +254,7 @@ public class CreateDocument {
     }
 
     CBORTag issuerDecrypt(CBORObject authorizationResponse, boolean update) {
-        final CBORTag saveCustomData[] = new CBORTag[1];
+        final CBORObject saveCustomData[] = new CBORObject[1];
         byte[] cbor = new CBORAsymKeyDecrypter(new CBORAsymKeyDecrypter.KeyLocator() {
 
             @Override
@@ -287,7 +288,7 @@ public class CreateDocument {
 
             @Override
             public void foundData(CBORObject customData) {
-                saveCustomData[0] = customData.clone().getTag();
+                saveCustomData[0] = customData;
             }
                                 
         }).decrypt(authorizationResponse);
@@ -304,13 +305,12 @@ public class CreateDocument {
 
         // It helps having a potent CBOR implementation...
         
-        CBORTag signedData = saveCustomData[0];
-        CBORArray object = signedData.get().getArray();
-        object.update(1, decryptedData.set(UNENCRYPTED_DATA_LBL, object.get(1)));
+        CBORTag signedData = saveCustomData[0].clone().getTag();
+        signedData.get().getArray().get(1).getMap().merge(decryptedData);
         return signedData;
     }
 
-    CBORObject verifyAuthz(CBORObject authorizationResponse, boolean update) {
+    CBORObject verifyAuthz(CBORObject signedAuthorization, boolean update) {
 
         // Now, decode/decrypt/verify AuthorizationResponse
         // Note: this is performed by the Issuer!
@@ -346,7 +346,7 @@ public class CreateDocument {
                 }
             }
         })
-        .validate(AUTHZ_SIGNATURE_LBL, issuerDecrypt(authorizationResponse, update));
+        .validate(AUTHZ_SIGNATURE_LBL, issuerDecrypt(signedAuthorization, update));
         if (!suppliedPublicKey[0].equals(authorizationKey.getPublic())) {
             throw new CryptoException("Unknown public key");
         }
