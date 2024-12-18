@@ -17,6 +17,7 @@ public class KeyEncryption extends TableExecutor {
     @Override
     String getTableString() {
         return new Table()
+
             .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, 
                  AuthorizationResponse.ALGORITHM_NAME,
                  Types.INT, ENCRYPTION_ALGORITHM_COPY)

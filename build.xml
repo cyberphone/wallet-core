@@ -1,24 +1,13 @@
 <project name="Wallet Core builder" default="help">
 
   <!-- set properties for this build -->
-  <property name="src.file" location="../src/cbor.js"/>
-  <property name="npm.dir" location="../npm"/>
-  <property name="local.dir" location="../local"/>
-  <property name="npm.index.mjs" location="${npm.dir}/mjs/index.mjs"/>
-  <property name="npm.index.cjs" location="${npm.dir}/cjs/index.cjs"/>
   <property name="temp.dir" location=".tmp"/>
   <property name="webpki.lib.dir" location="../openkeystore/library/dist"/>
-  <property name="authz-key" location="../openkeystore/testdata/keys/ed25519privatekey.jwk"/>
-  <property name="enc-key" location="../openkeystore/testdata/keys/p256privatekey.jwk"/>
+  <property name="authz-key" location="keys/ed25519privatekey.jwk"/>
+  <property name="enc-key" location="keys/p256privatekey.jwk"/>
   <property name="doc.file" location="doc/index.html"/>
   <property name="docgen.dir" location="docgen"/>
   <property name="test.dir" location="../test"/>
-  <property name="browser-test.file" location="../doc/browser-test.html"/>
-  <property name="browser-test-template.file" location="browser-test-template.html"/>
-  <property name="node-test.file" location="../test/test-all.js"/>
-  <property name="node-test-template.file" location="node-test-template.js"/>
-  <property name="npm-test.file" location="../npm/test-all.mjs"/>
-  <property name="npm-test-template.file" location="npm-test-template.js"/>
 
   <property name="debug"  value="on"/>
 

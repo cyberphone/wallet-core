@@ -36,6 +36,7 @@ import org.webpki.crypto.KeyEncryptionAlgorithms;
 import org.webpki.jose.JOSEKeyWords;
 import org.webpki.json.JSONObjectReader;
 import org.webpki.json.JSONParser;
+
 import org.webpki.util.HexaDecimal;
 import org.webpki.util.IO;
 import org.webpki.util.UTF8;
@@ -44,7 +45,7 @@ public class CreateDocument {
 
     static final String BANKNET2 = "https://banknet2.org"; 
 
-    static final String CREDENTIAL_VERSION = "https://saturn.standard/cred/v1";
+    static final String CREDENTIAL_VERSION = "https://cyberphone.github.io/saturn/cred/v1";
 
     static final String PAYEE_HOST = "spaceshop.com";
 

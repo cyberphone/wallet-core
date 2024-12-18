@@ -14,6 +14,7 @@ public class AuthorizationResponse extends TableExecutor {
     @Override
     String getTableString() {
         return new Table()
+
             .add(CBORCryptoConstants.CXF_CUSTOM_DATA_LBL, CUSTOM_DATA_NAME, Types.MAP,
                 "CEF custom (<i>unencrypted</i>) data in the form of a copy of the " +
                 "${href.signed-authorization} object where all <code>map</code> objects " +

@@ -26,6 +26,8 @@ enum ExternalLinks {
 
     RFC8949 ("https://www.rfc-editor.org/rfc/rfc8949.html"),
 
+    WEBAUTHN ("https://www.w3.org/TR/webauthn/"),
+
     EUDIW ("https://ec.europa.eu/digital-building-blocks/sites/display/EUDIGITALIDENTITYWALLET/EU+Digital+Identity+Wallet+Home");
 
     String link;

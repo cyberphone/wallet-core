@@ -122,15 +122,17 @@ In addition, the HTTP <code style='white-space:nowrap'>Content-Type</code>
 header parameter <b>must</b> be set to <code>application/cbor</code>.
 ${payee-processing}
 After receiving the ${href.authorization-response} the <code class='entity'>Payee</code>
-<b>must</b> perform a number of validation checks
+<b>must</b> perform a number of checks
 on the ${href.unencrypted-data} object including:
 <ul style='padding-top:0;margin-top:0.5em'>
   <li style='padding-top:0'>Verify that the
     <kbd>paymentRequest</kbd> object is identical to the original request.</li>
   <li>Verify that the <kbd>providerInfo</kbd> object contains a supported
     <kbd>networkId</kbd>.</li>
-  <li>Verify that the <kbd>timeStamp</kbd> deviates less than &pm;60 seconds from
+  <li>Verify that <kbd>timeStamp</kbd> deviates less than &pm;30 seconds from
     the current time.</li>
+  <li>Verify that <kbd>payeeHost</kbd> matches that of the
+    <code class='entity'>Payee</code>.</li>
 </ul>
 If any validation step fails, the authorization process <b>must</b> be aborted
 including providing the <code class='entity'>Payer</code> with
@@ -197,7 +199,7 @@ The decryption process should return two CBOR objects.
 except for the ${href.unencrypted-data} object have been removed.
 Note that this item is already supplied in clear:
 ${unencrypted-data.txt}
-2. The remaing part of the ${href.signed-authorization} object
+2. The remaining part of the ${href.signed-authorization} object
 which after decryption should read like the following:
 ${restored.txt}
 ${signature-validation}
@@ -264,8 +266,8 @@ ${encryption-key.jwk}
 <div style='margin-top:0.8em'>Encryption key in COSE format:</div>
 ${encryption-key.txt}
 ${version}
-  API version: 0.56<br>
-  Document version: 2024-12-16<br>
+  API version: 0.57<br>
+  Document version: 2024-12-18<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

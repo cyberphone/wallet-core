@@ -10,6 +10,7 @@ public class ProviderInfo extends TableExecutor {
     @Override
     String getTableString() {
         return new Table()
+
             .add(NETWORK_ID_LBL, NETWORK_ID_NAME, Types.TSTR,
                 CreateDocument.COPY_ATTRIBUTE)
 

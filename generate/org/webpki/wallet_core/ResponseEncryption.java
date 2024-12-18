@@ -16,12 +16,6 @@ public class ResponseEncryption extends TableExecutor {
             .add(INSTANCE_KEY_LBL, INSTANCE_KEY_NAME, Types.BSTR,
                 "Random encryption key, initialized for each " +
                 "authorization request." +
-                "<div style='padding-top:0.5em'>The <kbd>" + INSTANCE_KEY_NAME + "</kbd> " +   
-                "is used by the <code class='entity'>Issuer</code> " +
-                "for returning encrypted messages to the <code class='entity'>Payer</code> " +
-                "like &quot;Out&nbsp;of&nbsp;funds&quot; through " +
-                "the regular transaction channel " +
-                "without revealing any personal information to intermediaries.</div>" +
                 "<div style='padding-top:0.5em'>" +
                 "The length of the <kbd>" + INSTANCE_KEY_NAME + 
                 "</kbd> attribute <b>must</b> match the <kbd>" + ALGORITHM_NAME + "</kbd>.</div>")
@@ -32,6 +26,24 @@ public class ResponseEncryption extends TableExecutor {
     @Override
     String getTitle() {
         return "Response Encryption";
+    }
+
+    @Override
+    String getBeforeText() {
+        return 
+            "The " + getTitle() + " object provides a means for an " +
+            "<code class='entity'>Issuer</code> to return " +
+            "messages to the <code class='entity'>Payer</code> " +
+            "like &quot;Out&nbsp;of&nbsp;funds&quot; through " +
+            "the regular transaction channel, and that " +
+            "without revealing any personal information to intermediaries. " +
+            "In addition, " + getTitle()  + " also serves as a strong <i>nonce</i>, " +
+            "ensuring that ${href.signed-authorization} objects become unique, irrespective " +
+            "of ${href.authorization-request} data and time-stamps." +
+            "<div style='padding-top:0.5em'>" +
+            "This concept can also be used to force the <code class='entity'>Payer</code> " +
+            "to provide additional information which could be needed for high-value " +
+            "or &quot;suspicious&quot; transaction requests.</div>";
     }
 
 }
