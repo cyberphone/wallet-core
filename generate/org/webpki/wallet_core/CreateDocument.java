@@ -58,8 +58,8 @@ public class CreateDocument {
     static final String REFERENCE_ID = "20241216.00079";
 
     static final String COPY_ATTRIBUTE =
-        "Copy of the same attribute of the selected payment credential." +
-        "<div style='padding-top:0.5em'>See also ${href.credential-database}.</div>";
+        "Copy of the same attribute of the selected payment credential in " +
+        "the ${href.credential-database}.";
 
     static final byte[] INSTANCE_KEY = HexaDecimal.decode(
         "7fdd851a3b9d2dafc5f0d00030e22b9343900cd42ede4948568a4a2ee655291a");
