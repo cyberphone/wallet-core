@@ -61,7 +61,7 @@ public class SignedAuthorization extends TableExecutor {
 
     @Override
     String getBeforeText() {
-        return "An " + getTitle() + " consists of a CBOR map wrapped in " +
+        return "A " + getTitle() + " consists of a CBOR map wrapped in " +
             "a ${href.cotx} container as follows:" +
             "<div class='webpkifloat'><div style='padding:1em 2em'>" +
             "<code>1010([&quot;" + MessageCommon.SIGNED_AUTHZ_ID + "&quot;,&nbsp;{<br></code>" +

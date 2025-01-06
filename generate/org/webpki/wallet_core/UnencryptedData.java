@@ -44,7 +44,7 @@ public class UnencryptedData extends TableExecutor {
                 "using UTC (T) or local time (Z) format." +
                 "<div style='padding-top:0.5em'>" +
                 "The purpose of the <kbd>" + TIME_STAMP_NAME + "</kbd> attribute is to provide " +
-                "a means for an <code class='entity'>Issuer</code> to verify" +
+                "a means for an <code class='entity'>Issuer</code> to verify " +
                 "the &quot;freshness&quot; of a received ${href.authorization-response}. " +
                 "The recommended method is using a cache holding a hash of the " +
                 "associated ${href.signed-authorization} " +
