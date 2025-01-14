@@ -35,6 +35,17 @@ public class AuthorizationRequest extends TableExecutor {
     String getTitle() {
         return "Authorization Request";
     }
+
+    @Override
+    String getBeforeText() {
+        return "An " + getTitle() + " consists of a CBOR <code>map</code> object, " +
+            "embedded by a ${href.cotx} wrapper:" +
+            "<div class='webpkifloat'><div style='padding:1em 2em'>" +
+            "<code>1010([&quot;" + MessageCommon.AUTHZ_REQUEST_ID + "&quot;,&nbsp;{<br></code>" +
+            "<div style='padding:1em 0 1em 2em'><i>CBOR map...</i></div>" +
+            "<code>}])</code>" +
+            "</div></div>";
+    }
  
     @Override
     String getAfterText() {

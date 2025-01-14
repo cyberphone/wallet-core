@@ -5,7 +5,8 @@ import org.webpki.cbor.CBORInt;
 public class MessageCommon {
 
     // COTX Identifiers
-    public static final String ENCRYPTED_AUTHZ_ID       = "https://cyberphone.github.io/saturn/enc/v1";
+    public static final String AUTHZ_RESPONSE_ID        = "https://cyberphone.github.io/saturn/ares/v1";
+    public static final String AUTHZ_REQUEST_ID         = "https://cyberphone.github.io/saturn/areq/v1";
     public static final String SIGNED_AUTHZ_ID          = "https://cyberphone.github.io/saturn/sig/v1";
 
     public static final String NDP_GAS_ID               = "https://cyberphone.github.io/saturn/ndp/gas";

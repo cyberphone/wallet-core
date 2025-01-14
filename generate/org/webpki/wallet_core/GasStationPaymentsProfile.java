@@ -25,10 +25,6 @@ MessageCommon.NDP_GAS_ID +
 "thus represents an argument to a ${href.payment-request}, " +
 "for a gas station payment with a validity of 2 hours." +
 "<p>" +
-"Note that <code>&quot;" + MessageCommon.NDP_GAS_ID + "&quot;</code> " +
-"represents a temporary name allocation." +
-"</p>" +
-"<p>" +
 "Since non-direct payments differ from one-off payments, the " +
 "<code class='entity'>Wallet</code> UI should also reflect such requests in " +
 "a <i>meaningful</i> way." +

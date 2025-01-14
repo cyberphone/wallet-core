@@ -75,8 +75,6 @@ public class SignedAuthorization extends TableExecutor {
 
     @Override
     String getAfterText() {
-        return "For an example, see ${href.signature-validation}." +
-            "<p>Note that <code>&quot;" + MessageCommon.SIGNED_AUTHZ_ID + "&quot;</code> " +
-            "represents a temporary name allocation.</p>";
+        return "For an example, see ${href.signature-validation}.";
     }
 }

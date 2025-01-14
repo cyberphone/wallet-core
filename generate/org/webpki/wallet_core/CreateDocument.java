@@ -49,13 +49,13 @@ public class CreateDocument {
 
     static final String PAYEE_HOST = "spaceshop.com";
 
-    static final String TIME_STAMP = "2024-12-10T13:28:02-01:00";
+    static final String TIME_STAMP = "2025-01-14T13:28:02-01:00";
 
     static final String PAYER_ACCOUNT = "FR7630002111110020050014382";
 
     static final String SERIAL_NUMBER = "010049255";
 
-    static final String REFERENCE_ID = "20241216.00079";
+    static final String REFERENCE_ID = "20250114.00079";
 
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected payment credential in " +
@@ -180,14 +180,15 @@ public class CreateDocument {
             .set(ALGORITHM_LBL, new CBORInt(ENC_CONTENT.getCoseAlgorithmId()))
             .set(INSTANCE_KEY_LBL, new CBORBytes(INSTANCE_KEY));
 
-        CBORMap authorizationRequest = new CBORMap()
-            .set(PAYMENT_REQUEST_LBL, paymentRequest)
-            .set(SUPPORTED_NETWORKS_LBL, new CBORArray()
-                .add(new CBORString("https://cardnetwork.com"))
-                .add(new CBORString(BANKNET2)))
-            .set(RECEIPT_URL_LBL, new CBORString(
-                "https://" + PAYEE_HOST + 
-                "/receipts/" + REFERENCE_ID + ".MNloPyPahXxr43flXzufdQ"));
+        CBORTag authorizationRequest = new CBORTag(MessageCommon.AUTHZ_REQUEST_ID,
+            new CBORMap()
+                .set(PAYMENT_REQUEST_LBL, paymentRequest)
+                .set(SUPPORTED_NETWORKS_LBL, new CBORArray()
+                    .add(new CBORString("https://cardnetwork.com"))
+                    .add(new CBORString(BANKNET2)))
+                .set(RECEIPT_URL_LBL, new CBORString(
+                    "https://" + PAYEE_HOST + 
+                    "/receipts/" + REFERENCE_ID + ".MNloPyPahXxr43flXzufdQ")));
         codeTable("authz-req.txt", authorizationRequest);
 
         // Create a signed authorization response
@@ -246,7 +247,7 @@ public class CreateDocument {
                 }
                 @Override
                 public CBORObject wrap(CBORMap map) {
-                    return new CBORTag(ENCRYPTED_AUTHZ_ID, map);
+                    return new CBORTag(AUTHZ_RESPONSE_ID, map);
                 }          
             })
             .setPublicKeyOption(true)
@@ -280,7 +281,7 @@ public class CreateDocument {
             public void foundData(CBORObject object) {
                 CBORTag cborTag = object.getTag();
                 if (cborTag.getTagNumber() != CBORTag.RESERVED_TAG_COTX ||
-                    !cborTag.get().getArray().get(0).getString().equals(ENCRYPTED_AUTHZ_ID)) {
+                    !cborTag.get().getArray().get(0).getString().equals(AUTHZ_RESPONSE_ID)) {
                         throw new CryptoException("Unknown tag:" + cborTag);
                 }
             }

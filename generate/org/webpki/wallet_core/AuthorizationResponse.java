@@ -55,7 +55,7 @@ public class AuthorizationResponse extends TableExecutor {
         return "An " + getTitle() + " consists of a single ${href.cef} object, where the " +
             "outermost element is a ${href.cotx} wrapper as follows:" +
             "<div class='webpkifloat'><div style='padding:1em 2em'>" +
-            "<code>1010([&quot;" + MessageCommon.ENCRYPTED_AUTHZ_ID + "&quot;,&nbsp;{<br></code>" +
+            "<code>1010([&quot;" + MessageCommon.AUTHZ_RESPONSE_ID + "&quot;,&nbsp;{<br></code>" +
             "<div style='padding:1em 0 1em 2em'><i>CEF container...</i></div>" +
             "<code>}])</code>" +
             "</div></div>" +
@@ -67,8 +67,6 @@ public class AuthorizationResponse extends TableExecutor {
 
     @Override
     String getAfterText() {
-        return "See also ${href.authorization-processing}."+
-        "<p>Note that <code>&quot;" + MessageCommon.ENCRYPTED_AUTHZ_ID + "&quot;</code> " +
-        "represents a temporary name allocation.</p>";
+        return "See also ${href.authorization-processing}.";
     }
 }
