@@ -2,11 +2,11 @@ package org.webpki.wallet_core;
 
 enum Types {
 
-    ARRAY ("array"), 
-    MAP   ("map"), 
+    ARRAY ("[]"), 
+    MAP   ("{}"), 
     TSTR  ("tstr"), 
     BSTR  ("bstr"), 
-    ANY   ("&quot;</code><i>Any</i><code>&quot;"), 
+    ANY   ("any"), 
     PS    ("&quot;ps&quot;"),
     COTX  ("cotx"),
     INT   ("int");

@@ -3,6 +3,7 @@ package org.webpki.wallet_core;
 public class CredentialDatabaseEntry {
 
     static final String VERSION_NAME           = "version";
+    static final String PREPENDED_PATH_NAME    = "prependedPath";
     static final String CARD_IMAGE_NAME        = "cardImage";
     static final String AUTHZ_KEY_HANDLE_NAME  = "authzKeyHandle";
     static final String AUTHZ_ALG_NAME         = "authzAlg";
@@ -57,10 +58,26 @@ public class CredentialDatabaseEntry {
             ProviderInfo.NETWORK_ID_NAME + "</kbd> identifier. If <kbd>" + 
             ProviderInfo.SERVICE_LOCATOR_NAME + "</kbd> is expressed as a host-name only, " +
             "a <code style='white-space:nowrap'>&quot;/.well-known/&quot;</code> " +
+            "[${href.rfc8615}] URL extension would be used. " +
+            "Note that if <kbd>PROVIDER_PATH_NAME</kbd> is defined it must be prepended, forming " +
+            "URLs like <code style='white-space:nowrap'>https://example.com/path./well-known/" +
+            "saturn-service</code>.</div>" +
+            "<div style='padding-top:0.5em'>See also ${href.provider-info}.</div>");
+
+            add(PREPENDED_PATH_NAME, Types.TSTR,
+            "Payment service URL or host name. " +
+            "This attribute enables the <code class='entity'>Payee</code> " +
+            "to find the end-point of the specific payment service (like a bank), " +
+            "associated with the payment credential." +
+            "<div style='padding-top:0.5em'>" +
+            "How to interpret this attribute is dictated by the <kbd>" +
+            ProviderInfo.NETWORK_ID_NAME + "</kbd> identifier. If <kbd>" + 
+            ProviderInfo.SERVICE_LOCATOR_NAME + "</kbd> is expressed as a host-name only, " +
+            "a <code style='white-space:nowrap'>&quot;/.well-known/&quot;</code> " +
             "[${href.rfc8615}] URL extension would typically be used.</div>" +
             "<div style='padding-top:0.5em'>See also ${href.provider-info}.</div>");
 
-        add(SignedAuthorization.ACCOUNT_ID_NAME, Types.TSTR,
+            add(SignedAuthorization.ACCOUNT_ID_NAME, Types.TSTR,
             "Account identifier associated with the payment credential." +
             "<div style='padding-top:0.5em'>See also ${href.signed-authorization}.</div>");
 

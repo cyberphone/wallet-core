@@ -2,6 +2,8 @@ package org.webpki.wallet_core;
 
 import static org.webpki.wallet_core.MessageCommon.*;
 
+import org.webpki.cbor.CBORCryptoConstants;
+
 public class SignedAuthorization extends TableExecutor {
 
     static final String UNENCRYPTED_DATA_NAME    = "unencryptedData";
@@ -47,7 +49,7 @@ public class SignedAuthorization extends TableExecutor {
                 "This option depends on <code class='entity'>Payer</code> " +
                 "privacy settings.</div>")
 
-            .add(AUTHZ_SIGNATURE_LBL, AUTHZ_SIGNATURE_NAME, Types.MAP,
+            .add(CBORCryptoConstants.CSF_CONTAINER_LBL, AUTHZ_SIGNATURE_NAME, Types.MAP,
                 "Authorization signature using a ${href.csf} object.")
     
             .getTableString();

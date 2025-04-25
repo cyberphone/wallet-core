@@ -11,6 +11,9 @@ public class MessageCommon {
 
     public static final String NDP_GAS_ID               = "https://cyberphone.github.io/saturn/ndp/gas";
 
+    // /.well-known externsion
+    public static final String SATURM_CONFIGURATION     = "saturn-configuration";
+
     // Authorization Request
     public static final CBORInt PAYMENT_REQUEST_LBL     = new CBORInt(1); 
     public static final CBORInt SUPPORTED_NETWORKS_LBL  = new CBORInt(2);
@@ -39,8 +42,6 @@ public class MessageCommon {
     public static final CBORInt PLATFORM_DATA_LBL       = new CBORInt(5);   
     public static final CBORInt WALLET_DATA_LBL         = new CBORInt(6);
     public static final CBORInt LOCATION_LBL            = new CBORInt(7);
-
-    public static final CBORInt AUTHZ_SIGNATURE_LBL     = new CBORInt(-1); 
 
     // Response Encryption
     public static final CBORInt ALGORITHM_LBL           = new CBORInt(1);

@@ -49,13 +49,13 @@ public class CreateDocument {
 
     static final String PAYEE_HOST = "spaceshop.com";
 
-    static final String TIME_STAMP = "2025-01-14T13:28:02-01:00";
+    static final String TIME_STAMP = "2025-04-25T13:28:02-01:00";
 
     static final String PAYER_ACCOUNT = "FR7630002111110020050014382";
 
     static final String SERIAL_NUMBER = "010049255";
 
-    static final String REFERENCE_ID = "20250114.00079";
+    static final String REFERENCE_ID = "20250425.00079";
 
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected payment credential in " +
@@ -213,20 +213,14 @@ public class CreateDocument {
 
             CBORObject signedAuthorization = new CBORAsymKeySigner(authorizationKey.getPrivate())
             .setPublicKey(authorizationKey.getPublic())
-            .setIntercepter(new CBORCryptoUtils.Intercepter() {
-                @Override
-                public CBORObject wrap(CBORMap map) {
-                    return new CBORTag(SIGNED_AUTHZ_ID, map);
-                }         
-            })
-            .sign(AUTHZ_SIGNATURE_LBL, new CBORMap()
+            .sign(new CBORTag(SIGNED_AUTHZ_ID, new CBORMap()
                 .set(UNENCRYPTED_DATA_LBL, unencryptedData)
                 .set(RESPONSE_ENCRYPTION_LBL, responseEncryption)
                 .set(ACCOUNT_ID_LBL, new CBORString(PAYER_ACCOUNT))
                 .set(SERIAL_NUMBER_LBL, new CBORString(SERIAL_NUMBER))
                 .set(PLATFORM_DATA_LBL, platformData)
                 .set(LOCATION_LBL, location)
-                .set(WALLET_DATA_LBL, walletData));
+                .set(WALLET_DATA_LBL, walletData)));
 
         codeTable("signed-authz.txt", signedAuthorization);
 
@@ -244,14 +238,11 @@ public class CreateDocument {
                 @Override
                 public CBORObject getCustomData() {
                     return signatureTag;
-                }
-                @Override
-                public CBORObject wrap(CBORMap map) {
-                    return new CBORTag(AUTHZ_RESPONSE_ID, map);
-                }          
+                }    
             })
             .setPublicKeyOption(true)
-            .encrypt(dataToBeEncrypted.encode()).encode();
+            .encrypt(dataToBeEncrypted.encode(), new CBORTag(AUTHZ_RESPONSE_ID, new CBORMap()))
+            .encode();
         return CBORDecoder.decode(cbor);
     }
 
@@ -348,7 +339,7 @@ public class CreateDocument {
                 }
             }
         })
-        .validate(AUTHZ_SIGNATURE_LBL, issuerDecrypt(signedAuthorization, update));
+        .validate(issuerDecrypt(signedAuthorization, update));
         if (!suppliedPublicKey[0].equals(authorizationKey.getPublic())) {
             throw new CryptoException("Unknown public key");
         }
