@@ -66,9 +66,12 @@ in turn provides links to the formal definitions.
 The Saturn protocol is based on CBOR [${href.rfc8949}] which is a <i>binary</i> interchange format.
 However, for documentation purposes, messages are shown in <i>diagnostic notation</i>.
 </p>
+<p>
 To support cryptographic operations requiring secure transformations of CBOR <code>map</code> objects,
-Saturn relies on an IETF standard currently in development [${href.cde}],
-which defines <i>deterministic encoding</i> of CBOR.
+Saturn relies on a CBOR profile known as ${href.core},
+which (among many things), defines <i>deterministic encoding</i> of CBOR.
+</p>
+Throughout this document, CBOR data types are expressed in CDDL [${href.rfc8610}].
 ${sequence-diagram}
 The sequence diagram below outlines the Saturn protocol: 
 <div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Sequence Diagram'></div>

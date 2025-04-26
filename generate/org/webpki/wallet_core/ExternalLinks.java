@@ -12,7 +12,7 @@ enum ExternalLinks {
 
     COTX  ("https://www.ietf.org/archive/id/draft-rundgren-cotx-04.html"),
 
-    CDE  ("https://datatracker.ietf.org/doc/draft-ietf-cbor-cde/"),
+    CORE  ("https://datatracker.ietf.org/doc/draft-rundgren-cbor-core/"),
 
     RFC8615 ("https://www.rfc-editor.org/rfc/rfc8615"),
 
@@ -23,6 +23,8 @@ enum ExternalLinks {
     ISO4217 ("https://www.iso.org/iso-4217-currency-codes.html"),
 
     RECEIPTS ("https://cyberphone.github.io/doc/defensive-publications/e-receipts.pdf"),
+
+    RFC8610 ("https://www.rfc-editor.org/rfc/rfc8610.html"),
 
     RFC8949 ("https://www.rfc-editor.org/rfc/rfc8949.html"),
 
@@ -41,10 +43,13 @@ enum ExternalLinks {
     }
 
     String getHtml() {
+        String name = toString();
+        if (name.equals(ExternalLinks.CORE.toString())) {
+            name = "CBOR::Core";
+        }
         return "<a href='" + 
                link +
-               "' style='white-space:nowrap'>" +
-               toString() +
+               "' style='white-space:nowrap'>" + name +
                "<img src='xtl.svg' alt='" +
                toString().toLowerCase() + "'></a>";
     }

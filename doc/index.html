@@ -96,9 +96,12 @@ in turn provides links to the formal definitions.
 The Saturn protocol is based on CBOR [<a href='https://www.rfc-editor.org/rfc/rfc8949.html' style='white-space:nowrap'>RFC8949<img src='xtl.svg' alt='rfc8949'></a>] which is a <i>binary</i> interchange format.
 However, for documentation purposes, messages are shown in <i>diagnostic notation</i>.
 </p>
+<p>
 To support cryptographic operations requiring secure transformations of CBOR <code>map</code> objects,
-Saturn relies on an IETF standard currently in development [<a href='https://datatracker.ietf.org/doc/draft-ietf-cbor-cde/' style='white-space:nowrap'>CDE<img src='xtl.svg' alt='cde'></a>],
-which defines <i>deterministic encoding</i> of CBOR.
+Saturn relies on a CBOR profile known as <a href='https://datatracker.ietf.org/doc/draft-rundgren-cbor-core/' style='white-space:nowrap'>CBOR::Core<img src='xtl.svg' alt='core'></a>,
+which (among many things), defines <i>deterministic encoding</i> of CBOR.
+</p>
+Throughout this document, CBOR data types are expressed in CDDL [<a href='https://www.rfc-editor.org/rfc/rfc8610.html' style='white-space:nowrap'>RFC8610<img src='xtl.svg' alt='rfc8610'></a>].
 <h5 id='2.1.sequence-diagram'>2.1.&nbsp; Sequence&nbsp;Diagram</h5>
 The sequence diagram below outlines the Saturn protocol: 
 <div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Sequence Diagram'></div>
