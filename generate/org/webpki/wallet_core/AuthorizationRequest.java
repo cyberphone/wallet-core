@@ -18,7 +18,7 @@ public class AuthorizationRequest extends TableExecutor {
             .add(SUPPORTED_NETWORKS_LBL, SUPPORTED_NETWORKS_NAME, Types.ARRAY,
                 "Non-empty list of payment network/method identifiers " +
                 "that the <code class='entity'>Payee</code> supports. " +
-                "Network identifiers are expressed as CBOR strings (tstr)." +
+                "Network identifiers are expressed as CBOR strings (<code>tstr</code>)." +
                 "<div style='padding-top:0.5em'>" +
                 "See also <kbd>" + ProviderInfo.NETWORK_ID_NAME + "</kbd> in the " +
                 "${href.credential-database}.</div>")
@@ -50,8 +50,6 @@ public class AuthorizationRequest extends TableExecutor {
     @Override
     String getAfterText() {
         return "The " + getTitle() + " represents the primary " +
-            "<code class='entity'>Payee</code> to <code class='entity'>Wallet</code> message. " + 
-            "In same-device Web contexts this message is also associated " +
-            "with the invocation of the <code class='entity'>Wallet</code>.";
+            "<code class='entity'>Payee</code> to <code class='entity'>Wallet</code> message.";
     }
 }
