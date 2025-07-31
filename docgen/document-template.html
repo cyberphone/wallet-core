@@ -26,8 +26,7 @@ src="ipr.svg" alt="IPR declaration" title="IPR declaration">
 <h3 style="text-align:center;font-weight:normal;font-size:1.5em">Saturn - Payment Authorization Wallet</h3>
 <i>Disclaimer: this is a system in development, subject to change without notice.</i>
 <p>
-Copyright Notice: this document is furnished under an
-<a href='https://github.com/cyberphone/wallet-core/blob/main/LICENSE'>MIT license</a>.
+Copyright Notice: this document is furnished under an ${href.license}.
 </p>
 <h3>Table of Contents</h3>
 <div class='webpkifloat'><div>
@@ -75,13 +74,11 @@ Throughout this document, CBOR data types are expressed in CDDL [${href.rfc8610}
 ${sequence-diagram}
 The sequence diagram below outlines the Saturn protocol: 
 <div class='webpkifloat'><img src='sequence-diagram.png' class='webpkibox' style='width:50em' title='Sequence Diagram'></div>
-Payer icon provided through the courtesy of 
-<a href='https://commons.wikimedia.org/wiki/File:Crystal_Clear_kdm_user_female.svg'>wikimedia.org<img src='xtl.svg' alt='payer'></a>.
+Payer icon provided through the courtesy of ${href.woman}.
 ${wallet-initiation}
 The payment process is initiated when the <code class='entity'>Payer</code> hits a &quot;Pay&quot;
 button on the Web or scans a QR-code, returning a <code class='entity'>Wallet</code> activation URL.
-For invocation over the Web, the W3C <a href='https://www.w3.org/TR/payment-request/'>Payment&nbsp;Request</a>
-API is a suitable choice.
+For invocation over the Web, the W3C ${href.payreq} API is a suitable choice.
 <div style='margin-top:1em'>
 The <code class='entity'>Wallet</code> should then use the received URL for performing an HTTP&nbsp;GET
 (step #1 in the ${href.sequence-diagram}) to the <code class='entity'>Payee</code> service.
@@ -286,10 +283,8 @@ The following table shows the <i>minimum</i> algorithm support required:
 ${security-considerations}
 TBD.
 ${test-vectors}
-Equipped with an appropriate diagnostic notation parser like
-<a href='https://cyberphone.github.io/CBOR.js/doc/playground.html'>
-https://cyberphone.github.io/CBOR.js/doc/playground.html
-</a> and ${href.cef}/${href.csf} support, the ${href.payer-authorization} sample
+Equipped with an appropriate diagnostic notation parser like ${href.playground}
+and ${href.cef}/${href.csf} support, the ${href.payer-authorization} sample
 should be possible to decrypt and validate, using the following sample keys.
 <div style='margin-top:0.8em'>Authorization key in JWK format:</div>
 ${authorization-key.jwk}

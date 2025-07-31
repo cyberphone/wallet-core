@@ -12,7 +12,7 @@ enum ExternalLinks {
 
     COTX  ("https://www.ietf.org/archive/id/draft-rundgren-cotx-04.html"),
 
-    CORE  ("https://datatracker.ietf.org/doc/draft-rundgren-cbor-core/"),
+    CORE  ("https://datatracker.ietf.org/doc/draft-rundgren-cbor-core/", "CBOR::Core"),
 
     RFC8615 ("https://www.rfc-editor.org/rfc/rfc8615"),
 
@@ -22,7 +22,7 @@ enum ExternalLinks {
 
     ISO4217 ("https://www.iso.org/iso-4217-currency-codes.html"),
 
-    RECEIPTS ("https://cyberphone.github.io/doc/defensive-publications/e-receipts.pdf"),
+    RECEIPTS ("https://cyberphone.github.io/doc/defensive-publications/signed-e-receipts.pdf", "e-Receipts"),
 
     RFC8610 ("https://www.rfc-editor.org/rfc/rfc8610.html"),
 
@@ -30,12 +30,26 @@ enum ExternalLinks {
 
     WEBAUTHN ("https://www.w3.org/TR/webauthn/"),
 
+    PAYREQ ("https://www.w3.org/TR/payment-request/", "Payment Request"),
+
+    LICENSE ("https://github.com/cyberphone/wallet-core/blob/main/LICENSE", "MIT license"),
+
+    WOMAN ("https://commons.wikimedia.org/wiki/File:Crystal_Clear_kdm_user_female.svg", "wikimedia.org"),
+
+    PLAYGROUND ("https://cyberphone.github.io/CBOR.js/doc/playground.html", "CBOR Playground"),
+
     EUDIW ("https://ec.europa.eu/digital-building-blocks/sites/display/EUDIGITALIDENTITYWALLET/EU+Digital+Identity+Wallet+Home");
 
     String link;
+    String actualName;
+
+    ExternalLinks(String link, String actualName) {
+        this.link = link;
+        this.actualName = actualName;
+    }
 
     ExternalLinks(String link) {
-        this.link = link;
+        this(link, null);
     }
 
     String getHolder() {
@@ -43,10 +57,7 @@ enum ExternalLinks {
     }
 
     String getHtml() {
-        String name = toString();
-        if (name.equals(ExternalLinks.CORE.toString())) {
-            name = "CBOR::Core";
-        }
+        String name = actualName == null? toString() : actualName;
         return "<a href='" + 
                link +
                "' style='white-space:nowrap'>" + name +
