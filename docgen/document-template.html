@@ -80,10 +80,14 @@ Payer icon provided through the courtesy of
 ${wallet-initiation}
 The payment process is initiated when the <code class='entity'>Payer</code> hits a &quot;Pay&quot;
 button on the Web or scans a QR-code, returning a <code class='entity'>Wallet</code> activation URL.
+For invocation over the Web, the W3C <a href='https://www.w3.org/TR/payment-request/'>Payment&nbsp;Request</a>
+API is a suitable choice.
+<div style='margin-top:1em'>
 The <code class='entity'>Wallet</code> should then use the received URL for performing an HTTP&nbsp;GET
 (step #1 in the ${href.sequence-diagram}) to the <code class='entity'>Payee</code> service.
 This operation should return an ${href.authorization-request} object
 (step #2 in the ${href.sequence-diagram}) like the following:
+</div>
 ${authz-req.txt}
 Note that the <code class='entity'>Payee</code> service <b>must</b> set the
 HTTP <code style='white-space:nowrap'>Content-Type</code> header parameter

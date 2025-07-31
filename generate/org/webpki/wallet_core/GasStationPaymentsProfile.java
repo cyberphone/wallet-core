@@ -15,7 +15,7 @@ MessageCommon.NDP_GAS_ID +
 "&quot;</code>, " +
 "while the <i>Additional&nbsp;Parameters</i> consist of single CBOR " +
 "integer (<code>int</code>) holding the time " +
-"in minutes (30-3600), the reservation will remain " +
+"in minutes (30-2880), the reservation will remain " +
 "valid before being automatically revoked by the account-holding entity. " +
 "It is recommended to have a margin of at least 15 minutes." +
 "</p>" +
