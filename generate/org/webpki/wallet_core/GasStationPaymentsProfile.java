@@ -14,16 +14,16 @@ class GasStationPaymentsProfile {
 MessageCommon.NDP_GAS_ID +
 "&quot;</code>, " +
 "while the <i>Additional&nbsp;Parameters</i> consist of single CBOR " +
-"integer (<code>int</code>) holding the " +
-"number of hours (1-24) the reservation will remain " +
+"integer (<code>int</code>) holding the time " +
+"in minutes (30-3600), the reservation will remain " +
 "valid before being automatically revoked by the account-holding entity. " +
 "It is recommended to have a margin of at least 15 minutes." +
 "</p>" +
 "The CBOR object " +
 "<div class='webpkifloat'><div style='padding:1em 2em'>" +
-"<code>1010([&quot;" + MessageCommon.NDP_GAS_ID  + "&quot;, 2])</code></div></div>" +
+"<code>1010([&quot;" + MessageCommon.NDP_GAS_ID  + "&quot;, 120])</code></div></div>" +
 "thus represents an argument to a ${href.payment-request}, " +
-"for a gas station payment with a validity of 2 hours." +
+"for a gas station payment with a validity of 120 minutes." +
 "<p>" +
 "Since non-direct payments differ from one-off payments, the " +
 "<code class='entity'>Wallet</code> UI should also reflect such requests in " +

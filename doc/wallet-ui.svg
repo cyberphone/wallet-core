@@ -69,7 +69,7 @@
     </g>
 
     <g fill='white' font-family='sans-serif' letter-spacing='1.5' font-size='18'>
-        <text x='40' y='21' font-size='18'>spaceshop.com</text>
+        <text x='200' y='21' font-size='18' text-anchor='middle'>spaceshop.com</text>
         <text x='94' y='271' text-anchor='end'>Payee</text>
         <text x='116' y='271'>Space Shop</text>
         <text x='94' y='324' text-anchor='end'>Total</text>
