@@ -19,7 +19,7 @@ public class AuthorizationResponse extends TableExecutor {
                 "CEF custom (<i>unencrypted</i>) data in the form of a copy of the " +
                 "${href.signed-authorization} object where all <code>map</code> objects " +
                 "except for the ${href.unencrypted-data} object have been removed." +
-                "<div style='padding-top:0.5em'>Also see ${href.decryption}.</div>")
+                "<div style='padding-top:0.5em'>See also ${href.decryption}.</div>")
 
             .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, ALGORITHM_NAME, Types.INT,
                 "Copy of the <kbd>" +
@@ -40,7 +40,7 @@ public class AuthorizationResponse extends TableExecutor {
                 "Encrypted version of the outermost <code>map</code> object " +
                 "of the ${href.signed-authorization} object " +
                 "where the ${href.unencrypted-data} object has been removed." +
-                "<div style='padding-top:0.5em'>Also see ${href.decryption}.</div>")
+                "<div style='padding-top:0.5em'>See also ${href.decryption}.</div>")
 
             .getTableString();
     }
