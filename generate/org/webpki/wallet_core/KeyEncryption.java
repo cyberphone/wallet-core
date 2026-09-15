@@ -20,7 +20,7 @@ public class KeyEncryption extends TableExecutor {
 
             .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, 
                  AuthorizationResponse.ALGORITHM_NAME,
-                 Types.INT, ENCRYPTION_ALGORITHM_COPY)
+                 Types.INT32, ENCRYPTION_ALGORITHM_COPY)
 
             .add(CBORCryptoConstants.CEF_EPHEMERAL_KEY_LBL, EPHEMERAL_KEY_NAME, Types.MAP,
                 "Ephemeral ECDH public key.")

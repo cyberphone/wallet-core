@@ -21,7 +21,7 @@ public class AuthorizationResponse extends TableExecutor {
                 "except for the ${href.unencrypted-data} object have been removed." +
                 "<div style='padding-top:0.5em'>See also ${href.decryption}.</div>")
 
-            .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, ALGORITHM_NAME, Types.INT,
+            .add(CBORCryptoConstants.CXF_ALGORITHM_LBL, ALGORITHM_NAME, Types.INT32,
                 "Copy of the <kbd>" +
                 CredentialDatabaseEntry.ENC_CONTENT_ALG_NAME +
                 "</kbd> attribute of the selected payment credential in the " +

@@ -9,7 +9,7 @@ enum Types {
     ANY   ("any"), 
     PS    ("&quot;ps&quot;"),
     COTX  ("cotx"),
-    INT   ("int");
+    INT32 ("int32");
 
     String html;
 

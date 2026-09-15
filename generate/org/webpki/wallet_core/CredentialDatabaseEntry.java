@@ -95,7 +95,7 @@ public class CredentialDatabaseEntry {
             "Card images <b>must</b> be in ${href.svg} format and tentatively having " +
             "a size of <code>300&times;180</code> pixels.</div>");
 
-        add(AUTHZ_ALG_NAME, Types.INT,
+        add(AUTHZ_ALG_NAME, Types.INT32,
             "COSE signature algorithm to use for creating " +
             "${href.signed-authorization} objects.");
 
@@ -107,11 +107,11 @@ public class CredentialDatabaseEntry {
             "Authorization public key for inclusion in " +
             "${href.signed-authorization} objects.");
 
-        add(ENC_CONTENT_ALG_NAME, Types.INT,
+        add(ENC_CONTENT_ALG_NAME, Types.INT32,
             "COSE content encryption algorithm to use for creating " +
             "${href.authorization-response} objects.");
 
-        add(ENC_KEY_ALG_NAME, Types.INT,
+        add(ENC_KEY_ALG_NAME, Types.INT32,
             "COSE key encryption algorithm to use for creating " +
             "${href.authorization-response} objects.");
 

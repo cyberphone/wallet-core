@@ -10,7 +10,7 @@ public class ResponseEncryption extends TableExecutor {
     @Override
     String getTableString() {
         return new Table()
-            .add(ALGORITHM_LBL, ALGORITHM_NAME, Types.INT,
+            .add(ALGORITHM_LBL, ALGORITHM_NAME, Types.INT32,
                 KeyEncryption.ENCRYPTION_ALGORITHM_COPY)
 
             .add(INSTANCE_KEY_LBL, INSTANCE_KEY_NAME, Types.BSTR,
