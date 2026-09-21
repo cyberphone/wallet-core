@@ -10,6 +10,7 @@ public class SignedAuthorization extends TableExecutor {
     static final String RESPONSE_ENCRYPTION_NAME = "responseEncryption";
     static final String ACCOUNT_ID_NAME          = "accountId";
     static final String SERIAL_NUMBER_NAME       = "serialNumber";
+    static final String TIME_STAMP_NAME          = "timeStamp";
     static final String PLATFORM_DATA_NAME       = "platformData";
     static final String WALLET_DATA_NAME         = "walletData";
     static final String LOCATION_NAME            = "location";
@@ -30,6 +31,29 @@ public class SignedAuthorization extends TableExecutor {
 
             .add(SERIAL_NUMBER_LBL, SERIAL_NUMBER_NAME, Types.TSTR,
                 CreateDocument.COPY_ATTRIBUTE)
+
+            .add(TIME_STAMP_LBL, TIME_STAMP_NAME, Types.TSTR,
+                "ISO date-time string [${href.rfc3339}] " +
+                "using UTC (T) or local time (Z) format." +
+                "<div style='padding-top:0.5em'>" +
+                "The purpose of the <kbd>" + TIME_STAMP_NAME + "</kbd> attribute is to provide " +
+                "a means for an <code class='entity'>Issuer</code> to verify " +
+                "the &quot;freshness&quot; of a received ${href.authorization-response}. " +
+                "The recommended method is using a cache holding a hash of the " +
+                "associated ${href.signed-authorization} " +
+                "and its <kbd>" + TIME_STAMP_NAME + "</kbd>, " +
+                "where the latter is used to automatically remove a cache entry when the " +
+                "authorization is considered to be expired. " +
+                "This arrangement is either used for protection against replay, " +
+                "or for supporting <i>idempotent</i> operation.</div>" +
+                "<div style='padding-top:0.5em'>" +
+                "Note that authorizations that already have expired or are too new <b>must</b> " +
+                "be rejected.</div>" +
+                "<div style='padding-top:0.5em'>" +
+                "<i>Tentative</i> lower limit: " +
+                "<kbd>" + TIME_STAMP_NAME + "</kbd><code> &gt; currentTime - 600s</code><br>" +
+                "<i>Tentative</i> higher limit: " +
+                "<kbd>" + TIME_STAMP_NAME + "</kbd><code> &lt; currentTime + 60s</code></div>")
 
             .add(PLATFORM_DATA_LBL, PLATFORM_DATA_NAME, Types.ARRAY,
                 "Array holding the name and version of the operating system in " +

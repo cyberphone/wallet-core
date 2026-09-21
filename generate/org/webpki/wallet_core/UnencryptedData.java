@@ -7,7 +7,6 @@ public class UnencryptedData extends TableExecutor {
     static final String PAYMENT_REQUEST_NAME  = "paymentRequest";
     static final String PROVIDER_INFO_NAME    = "providerInfo";
     static final String PAYEE_HOST_NAME       = "payeeHost";
-    static final String TIME_STAMP_NAME       = "timeStamp";
 
     @Override
     String getTableString() {
@@ -38,29 +37,6 @@ public class UnencryptedData extends TableExecutor {
                 "<div style='padding-top:0.5em'>" +
                 "The security of this arrangement also depends on that forwarded " + 
                 "<code class='entity'>Payee</code> requests are properly authenticated.</div>")
-
-            .add(TIME_STAMP_LBL, TIME_STAMP_NAME, Types.TSTR,
-                "ISO date-time string [${href.rfc3339}] " +
-                "using UTC (T) or local time (Z) format." +
-                "<div style='padding-top:0.5em'>" +
-                "The purpose of the <kbd>" + TIME_STAMP_NAME + "</kbd> attribute is to provide " +
-                "a means for an <code class='entity'>Issuer</code> to verify " +
-                "the &quot;freshness&quot; of a received ${href.authorization-response}. " +
-                "The recommended method is using a cache holding a hash of the " +
-                "associated ${href.signed-authorization} " +
-                "and its <kbd>" + TIME_STAMP_NAME + "</kbd>, " +
-                "where the latter is used to automatically remove a cache entry when the " +
-                "authorization is considered to be expired. " +
-                "This arrangement is either used for protection against replay, " +
-                "or for supporting <i>idempotent</i> operation.</div>" +
-                "<div style='padding-top:0.5em'>" +
-                "Note that authorizations that already have expired or are too new <b>must</b> " +
-                "be rejected.</div>" +
-                "<div style='padding-top:0.5em'>" +
-                "<i>Tentative</i> lower limit: " +
-                "<kbd>" + TIME_STAMP_NAME + "</kbd><code> &gt; currentTime - 600s</code><br>" +
-                "<i>Tentative</i> higher limit: " +
-                "<kbd>" + TIME_STAMP_NAME + "</kbd><code> &lt; currentTime + 60s</code></div>")
 
             .getTableString();
     }
