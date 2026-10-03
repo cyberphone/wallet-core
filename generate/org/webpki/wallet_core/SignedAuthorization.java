@@ -90,7 +90,7 @@ public class SignedAuthorization extends TableExecutor {
         return "A " + getTitle() + " consists of a CBOR map wrapped in " +
             "a ${href.cotx} container as follows:" +
             "<div class='webpkifloat'><div style='padding:1em 2em'>" +
-            "<code>1010([&quot;" + MessageCommon.SIGNED_AUTHZ_ID + "&quot;,&nbsp;{<br></code>" +
+            "<code>1010([&quot;" + MessageCommon.AUTHZ_RESPONSE_ID + "&quot;,&nbsp;{<br></code>" +
             "<div style='padding:1em 0 1em 2em'><i>CBOR map...</i></div>" +
             "<code>}])</code>" +
             "</div></div>" +

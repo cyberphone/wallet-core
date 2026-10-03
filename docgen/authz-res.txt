@@ -1,19 +1,17 @@
 1010(["https://cyberphone.github.io/saturn/ares/v1", {
-  0: 1010(["https://cyberphone.github.io/saturn/sig/v1", {
+  0: {
     1: {
-      1: {
-        1: "Space Shop",
-        2: "600.00",
-        3: "EUR",
-        4: "20260921.00079"
-      },
-      2: {
-        1: "https://banknet2.org",
-        2: "mybank.com"
-      },
-      3: "spaceshop.com"
-    }
-  }]),
+      1: "Space Shop",
+      2: "600.00",
+      3: "EUR",
+      4: "20261002.00079"
+    },
+    2: {
+      1: "https://banknet2.org",
+      2: "mybank.com"
+    },
+    3: "spaceshop.com"
+  },
   1: 3,
   2: {
     1: -29,
@@ -26,12 +24,12 @@
     7: {
       1: 2,
       -1: 1,
-      -2: h'f9e2269b093e0cda003416adaa8a633a6a375a42d2baa4162f001f5a3ec951bb',
-      -3: h'b4d5455a297db3884db9167fb8cf376bea3f655f725e530de810e746365379e5'
+      -2: h'0e32058e38d99ffd237c2d1b6289487970d14823a09e4779fe21cdbe6e16f802',
+      -3: h'31d4588f1bbb8d302ad502b4c00fe1711697340e1d5899c72d568d33059c11ad'
     },
-    10: h'24f389b83b65a723328652ec9cfbfd04fea048d696f8848cf9e2b721f53c0138b23b7c391e1edb2b'
+    10: h'951cb0bad275c0c09b9d2ea3ff132b806c9b65fc5531142808193c410203dd6e58e1887499ddc595'
   },
-  8: h'db5a44a3743d4d04f896fd6edf69fe79',
-  9: h'639f9f80f2d07315c912bea1',
-  10: h'82cf1b4a108f5c71af2bda401859917cd7f30cbe2d4caa942de3b093eef6f6797244933acfc6ee022a0ad1ac969afda909fef76e5cda3b9eef086353141271a0bea0139ae885f9f80549eb9894008c3c63fc0af8cd567a706bb8443e6bd6fde43d45a0086a5c99f9e6a9d185c34ffa6a8e1fb20bc575ceef8a479ccd2c2cd0f4e7376698ebeb89390fd572f05015d3f09e35ceb4a5b904b1aed8ad2706be635757d0540707ef57dee0d78484a1afc70b87b6687fd45de639fbc476195eac95f6fa3cd4ffd0c2d834acde7940beb482738ef3d467c448241a73143dafc6e0e17f0e0b64b001b2cd3ebedb0a86f6d3430ee8e7809c48cf173bc3343d5f143fb1d3a390f8d5750b189e3b4dcc9defff'
+  8: h'fdf20fd6784fbc6ef07e7915b1a2aaff',
+  9: h'cddc2f4a14476f3a13aafe95',
+  10: h'9dfe13b227ba9edbb68440865ea28220fa7287231e4c31e9626547adde183378478d70d8a7934c770e3d36db505048a100ec2ab9363b28caa79a2b9d4ff413c7a2756e03909be8448c1e2d0409c3e7327c6aa715cccfad643471ef5bb8e95f7a011f9f051b87dcdb8385481914f045247615702f0460814c9583799896cbb4e0e237b2d7796d7de5c5548ae98fb57a5534e3fb22b75ac02094f32c303977afb3a94d962f037201366b69d46d4f273268fa05ed2655bd3ff3a429131b062c1f2a8ad2b8555a5e3d7ecf1e5296c9d310b79490cba117f093db8ce90cf03cf8c2c563e0c92b5d5ca5ce0b1c48553c4d4363710c8b4a7f62b2488ec55c0a684fa05ee4a687bf5f850ae9f3690c0aae87'
 }])
