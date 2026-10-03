@@ -248,7 +248,7 @@ public class CreateDocument {
     }
 
     CBORObject issuerDecrypt(CBORObject authorizationResponse, boolean update) {
-        final CBORMap unencryptedData[] = new CBORMap[1];
+        final CBORObject unencryptedData[] = new CBORObject[1];
         final String authzObjectId[] = new String[1];
 
         byte[] cbor = new CBORAsymKeyDecrypter(new CBORAsymKeyDecrypter.KeyLocator() {
@@ -285,7 +285,7 @@ public class CreateDocument {
             @Override
             public void foundData(CBORObject customData) {
                 // Creative reuse of label 0 saves 2 bytes.
-                unencryptedData[0] = new CBORMap().set(UNENCRYPTED_DATA_LBL, customData);
+                unencryptedData[0] = customData;
             }
                                 
         }).decrypt(authorizationResponse);
@@ -303,7 +303,9 @@ public class CreateDocument {
 
         // It helps having a potent CBOR implementation...
         
-        return new CBORTag(authzObjectId[0], unencryptedData[0].merge(decryptedData));
+        return new CBORTag(authzObjectId[0], 
+                           new CBORMap().set(UNENCRYPTED_DATA_LBL, 
+                                             unencryptedData[0]).merge(decryptedData));
     }
 
     CBORObject verifyAuthz(CBORObject authorizationResponse, boolean update) {

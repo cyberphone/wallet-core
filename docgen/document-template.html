@@ -215,13 +215,18 @@ ${unencrypted-data.txt}
 which after decryption should read like the following:
 ${restored.txt}
 ${signature-validation}
-Now combine the objects retrieved during the decryption phase
-by <i>merging</i> the second <code>map</code> with the first <code>map</code> (${href.unencrypted-data}).
-Note that the length of the resulting <code>map</code> object
-<b>must</b> be updated to reflect the addition of an item.
-Then wrap the resulting <code>map</code> object in the
-Authorization Response ${href.cotx} object.
-These operations effectively <i>recreate</i> the ${href.signed-authorization} object:
+For validating the the ${href.signed-authorization} object, it must be
+recreated using the following steps:
+<ul style='padding-top:0;margin-top:0'>
+  <li style='padding-top:0.5em'>Wrap the ${href.unencrypted-data} object 
+    obtained in ${href.decryption} in a CBOR 
+    <code>map</code> using the <code>int</code> label <code>1</code>.</li>
+  <li>Merge the previous <code>map</code> object with the <i>decrypted</i> 
+    <code>map</code> object obtained in ${href.decryption}.</li>
+  <li>Wrap the resulting <code>map</code> object in an
+     Authorization Response ${href.cotx} object.</li>
+</ul>
+Applied to the example, the ${href.signed-authorization} object should read as follows:
 ${signed-authz.txt}
 Since this object contains a ${href.csf} <kbd>publicKey</kbd>
 attribute, it can be validated using &quot;as&nbsp;is&quot;.
