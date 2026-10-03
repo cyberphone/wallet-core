@@ -1,6 +1,7 @@
 package org.webpki.wallet_core;
 
 import org.webpki.cbor.CBORInt;
+import org.webpki.cbor.CBORCryptoConstants;
 
 public class MessageCommon {
 
@@ -33,7 +34,7 @@ public class MessageCommon {
     public static final CBORInt SERVICE_LOCATOR_LBL     = new CBORInt(2);
 
     // Signed Authorization
-    public static final CBORInt UNENCRYPTED_DATA_LBL    = new CBORInt(0);
+    public static final CBORInt UNENCRYPTED_DATA_LBL    = CBORCryptoConstants.CXF_CUSTOM_DATA_LBL;
     public static final CBORInt RESPONSE_ENCRYPTION_LBL = new CBORInt(1);
     public static final CBORInt ACCOUNT_ID_LBL          = new CBORInt(2);
     public static final CBORInt SERIAL_NUMBER_LBL       = new CBORInt(3);

@@ -284,6 +284,7 @@ public class CreateDocument {
 
             @Override
             public void foundData(CBORObject customData) {
+                // Creative reuse of label 0 saves 2 bytes.
                 unencryptedData[0] = new CBORMap().set(UNENCRYPTED_DATA_LBL, customData);
             }
                                 

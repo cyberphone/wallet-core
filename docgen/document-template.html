@@ -219,7 +219,9 @@ Now combine the objects retrieved during the decryption phase
 by <i>merging</i> the second <code>map</code> with the first <code>map</code> (${href.unencrypted-data}).
 Note that the length of the resulting <code>map</code> object
 <b>must</b> be updated to reflect the addition of an item.
-This operation effectively <i>recreates</i> the ${href.signed-authorization} object:
+Then wrap the resulting <code>map</code> object in the
+Authorization Response ${href.cotx} object.
+These operations effectively <i>recreate</i> the ${href.signed-authorization} object:
 ${signed-authz.txt}
 Since this object contains a ${href.csf} <kbd>publicKey</kbd>
 attribute, it can be validated using &quot;as&nbsp;is&quot;.
