@@ -3,6 +3,7 @@ package org.webpki.wallet_core;
 public class CredentialDatabaseEntry {
 
     static final String VERSION_NAME           = "version";
+    static final String CURRENCIES             = "currencies";
     static final String CARD_IMAGE_NAME        = "cardImage";
     static final String AUTHZ_KEY_HANDLE_NAME  = "authzKeyHandle";
     static final String AUTHZ_ALG_NAME         = "authzAlg";
@@ -35,6 +36,15 @@ public class CredentialDatabaseEntry {
             "Since credential data may evolve over time, versioning is necessary. " +
             "This specification covers version: " +
             "<code style='white-space:nowrap'>" + CreateDocument.CREDENTIAL_VERSION + "</code>.");
+
+        add(CURRENCIES, Types.ARRAY,
+            "Non-empty list of supported currencies expressed in the ${href.iso4217} " +
+            "<i>alphabetical</i> format. " +
+            "In the case the <kbd>currency</kbd> element of the ${href.payment-request} " +
+            "does not match any of the listed <kbd>currencies</kbd> of the " +
+            "selected payment credential, the <code class='entity'>Wallet</code> UI " +
+            "should inform the <code class='entity'>Payer</code> that " +
+            "currency conversion fees may apply.");
 
         add(ProviderInfo.NETWORK_ID_NAME, Types.TSTR,
             "Payment network/method identifier. " +

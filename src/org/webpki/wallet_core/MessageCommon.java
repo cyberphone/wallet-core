@@ -27,7 +27,8 @@ public class MessageCommon {
     // Unencryptef Data
     // PAYMENT_REQUEST_LBL
     public static final CBORInt PROVIDER_INFO_LBL       = new CBORInt(2);
-    public static final CBORInt PAYEE_HOST_LBL          = new CBORInt(3);
+    public static final CBORInt LANGUAGE_LBL            = new CBORInt(3);
+    public static final CBORInt PAYEE_HOST_LBL          = new CBORInt(4);
 
     public static final CBORInt NETWORK_ID_LBL          = new CBORInt(1); 
     public static final CBORInt SERVICE_LOCATOR_LBL     = new CBORInt(2);

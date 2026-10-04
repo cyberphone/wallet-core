@@ -6,6 +6,7 @@ public class UnencryptedData extends TableExecutor {
 
     static final String PAYMENT_REQUEST_NAME  = "paymentRequest";
     static final String PROVIDER_INFO_NAME    = "providerInfo";
+    static final String LANGUAGE_NAME         = "language";
     static final String PAYEE_HOST_NAME       = "payeeHost";
 
     @Override
@@ -23,6 +24,11 @@ public class UnencryptedData extends TableExecutor {
                 "required by the <code class='entity'>Payee</code> for deriving " +
                 "which payment network " +
                 "to use and how to initiate a compatible payment transaction request.")
+
+           .add(LANGUAGE_LBL, LANGUAGE_NAME, Types.TSTR,
+                "A 2-or-3-character code that defines the basic language, all " +
+                "written in <i>lowercase</i>. For example, the language code for English is " +
+                "<code>en</code>, and the code for Badeshi is <code>bdz</code>.")
 
             .add(PAYEE_HOST_LBL, PAYEE_HOST_NAME, Types.TSTR,
                 "Host name or IP address of the invoking <code class='entity'>Payee</code>, " +

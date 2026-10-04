@@ -49,13 +49,17 @@ public class CreateDocument {
 
     static final String PAYEE_HOST = "spaceshop.com";
 
-    static final String TIME_STAMP = "2026-10-02T13:28:02-01:00";
+    static final String TIME_STAMP = "2026-10-04T13:28:02-01:00";
 
     static final String PAYER_ACCOUNT = "FR7630002111110020050014382";
 
     static final String SERIAL_NUMBER = "010049255";
 
-    static final String REFERENCE_ID = "20261002.00079";
+    static final String REFERENCE_ID = "20261004.00079";
+
+    static final String LANGUAGE = "en";
+
+    static final String ANDROID_VERSION = "17";
 
     static final String COPY_ATTRIBUTE =
         "Copy of the same attribute of the selected payment credential in " +
@@ -196,11 +200,12 @@ public class CreateDocument {
         CBORMap unencryptedData = new CBORMap()
             .set(PAYMENT_REQUEST_LBL, paymentRequest)
             .set(PROVIDER_INFO_LBL, providerInfo)
+            .set(LANGUAGE_LBL, new CBORString(LANGUAGE))
             .set(PAYEE_HOST_LBL, new CBORString(PAYEE_HOST));
 
         CBORArray platformData = new CBORArray()
             .add(new CBORString("Android"))
-            .add(new CBORString("15"));
+            .add(new CBORString(ANDROID_VERSION));
 
         CBORArray walletData = new CBORArray()
             .add(new CBORString("Saturn"))
