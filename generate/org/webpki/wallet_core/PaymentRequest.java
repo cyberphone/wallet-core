@@ -28,7 +28,10 @@ public class PaymentRequest extends TableExecutor {
                 "custom for prices for the specific <kbd>currency</kbd>.</div>")
 
             .add(CURRENCY_LBL, CURRENCY_NAME, Types.TSTR,
-                "Currency expressed in the ${href.iso4217} <i>alphabetical</i> format.")
+                "Currency expressed in the ${href.iso4217} <i>alphabetical</i> format." +
+                "<div style='padding-top:0.5em'>" +
+                "See also <kbd>" + CredentialDatabaseEntry.CURRENCIES + "</kbd> in the " +
+                "${href.credential-database}.</div>")
     
             .add(REFERENCE_ID_LBL, REFERENCE_ID_NAME, Types.TSTR,
                 "<code class='entity'>Payee</code> reference Id. " +
