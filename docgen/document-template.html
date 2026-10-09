@@ -135,9 +135,11 @@ After receiving the ${href.authorization-response}, the <code class='entity'>Pay
 on the ${href.unencrypted-data} object including:
 <ul style='padding-top:0;margin-top:0.5em'>
   <li style='padding-top:0'>Verify that the
-    <kbd>paymentRequest</kbd> object is identical to the original request.</li>
-  <li>Verify that the <kbd>providerInfo</kbd> object contains a supported
-    <kbd>networkId</kbd>.</li>
+    <kbd>paymentRequest</kbd> object is identical to the original ${href.payment-request}.</li>
+  <li>Verify that the <kbd>providerInfo</kbd> object contains a
+    <kbd>networkId</kbd> matching an element of the 
+    <kbd>supportedNetworks</kbd> list of the ${href.authorization-request}, including
+    an for the <kbd>networkId</kbd> matching <kbd>serviceLocator</kbd>.</li>
   <li>Verify that <kbd>payeeHost</kbd> matches that of the
     <code class='entity'>Payee</code>.</li>
 </ul>
@@ -147,7 +149,9 @@ a suitable error message,
 ${calling-the-payment-network}
 After successful validation of the ${href.authorization-response},
 the <code class='entity'>Payee</code>
-includes this object in a <i>payment-network-specific</i> request to the designated
+includes this object in a <i>payment-network-specific</i> initiation request
+(step #<code style='color:red'>I</code> in the ${href.sequence-diagram})
+to the designated
 <code class='entity'>Payment</code>&#8201;<code class='entity'>Network</code>
 (provided by the selected payment credential).
 Note that this phase may constitute of <i>multiple</i> request-response pairs.
@@ -304,7 +308,7 @@ ${encryption-key.jwk}
 ${encryption-key.txt}
 ${version}
   API version: 0.63<br>
-  Document version: 2026-10-04<br>
+  Document version: 2026-10-09<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>

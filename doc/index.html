@@ -165,9 +165,11 @@ After receiving the <a href='#3.3.authorization-response'>Authorization&nbsp;Res
 on the <a href='#3.5.unencrypted-data'>Unencrypted&nbsp;Data</a> object including:
 <ul style='padding-top:0;margin-top:0.5em'>
   <li style='padding-top:0'>Verify that the
-    <kbd>paymentRequest</kbd> object is identical to the original request.</li>
-  <li>Verify that the <kbd>providerInfo</kbd> object contains a supported
-    <kbd>networkId</kbd>.</li>
+    <kbd>paymentRequest</kbd> object is identical to the original <a href='#3.2.payment-request'>Payment&nbsp;Request</a>.</li>
+  <li>Verify that the <kbd>providerInfo</kbd> object contains a
+    <kbd>networkId</kbd> matching an element of the 
+    <kbd>supportedNetworks</kbd> list of the <a href='#3.1.authorization-request'>Authorization&nbsp;Request</a>, including
+    an for the <kbd>networkId</kbd> matching <kbd>serviceLocator</kbd>.</li>
   <li>Verify that <kbd>payeeHost</kbd> matches that of the
     <code class='entity'>Payee</code>.</li>
 </ul>
@@ -177,7 +179,9 @@ a suitable error message,
 <h5 id='2.6.calling-the-payment-network'>2.6.&nbsp; Calling&nbsp;the&nbsp;Payment&nbsp;Network</h5>
 After successful validation of the <a href='#3.3.authorization-response'>Authorization&nbsp;Response</a>,
 the <code class='entity'>Payee</code>
-includes this object in a <i>payment-network-specific</i> request to the designated
+includes this object in a <i>payment-network-specific</i> initiation request
+(step #<code style='color:red'>I</code> in the <a href='#2.1.sequence-diagram'>Sequence&nbsp;Diagram</a>)
+to the designated
 <code class='entity'>Payment</code>&#8201;<code class='entity'>Network</code>
 (provided by the selected payment credential).
 Note that this phase may constitute of <i>multiple</i> request-response pairs.
@@ -334,7 +338,7 @@ should be possible to decrypt and validate, using the following sample keys.
 <div class='webpkifloat'><div class='webpkibox' id='encryption-key.txt' style='width:50em'>{<br>&nbsp;&nbsp;1:&nbsp;2,<br>&nbsp;&nbsp;-1:&nbsp;1,<br>&nbsp;&nbsp;-2:&nbsp;h'e812b1a6dcbc708f9ec43cc2921fa0a14e9d5eadcc6dc63471dd4b680c6236b5',<br>&nbsp;&nbsp;-3:&nbsp;h'9826dcbd4ce6e388f72edd9be413f2425a10f75b5fd83d95fa0cde53159a51d8',<br>&nbsp;&nbsp;-4:&nbsp;h'e97c4c15785c613e5037dc394c88366922ac6dc8fea63e019d990aed93ade01f'<br>}</div></div>
 <h3 id='11.version'>11.&nbsp; Version</h3>
   API version: 0.63<br>
-  Document version: 2026-10-04<br>
+  Document version: 2026-10-09<br>
   Author: Anders Rundgren (<code>anders.rundgren.net@gmail.com</code>)
 </body>
 </html>
