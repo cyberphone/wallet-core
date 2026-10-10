@@ -253,10 +253,11 @@ public class CreateDocument {
     }
 
     CBORObject issuerDecrypt(CBORObject authorizationResponse, boolean update) {
-        final CBORObject unencryptedData[] = new CBORObject[1];
-        final String authzObjectId[] = new String[1];
+        CBORObject unencryptedData[] = new CBORObject[1];
+        String authzObjectId[] = new String[1];
 
-        byte[] cbor = new CBORAsymKeyDecrypter(new CBORAsymKeyDecrypter.KeyLocator() {
+        CBORMap decryptedData = CBORDecoder.decode(new CBORAsymKeyDecrypter(
+            new CBORAsymKeyDecrypter.KeyLocator() {
 
             @Override
             public PrivateKey locate(PublicKey optionalPublicKey,
@@ -293,14 +294,12 @@ public class CreateDocument {
                 unencryptedData[0] = customData;
             }
                                 
-        }).decrypt(authorizationResponse);
+        }).decrypt(authorizationResponse)).getMap();
         if (update) {
             codeTable("unencrypted-data.txt", unencryptedData[0]);
         }
 
         // Restore signed message
-
-        CBORMap decryptedData = CBORDecoder.decode(cbor).getMap();
 
         if (update) {
             codeTable("restored.txt", decryptedData);
