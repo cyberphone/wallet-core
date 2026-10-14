@@ -279,11 +279,11 @@ public class CreateDocument {
 
             @Override
             public void foundData(CBORObject object) {
-                String objectId = object.getTag().getCOTXObject().objectId;
-                if (!objectId.equals(AUTHZ_RESPONSE_ID)) {
-                    throw new CryptoException("Unknown authzObjectId:" + objectId);
+                String id = object.getTag().getCOTX().id;
+                if (!id.equals(AUTHZ_RESPONSE_ID)) {
+                    throw new CryptoException("Unknown authzObjectId:" + id);
                 }
-                authzObjectId[0] = objectId;
+                authzObjectId[0] = id;
             }
     
         }).setCustomDataPolicy(CBORCryptoUtils.POLICY.MANDATORY, new CBORCryptoUtils.Collector() {
@@ -340,9 +340,9 @@ public class CreateDocument {
 
             @Override
             public void foundData(CBORObject object) {
-                String objectId = object.getTag().getCOTXObject().objectId;
-                if (!objectId.equals(AUTHZ_RESPONSE_ID)) {
-                    throw new CryptoException("Unknown authzObjectId:" + objectId);
+                String id = object.getTag().getCOTX().id;
+                if (!id.equals(AUTHZ_RESPONSE_ID)) {
+                    throw new CryptoException("Unknown authzObjectId:" + id);
                 }
             }
         })
