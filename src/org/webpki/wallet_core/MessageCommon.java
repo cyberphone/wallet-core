@@ -15,8 +15,9 @@ public class MessageCommon {
 
     // Authorization Request
     public static final CBORInt PAYMENT_REQUEST_LBL     = new CBORInt(1); 
-    public static final CBORInt SUPPORTED_NETWORKS_LBL  = new CBORInt(2);
-    public static final CBORInt RECEIPT_URL_LBL         = new CBORInt(3);
+    public static final CBORInt SUPPORTED_VERSIONS_LBL  = new CBORInt(2);
+    public static final CBORInt SUPPORTED_NETWORKS_LBL  = new CBORInt(3);
+    public static final CBORInt RECEIPT_URL_LBL         = new CBORInt(4);
 
     public static final CBORInt COMMON_NAME_LBL         = new CBORInt(1); 
     public static final CBORInt AMOUNT_LBL              = new CBORInt(2); 

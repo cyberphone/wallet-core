@@ -4,6 +4,7 @@ import static org.webpki.wallet_core.MessageCommon.*;
 
 public class AuthorizationRequest extends TableExecutor {
 
+    static final String SUPPORTED_VERSIONS_NAME = "supportedVersions";
     static final String SUPPORTED_NETWORKS_NAME = "supportedNetworks";
     static final String RECEIPT_URL_NAME        = "receiptUrl";
 
@@ -14,6 +15,16 @@ public class AuthorizationRequest extends TableExecutor {
             .add(PAYMENT_REQUEST_LBL, UnencryptedData.PAYMENT_REQUEST_NAME, Types.MAP,
                 "${href.payment-request} is the core " +
                 "<code class='entity'>Payee</code> request object.")
+
+            .add(SUPPORTED_VERSIONS_LBL, SUPPORTED_VERSIONS_NAME, Types.ARRAY,
+                "Non-empty list of payment authorization versions " +
+                "that the <code class='entity'>Issuer</code> supports. " +
+                "Version identifiers are expressed as CBOR strings (<code>tstr</code>)." +
+                "<div style='padding-top:0.5em'>" +
+                "See also <kbd>" + CredentialDatabaseEntry.VERSION_NAME + "</kbd> in the " +
+                "${href.credential-database}.</div>" +
+                "<div style='padding-top:0.5em'>" +
+                "Note: the CBOR label of this element <b>must</b> remain constant.</div>")
 
             .add(SUPPORTED_NETWORKS_LBL, SUPPORTED_NETWORKS_NAME, Types.ARRAY,
                 "Non-empty list of payment network/method identifiers " +

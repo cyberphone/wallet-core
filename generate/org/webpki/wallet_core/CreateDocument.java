@@ -170,11 +170,12 @@ public class CreateDocument {
 
         // Create AuthorizationRequest
 
-        CBORMap paymentRequest = new CBORMap()
-            .set(AMOUNT_LBL, new CBORString("600.00"))
-            .set(CURRENCY_LBL, new CBORString("EUR"))
-            .set(REFERENCE_ID_LBL, new CBORString(REFERENCE_ID))
-            .set(COMMON_NAME_LBL, new CBORString("Space Shop"));
+        PaymentRequest paymentRequest = new PaymentRequest("Space Shop",
+                                                           "600.00",
+                                                           "EUR",
+                                                           REFERENCE_ID,
+                                                           null);
+        
 
         CBORMap providerInfo = new CBORMap()
             .set(NETWORK_ID_LBL, new CBORString(BANKNET2))
@@ -186,7 +187,9 @@ public class CreateDocument {
 
         CBORTag authorizationRequest = new CBORTag(MessageCommon.AUTHZ_REQUEST_ID,
             new CBORMap()
-                .set(PAYMENT_REQUEST_LBL, paymentRequest)
+                .set(PAYMENT_REQUEST_LBL, paymentRequest.object)
+                .set(SUPPORTED_VERSIONS_LBL, new CBORArray()
+                    .add(new CBORString(CREDENTIAL_VERSION)))
                 .set(SUPPORTED_NETWORKS_LBL, new CBORArray()
                     .add(new CBORString("https://cardnetwork.com"))
                     .add(new CBORString(BANKNET2)))
@@ -198,7 +201,7 @@ public class CreateDocument {
         // Create a signed authorization response
 
         CBORMap unencryptedData = new CBORMap()
-            .set(PAYMENT_REQUEST_LBL, paymentRequest)
+            .set(PAYMENT_REQUEST_LBL, paymentRequest.object)
             .set(PROVIDER_INFO_LBL, providerInfo)
             .set(LANGUAGE_LBL, new CBORString(LANGUAGE))
             .set(PAYEE_HOST_LBL, new CBORString(PAYEE_HOST));
