@@ -49,13 +49,13 @@ public class CreateDocument {
 
     static final String PAYEE_HOST = "spaceshop.com";
 
-    static final String TIME_STAMP = "2026-10-04T13:28:02-01:00";
+    static final String TIME_STAMP = "2026-11-13T13:28:02-01:00";
 
     static final String PAYER_ACCOUNT = "FR7630002111110020050014382";
 
     static final String SERIAL_NUMBER = "010049255";
 
-    static final String REFERENCE_ID = "20261004.00079";
+    static final String REFERENCE_ID = "20261113.00079";
 
     static final String LANGUAGE = "en";
 
@@ -221,7 +221,7 @@ public class CreateDocument {
 
         CBORObject signedAuthorization = new CBORAsymKeySigner(authorizationKey.getPrivate())
             .setPublicKey(authorizationKey.getPublic())
-            .sign(new CBORTag(AUTHZ_RESPONSE_ID, new CBORMap()
+            .sign(new CBORTag(AUTHZ_RESPONSE_SIG_ID, new CBORMap()
                 .set(UNENCRYPTED_DATA_LBL, unencryptedData)
                 .set(RESPONSE_ENCRYPTION_LBL, responseEncryption)
                 .set(ACCOUNT_ID_LBL, new CBORString(PAYER_ACCOUNT))
@@ -286,7 +286,7 @@ public class CreateDocument {
                 if (!id.equals(AUTHZ_RESPONSE_ID)) {
                     throw new CryptoException("Unknown authzObjectId:" + id);
                 }
-                authzObjectId[0] = id;
+                authzObjectId[0] = id + "#sig";
             }
     
         }).setCustomDataPolicy(CBORCryptoUtils.POLICY.MANDATORY, new CBORCryptoUtils.Collector() {
@@ -344,7 +344,7 @@ public class CreateDocument {
             @Override
             public void foundData(CBORObject object) {
                 String id = object.getTag().getCOTX().id;
-                if (!id.equals(AUTHZ_RESPONSE_ID)) {
+                if (!id.equals(AUTHZ_RESPONSE_SIG_ID)) {
                     throw new CryptoException("Unknown authzObjectId:" + id);
                 }
             }

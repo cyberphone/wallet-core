@@ -5,12 +5,13 @@ import org.webpki.cbor.CBORInt;
 public class MessageCommon {
 
     // COTX Identifiers
-    public static final String AUTHZ_RESPONSE_ID        = "https://cyberphone.github.io/saturn/ares/v1";
     public static final String AUTHZ_REQUEST_ID         = "https://cyberphone.github.io/saturn/areq/v1";
- 
+    public static final String AUTHZ_RESPONSE_ID        = "https://cyberphone.github.io/saturn/ares/v1";
+    public static final String AUTHZ_RESPONSE_SIG_ID    = AUTHZ_RESPONSE_ID + "#sig";
+  
     public static final String NDP_GAS_ID               = "https://cyberphone.github.io/saturn/ndp/gas";
 
-    // /.well-known externsion
+    // /.well-known/ extension
     public static final String SATURM_CONFIGURATION     = "saturn-configuration";
 
     // Authorization Request
@@ -48,6 +49,15 @@ public class MessageCommon {
     public static final CBORInt ALGORITHM_LBL           = new CBORInt(1);
     public static final CBORInt INSTANCE_KEY_LBL        = new CBORInt(2);
 
+    enum SIGNED_AUTHZ {
+        unencryptedData (UNENCRYPTED_DATA_LBL);
+
+        CBORInt label;
+
+        SIGNED_AUTHZ(CBORInt label) {
+            this.label = label;
+        }
+    }
 
 
 }

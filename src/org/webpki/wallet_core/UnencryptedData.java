@@ -50,11 +50,7 @@ public class UnencryptedData extends TableExecutor {
     @Override
     String getBeforeText() {
         return "The " + getTitle() + " structure holds the elements of a " +
-            "${href.authorization-response} that are provided in clear. " +
-            "<div style='padding-top:0.5em'>" +
-            "Note that the <code>&quot;" +
-             MessageCommon.AUTHZ_RESPONSE_ID + "&quot;</code> ${href.cotx} tag " +
-            "also belongs to unencrypted data.</div>";
+            "${href.authorization-response} that are provided in clear.";
     }
 
     @Override

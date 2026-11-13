@@ -90,11 +90,17 @@ public class SignedAuthorization extends TableExecutor {
         return "A " + getTitle() + " consists of a CBOR map wrapped in " +
             "a ${href.cotx} container as follows:" +
             "<div class='webpkifloat'><div style='padding:1em 2em'>" +
-            "<code>1010([&quot;" + MessageCommon.AUTHZ_RESPONSE_ID + "&quot;,&nbsp;{<br></code>" +
+            "<code>1010([&quot;" +
+            MessageCommon.AUTHZ_RESPONSE_SIG_ID + 
+            "&quot;,&nbsp;{<br></code>" +
             "<div style='padding:1em 0 1em 2em'><i>CBOR map...</i></div>" +
             "<code>}])</code>" +
             "</div></div>" +
             "Note that the COTX wrapper is included in the signature process as well." +
+            "<div style='padding-top:0.5em'>" +
+            "Note that the COTX identifier <b>must</b> match " +
+            "the id of the ${href.authorization-response} appended by " +
+            "<code>#sig</code>.</div>" +
             "<div style='padding-top:0.5em'>" +
             "The CBOR <code>map</code> keys are as follows:</div>";
     }
