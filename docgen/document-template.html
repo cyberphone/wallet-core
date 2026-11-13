@@ -232,8 +232,9 @@ recreated using the following steps:
     <code>map</code> using the <code>int</code> label <code>1</code>.</li>
   <li>Merge the previous <code>map</code> object with the <i>decrypted</i> 
     <code>map</code> object obtained in ${href.decryption}.</li>
-  <li>Wrap the resulting <code>map</code> object in an
-     Authorization Response ${href.cotx} object.</li>
+  <li>Wrap the resulting <code>map</code> object in a
+     ${href.cotx} object matching the ${href.authorization-response} object
+     appended with <code>#sig</code>.</li>
 </ul>
 Applied to the example, the ${href.signed-authorization} object should read as follows:
 ${signed-authz.txt}
