@@ -2,7 +2,7 @@ package org.webpki.wallet_core;
 
 public class CredentialDatabaseEntry {
 
-    static final String VERSION_NAME           = "version";
+    static final String AUTH_METHOD_NAME       = "authzMethod";
     static final String CURRENCIES             = "currencies";
     static final String CARD_IMAGE_NAME        = "cardImage";
     static final String AUTHZ_KEY_HANDLE_NAME  = "authzKeyHandle";
@@ -32,10 +32,10 @@ public class CredentialDatabaseEntry {
 
     String getHtml() {
 
-        add(VERSION_NAME, Types.TSTR,
-            "Since credential data may evolve over time, versioning is necessary. " +
-            "This specification covers version: " +
-            "<code style='white-space:nowrap'>" + CreateDocument.CREDENTIAL_VERSION + "</code>.");
+        add(AUTH_METHOD_NAME, Types.TSTR,
+            "Each credential is associated with a specific ${href.authorization-response} object " +
+            "and method.  This specification covers: " +
+            "<code style='white-space:nowrap'>" + MessageCommon.AUTHZ_RESPONSE_ID + "</code>.");
 
         add(CURRENCIES, Types.ARRAY,
             "Non-empty list of supported currencies expressed in the ${href.iso4217} " +
@@ -113,7 +113,7 @@ public class CredentialDatabaseEntry {
             "<div style='padding-top:0.5em'>" +
             "Note that <kbd>" + ENC_PUBLIC_KEY_NAME +
             "</kbd> objects are provided by credential issuers. " +
-            "In order to serve their primary purpose, preserving privacy, <kbd>" +
+            "To avoid becoming &quot;super-cookies&quot;, <kbd>" +
             ENC_PUBLIC_KEY_NAME + "</kbd> objects <b>must</b> be <i>shared</i> " +
             "by multiple clients.</div>");
         

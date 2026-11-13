@@ -45,8 +45,6 @@ public class CreateDocument {
 
     static final String BANKNET2 = "https://banknet2.org"; 
 
-    static final String CREDENTIAL_VERSION = "https://cyberphone.github.io/saturn/cred/v1";
-
     static final String PAYEE_HOST = "spaceshop.com";
 
     static final String TIME_STAMP = "2026-11-13T13:28:02-01:00";
@@ -188,8 +186,6 @@ public class CreateDocument {
         CBORTag authorizationRequest = new CBORTag(MessageCommon.AUTHZ_REQUEST_ID,
             new CBORMap()
                 .set(PAYMENT_REQUEST_LBL, paymentRequest.object)
-                .set(SUPPORTED_VERSIONS_LBL, new CBORArray()
-                    .add(new CBORString(CREDENTIAL_VERSION)))
                 .set(SUPPORTED_NETWORKS_LBL, new CBORArray()
                     .add(new CBORString("https://cardnetwork.com"))
                     .add(new CBORString(BANKNET2)))
