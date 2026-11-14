@@ -221,7 +221,7 @@ except for the ${href.unencrypted-data} object have been removed.
 Note that this item is already supplied in clear:
 ${unencrypted-data.txt}
 2. The remaining part of the ${href.signed-authorization} object
-which after decryption should read like the following:
+which after <i>decryption</i> and <i>decoding</i> should read like the following:
 ${restored.txt}
 ${signature-validation}
 For validating the the ${href.signed-authorization} object, it must be
@@ -231,7 +231,7 @@ recreated using the following steps:
     obtained in ${href.decryption} in a CBOR 
     <code>map</code> using the <code>int</code> label <code>1</code>.</li>
   <li>Merge the previous <code>map</code> object with the <i>decrypted</i> 
-    <code>map</code> object obtained in ${href.decryption}.</li>
+    and <i>decoded</i> <code>map</code> object obtained in ${href.decryption}.</li>
   <li>Wrap the resulting <code>map</code> object in a
      ${href.cotx} object matching the ${href.authorization-response} object
      appended with <code>#sig</code>.</li>

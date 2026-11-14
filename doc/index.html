@@ -251,7 +251,7 @@ except for the <a href='#3.5.unencrypted-data'>Unencrypted&nbsp;Data</a> object 
 Note that this item is already supplied in clear:
 <div class='webpkifloat'><div class='webpkibox' id='unencrypted-data.txt' style='width:50em'>{<br>&nbsp;&nbsp;1:&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;&quot;Space&nbsp;Shop&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;&quot;600.00&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;3:&nbsp;&quot;EUR&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;4:&nbsp;&quot;20261113.00079&quot;<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;2:&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;&quot;https://banknet2.org&quot;,<br>&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;&quot;mybank.com&quot;<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;3:&nbsp;&quot;en&quot;,<br>&nbsp;&nbsp;4:&nbsp;&quot;spaceshop.com&quot;<br>}</div></div>
 2. The remaining part of the <a href='#3.8.signed-authorization'>Signed&nbsp;Authorization</a> object
-which after decryption should read like the following:
+which after <i>decryption</i> and <i>decoding</i> should read like the following:
 <div class='webpkifloat'><div class='webpkibox' id='restored.txt' style='width:50em'>{<br>&nbsp;&nbsp;2:&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;3,<br>&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;h'7fdd851a3b9d2dafc5f0d00030e22b9343900cd42ede4948568a4a2ee655291a'<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;3:&nbsp;&quot;FR7630002111110020050014382&quot;,<br>&nbsp;&nbsp;4:&nbsp;&quot;010049255&quot;,<br>&nbsp;&nbsp;5:&nbsp;&quot;2026-11-13T13:28:02-01:00&quot;,<br>&nbsp;&nbsp;6:&nbsp;[&quot;Android&quot;,&nbsp;&quot;17&quot;],<br>&nbsp;&nbsp;7:&nbsp;[&quot;Saturn&quot;,&nbsp;&quot;1.0.0&quot;],<br>&nbsp;&nbsp;8:&nbsp;[38.8882,&nbsp;-77.01988],<br>&nbsp;&nbsp;simple(99):&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;-19,<br>&nbsp;&nbsp;&nbsp;&nbsp;4:&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;1,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1:&nbsp;6,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-2:&nbsp;h'fe49acf5b92b6e923594f2e83368f680ac924be93cf533aecaf802e37757f8c9'<br>&nbsp;&nbsp;&nbsp;&nbsp;},<br>&nbsp;&nbsp;&nbsp;&nbsp;6:&nbsp;h'7b4dc619333a17ee6d73ed36c590725b4ecda60ac71b70aced7167a129fc4d8c2133ba2cb90ef9ac39ea811853e20fb1edef31332644947ea80ad805ddf4c30c'<br>&nbsp;&nbsp;}<br>}</div></div>
 <h5 id='6.2.signature-validation'>6.2.&nbsp; Signature&nbsp;Validation</h5>
 For validating the the <a href='#3.8.signed-authorization'>Signed&nbsp;Authorization</a> object, it must be
@@ -261,7 +261,7 @@ recreated using the following steps:
     obtained in <a href='#6.1.decryption'>Decryption</a> in a CBOR 
     <code>map</code> using the <code>int</code> label <code>1</code>.</li>
   <li>Merge the previous <code>map</code> object with the <i>decrypted</i> 
-    <code>map</code> object obtained in <a href='#6.1.decryption'>Decryption</a>.</li>
+    and <i>decoded</i> <code>map</code> object obtained in <a href='#6.1.decryption'>Decryption</a>.</li>
   <li>Wrap the resulting <code>map</code> object in a
      <a href='https://www.ietf.org/archive/id/draft-rundgren-cotx-04.html' style='white-space:nowrap'>COTX<img src='xtl.svg' alt='cotx'></a> object matching the <a href='#3.3.authorization-response'>Authorization&nbsp;Response</a> object
      appended with <code>#sig</code>.</li>
