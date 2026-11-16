@@ -185,7 +185,7 @@ public class CreateDocument {
 
         CBORTag authorizationRequest = new CBORTag(MessageCommon.AUTHZ_REQUEST_ID,
             new CBORMap()
-                .set(PAYMENT_REQUEST_LBL, paymentRequest.object)
+                .set(PAYMENT_REQUEST_LBL, paymentRequest.mapObject)
                 .set(SUPPORTED_NETWORKS_LBL, new CBORArray()
                     .add(new CBORString("https://cardnetwork.com"))
                     .add(new CBORString(BANKNET2)))
@@ -197,7 +197,7 @@ public class CreateDocument {
         // Create a signed authorization response
 
         CBORMap unencryptedData = new CBORMap()
-            .set(PAYMENT_REQUEST_LBL, paymentRequest.object)
+            .set(PAYMENT_REQUEST_LBL, paymentRequest.mapObject)
             .set(PROVIDER_INFO_LBL, providerInfo)
             .set(LANGUAGE_LBL, new CBORString(LANGUAGE))
             .set(PAYEE_HOST_LBL, new CBORString(PAYEE_HOST));

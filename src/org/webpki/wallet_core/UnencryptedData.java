@@ -2,12 +2,29 @@ package org.webpki.wallet_core;
 
 import static org.webpki.wallet_core.MessageCommon.*;
 
+import org.webpki.cbor.CBORMap;
+import org.webpki.cbor.CBORObject;
+
 public class UnencryptedData extends TableExecutor {
 
     static final String PAYMENT_REQUEST_NAME  = "paymentRequest";
     static final String PROVIDER_INFO_NAME    = "providerInfo";
     static final String LANGUAGE_NAME         = "language";
     static final String PAYEE_HOST_NAME       = "payeeHost";
+
+    UnencryptedData() {} // For documentation purposes only
+
+    UnencryptedData(PaymentRequest paymentRequest) {
+        mapObject = new CBORMap()
+            .set(PAYMENT_REQUEST_LBL, paymentRequest.mapObject);
+    }
+
+    PaymentRequest paymentRequest;
+
+    UnencryptedData(CBORObject unencryptedData) {
+        mapObject = unencryptedData.getMap();
+        paymentRequest = new PaymentRequest(mapObject.get(PAYMENT_REQUEST_LBL));
+    }
 
     @Override
     String getTableString() {

@@ -2,6 +2,9 @@ package org.webpki.wallet_core;
 
 import static org.webpki.wallet_core.MessageCommon.*;
 
+import java.util.regex.Pattern;
+
+import org.webpki.cbor.CBORInt;
 import org.webpki.cbor.CBORMap;
 import org.webpki.cbor.CBORObject;
 import org.webpki.cbor.CBORString;
@@ -14,6 +17,9 @@ public class PaymentRequest extends TableExecutor {
     static final String CURRENCY_NAME            = "currency";
     static final String REFERENCE_ID_NAME        = "referenceId";
     static final String NON_DIRECT_PAYMENT_NAME  = "nonDirectPayment";
+
+    static final Pattern COMMON_NAME_PATTERN     = Pattern.compile("^(\\S+\\s*\\S)+$");
+    static final Pattern AMOUNT_PATTERN          = Pattern.compile("^(0|[1-9]\\d*)\\.\\d\\d$");
 
     private String commonName;
     public String getCommonName() {
@@ -40,7 +46,13 @@ public class PaymentRequest extends TableExecutor {
         return nonDirectPayment;
     }
 
-    CBORMap object;
+    String getString(CBORInt key) {
+        String string = mapObject.get(key).getString();
+        if (string.strip().length() != string.length()) {
+            throw new IllegalArgumentException("Leading or trailing whitespace");
+        }
+        return string;
+    }
 
     PaymentRequest() {} // For documentation purposes only
 
@@ -59,12 +71,12 @@ public class PaymentRequest extends TableExecutor {
     }
 
     PaymentRequest(CBORObject paymentRequest) {
-        object = paymentRequest.getMap();
-        commonName = object.get(COMMON_NAME_LBL).getString();
-        amount = object.get(AMOUNT_LBL).getString();
-        currency = object.get(CURRENCY_LBL).getString();
-        referenceId = object.get(REFERENCE_ID_LBL).getString();
-        CBORObject ndp = object.getConditionally(NON_DIRECT_PAYMENT_LBL, null);
+        mapObject = paymentRequest.getMap();
+        commonName = getString(COMMON_NAME_LBL, COMMON_NAME_PATTERN);
+        amount = getString(AMOUNT_LBL, AMOUNT_PATTERN);
+        currency = getString(CURRENCY_LBL);
+        referenceId = getString(REFERENCE_ID_LBL);
+        CBORObject ndp = mapObject.getConditionally(NON_DIRECT_PAYMENT_LBL, null);
         if (ndp != null) {
             nonDirectPayment = ndp.getTag().getCOTX();
         }
