@@ -5,7 +5,7 @@ import static org.webpki.wallet_core.MessageCommon.*;
 import org.webpki.cbor.CBORMap;
 import org.webpki.cbor.CBORObject;
 
-public class UnencryptedData extends TableExecutor {
+public class UnencryptedData extends MapCommon {
 
     static final String PAYMENT_REQUEST_NAME  = "paymentRequest";
     static final String PROVIDER_INFO_NAME    = "providerInfo";

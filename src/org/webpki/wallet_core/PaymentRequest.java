@@ -4,22 +4,23 @@ import static org.webpki.wallet_core.MessageCommon.*;
 
 import java.util.regex.Pattern;
 
-import org.webpki.cbor.CBORInt;
 import org.webpki.cbor.CBORMap;
 import org.webpki.cbor.CBORObject;
 import org.webpki.cbor.CBORString;
 import org.webpki.cbor.CBORTag;
 
-public class PaymentRequest extends TableExecutor {
+public class PaymentRequest extends MapCommon {
 
-    static final String AMOUNT_NAME              = "amount";
-    static final String COMMON_NAME_NAME         = "commonName";
-    static final String CURRENCY_NAME            = "currency";
-    static final String REFERENCE_ID_NAME        = "referenceId";
-    static final String NON_DIRECT_PAYMENT_NAME  = "nonDirectPayment";
+    static final String AMOUNT_NAME             = "amount";
+    static final String COMMON_NAME_NAME        = "commonName";
+    static final String CURRENCY_NAME           = "currency";
+    static final String REFERENCE_ID_NAME       = "referenceId";
+    static final String NON_DIRECT_PAYMENT_NAME = "nonDirectPayment";
 
-    static final Pattern COMMON_NAME_PATTERN     = Pattern.compile("^(\\S+\\s*\\S)+$");
-    static final Pattern AMOUNT_PATTERN          = Pattern.compile("^(0|[1-9]\\d*)\\.\\d\\d$");
+    static final Pattern COMMON_NAME_PATTERN    = Pattern.compile("^\\S+(\\s?\\S)*$");
+    static final Pattern AMOUNT_PATTERN         = Pattern.compile("^(0|[1-9]\\d{0,17})\\.\\d{2}$");
+    static final Pattern CURRENCY_PATTERN       = Pattern.compile("^[A-Z]{3}$");
+    static final Pattern REFERENCE_ID_PATTERN   = Pattern.compile("^\\S{6,}$");
 
     private String commonName;
     public String getCommonName() {
@@ -46,14 +47,6 @@ public class PaymentRequest extends TableExecutor {
         return nonDirectPayment;
     }
 
-    String getString(CBORInt key) {
-        String string = mapObject.get(key).getString();
-        if (string.strip().length() != string.length()) {
-            throw new IllegalArgumentException("Leading or trailing whitespace");
-        }
-        return string;
-    }
-
     PaymentRequest() {} // For documentation purposes only
 
     public PaymentRequest(String commonName,
@@ -74,8 +67,8 @@ public class PaymentRequest extends TableExecutor {
         mapObject = paymentRequest.getMap();
         commonName = getString(COMMON_NAME_LBL, COMMON_NAME_PATTERN);
         amount = getString(AMOUNT_LBL, AMOUNT_PATTERN);
-        currency = getString(CURRENCY_LBL);
-        referenceId = getString(REFERENCE_ID_LBL);
+        currency = getString(CURRENCY_LBL, CURRENCY_PATTERN);
+        referenceId = getString(REFERENCE_ID_LBL, REFERENCE_ID_PATTERN);
         CBORObject ndp = mapObject.getConditionally(NON_DIRECT_PAYMENT_LBL, null);
         if (ndp != null) {
             nonDirectPayment = ndp.getTag().getCOTX();

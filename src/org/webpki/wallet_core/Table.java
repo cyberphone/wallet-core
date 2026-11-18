@@ -7,6 +7,21 @@ import org.webpki.cbor.CBORObject;
 
 public class Table {
 
+    interface TableExecutor {
+
+        String getTableString();
+
+        String getTitle();
+
+        default String getBeforeText() {
+            return null;
+        }
+
+        default String getAfterText() {
+            return null;
+        }
+
+    }
     static class TableElement {
         String name;
         String description;
