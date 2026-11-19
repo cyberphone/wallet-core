@@ -1,37 +1,40 @@
-<project name="Wallet Core builder" default="help">
+<project name="Wallet Core builder" default="help" basedir=".">
 
   <!-- set properties for this build -->
   <property name="temp.dir" location=".tmp"/>
   <property name="webpki.lib.dir" location="../openkeystore/library/dist"/>
+  <property name="ext.jar" location="../openkeystore/resources/third-party-jars"/>
   <property name="authz-key" location="keys/ed25519privatekey.jwk"/>
   <property name="enc-key" location="keys/p256privatekey.jwk"/>
   <property name="doc.file" location="doc/index.html"/>
   <property name="docgen.dir" location="docgen"/>
-  <property name="test.dir" location="../test"/>
 
   <property name="debug"  value="on"/>
 
   <target name="help">
-    <echo message="help build doc"/>
+    <echo message="help build doc test"/>
   </target>
 
   <target name="build">
-    <echo message="not implemented"/>
-  </target>
-
-  <target name="doc">
     <delete dir="${temp.dir}"/>
     <mkdir dir="${temp.dir}"/>
     <javac debug="${debug}"
-           srcdir="src:generate"
+           srcdir="src:generate:test"
            destdir="${temp.dir}"
            includeAntRuntime="false">
       <classpath>
         <fileset dir="${webpki.lib.dir}">
           <include name="*.jar"/>
         </fileset>
+        <fileset dir="${ext.jar}">
+          <include name="junit*.jar"/>
+        </fileset>
       </classpath>
     </javac>
+  </target>
+
+  <target name="doc">
+    <antcall target="build"/>
     <java fork="yes"
       classname="org.webpki.wallet_core.CreateDocument"
       failonerror="true">
@@ -44,6 +47,26 @@
       <arg line="document-template.html ${doc.file} ${docgen.dir} ${authz-key} ${enc-key}"/>
     </java>
     <delete dir="${temp.dir}"/>
+  </target>
+
+  <echo message="${classpath.test}"/>
+
+  <target name="test">
+    <antcall target="build"/>
+    <junit fork="no" haltonfailure="yes" printsummary="yes">
+      <test name="org.webpki.wallet_core.TestWallet"/>
+      <formatter type="plain" usefile="false"/>
+      <classpath>
+        <pathelement path="${temp.dir}"/>
+        <fileset dir="${webpki.lib.dir}">
+          <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${ext.jar}">
+          <include name="junit*.jar"/>
+          <include name="hamcrest*.jar"/>
+        </fileset>
+      </classpath>
+    </junit>
   </target>
 
 </project>

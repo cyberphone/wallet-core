@@ -53,7 +53,10 @@ class MessageCommon {
     static final CBORInt ALGORITHM_LBL           = new CBORInt(1);
     static final CBORInt INSTANCE_KEY_LBL        = new CBORInt(2);
 
-    static final Pattern URL_PATTERN =  Pattern.compile("^https:\\/\\/\\S+\\/\\S+$");
+    static final Pattern URL_PATH_PATTERN        =  Pattern.compile("^https:\\/\\/\\S+\\/\\S+$");
+    static final Pattern ANY_STRING_PATTERN      =  Pattern.compile("^\\S+$");
+
+    static final int MAX_SUPPORTED_NETWORKS      = 20;
 
     enum SIGNED_AUTHZ {
         unencryptedData (UNENCRYPTED_DATA_LBL);
@@ -83,21 +86,12 @@ class MessageCommon {
     }
 
     static ArrayList<CBORObject> getArray(CBORObject cborObject, int expectedElements) {
-        var result = new ArrayList<CBORObject>();
         CBORArray array = cborObject.getArray();
-        int size;
-        if (expectedElements < 0) {
-            if ((size = array.size()) > -expectedElements) {
-                walletError("Array size out of range: %d", size);
-            }
-        } else {
-            size = expectedElements;
+        if (array.size() == 0 || expectedElements < 0 ?
+                     array.size() > -expectedElements : array.size() != expectedElements) {
+            walletError("Array size out of range: %d", array.size());
         }
-        int index = 0;
-        do {
-            result.add(array.get(index));  // There must always be one...
-        } while (++index < size);
-        return result;
+        return array.toArray();
     }
 
 }
