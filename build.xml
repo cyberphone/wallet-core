@@ -49,8 +49,6 @@
     <delete dir="${temp.dir}"/>
   </target>
 
-  <echo message="${classpath.test}"/>
-
   <target name="test">
     <antcall target="build"/>
     <junit fork="no" haltonfailure="yes" printsummary="yes">

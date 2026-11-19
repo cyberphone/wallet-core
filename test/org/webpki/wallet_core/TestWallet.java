@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import org.webpki.cbor.CBORDiagnosticNotation;
+import org.webpki.cbor.CBORObject;
 
 public class TestWallet {
 
@@ -38,7 +39,12 @@ public class TestWallet {
 
     void decodeRequest(String cborText, String failTextOrNull) {
         try {
-            new AuthorizationRequestDecoder(CBORDiagnosticNotation.convert(cborText));
+            CBORObject cborObject = CBORDiagnosticNotation.convert(cborText);
+            AuthorizationRequestDecoder authzReq = new AuthorizationRequestDecoder(cborObject);
+            assertTrue("Dec/Enc", cborObject.equals(new AuthorizationRequestEncoder(
+                authzReq.paymentRequest,
+                authzReq.supportedNetworks,
+                authzReq.optionalReceiptUrl).authorizationRequest));
             assertTrue("Must not", failTextOrNull == null);
         } catch (Exception e) {
             checkException(e, failTextOrNull);

@@ -22,32 +22,19 @@ public class PaymentRequest extends MapCommon {
     static final Pattern CURRENCY_PATTERN       = Pattern.compile("^[A-Z]{3}$");
     static final Pattern REFERENCE_ID_PATTERN   = Pattern.compile("^\\S{6,}$");
 
-    private String commonName;
-    public String getCommonName() {
-        return commonName;
-    }
+    public final String commonName;
 
-    private String amount;
-    public String getAmount() {
-        return amount;
-    }
+    public final String amount;
 
-    private String currency;
-    public String getCurrency() {
-        return currency;
-    }
+    public final String currency;
 
-    private String referenceId;
-    public String getReferenceId() {
-        return referenceId;
-    }
+    public final String referenceId;
 
-    private CBORTag.COTX nonDirectPayment;
-    public CBORTag.COTX getNonDirectPayment() {
-        return nonDirectPayment;
-    }
+    public final CBORTag nonDirectPayment;
 
-    PaymentRequest() {} // For documentation purposes only
+    PaymentRequest() { // For documentation purposes only
+        this("N/A", "0.00", "USD", "333333334333", null);
+    }
 
     public PaymentRequest(String commonName,
                           String amount,
@@ -63,16 +50,14 @@ public class PaymentRequest extends MapCommon {
                                       wr : wr.set(NON_DIRECT_PAYMENT_LBL, nonDirectPayment)));
     }
 
-    PaymentRequest(CBORObject paymentRequest) {
+    public PaymentRequest(CBORObject paymentRequest) {
         mapObject = paymentRequest.getMap();
         commonName = getString(COMMON_NAME_LBL, COMMON_NAME_PATTERN);
         amount = getString(AMOUNT_LBL, AMOUNT_PATTERN);
         currency = getString(CURRENCY_LBL, CURRENCY_PATTERN);
         referenceId = getString(REFERENCE_ID_LBL, REFERENCE_ID_PATTERN);
         CBORObject ndp = mapObject.getConditionally(NON_DIRECT_PAYMENT_LBL, null);
-        if (ndp != null) {
-            nonDirectPayment = ndp.getTag().getCOTX();
-        }
+        nonDirectPayment = ndp == null ? null : ndp.getTag();
     }
 
     @Override

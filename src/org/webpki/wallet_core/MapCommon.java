@@ -9,6 +9,10 @@ abstract class MapCommon extends TableExecutor {
 
     CBORMap mapObject;
 
+    public byte[] encode() {
+        return mapObject.encode();
+    }
+
     String getString(CBORInt key, Pattern pattern) {
         return MessageCommon.checkString(mapObject.get(key).getString(), pattern);
     }
