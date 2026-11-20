@@ -4,6 +4,7 @@ import static org.webpki.wallet_core.MessageCommon.*;
 
 import org.webpki.cbor.CBORMap;
 import org.webpki.cbor.CBORObject;
+import org.webpki.cbor.CBORString;
 
 public class UnencryptedData extends MapCommon {
 
@@ -12,18 +13,35 @@ public class UnencryptedData extends MapCommon {
     static final String LANGUAGE_NAME         = "language";
     static final String PAYEE_HOST_NAME       = "payeeHost";
 
-    UnencryptedData() {} // For documentation purposes only
+    public final PaymentRequest paymentRequest;
 
-    UnencryptedData(PaymentRequest paymentRequest) {
-        mapObject = new CBORMap()
-            .set(PAYMENT_REQUEST_LBL, paymentRequest.mapObject);
+    public final ProviderInfo providerInfo;
+
+    public final String language;
+
+    public final String payeeHost;
+
+    UnencryptedData() {  // For documentation purposes only
+        this(new PaymentRequest(), new ProviderInfo(), "en", "example.com");
     }
 
-    PaymentRequest paymentRequest;
+    public UnencryptedData(PaymentRequest paymentRequest,
+                           ProviderInfo providerInfo,
+                           String language,
+                           String payeeHost) {
+        this(new CBORMap()
+            .set(PAYMENT_REQUEST_LBL, paymentRequest.mapObject)
+            .set(PROVIDER_INFO_LBL, providerInfo.mapObject)
+            .set(LANGUAGE_LBL, new CBORString(language))
+            .set(PAYEE_HOST_LBL, new CBORString(payeeHost)));
+    }
 
-    UnencryptedData(CBORObject unencryptedData) {
-        mapObject = unencryptedData.getMap();
+    public UnencryptedData(CBORObject unencryptedData) {
+        super(unencryptedData);
         paymentRequest = new PaymentRequest(mapObject.get(PAYMENT_REQUEST_LBL));
+        providerInfo = new ProviderInfo(mapObject.get(PROVIDER_INFO_LBL));
+        language = getMapString(LANGUAGE_LBL, LANGUAGE_PATTERN);
+        payeeHost = getMapString(LANGUAGE_LBL, ANY_STRING_PATTERN);
     }
 
     @Override

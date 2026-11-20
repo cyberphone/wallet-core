@@ -30,7 +30,7 @@ public class AuthorizationRequestDecoder {
             walletError("Array size out of range: %d", supportedNetworks.length);           
         }
         for (int i = 0; i < array.size(); i++) {
-            supportedNetworks[i] = checkString(array.get(i).getString(), ANY_STRING_PATTERN);
+            supportedNetworks[i] = getAnyString(array.get(i));
         }
         optionalReceiptUrl = cborMap.containsKey(RECEIPT_URL_LBL) ?
             checkString(cborMap.get(RECEIPT_URL_LBL).getString(), URL_PATH_PATTERN) : null;

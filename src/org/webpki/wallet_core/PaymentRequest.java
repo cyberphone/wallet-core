@@ -51,11 +51,11 @@ public class PaymentRequest extends MapCommon {
     }
 
     public PaymentRequest(CBORObject paymentRequest) {
-        mapObject = paymentRequest.getMap();
-        commonName = getString(COMMON_NAME_LBL, COMMON_NAME_PATTERN);
-        amount = getString(AMOUNT_LBL, AMOUNT_PATTERN);
-        currency = getString(CURRENCY_LBL, CURRENCY_PATTERN);
-        referenceId = getString(REFERENCE_ID_LBL, REFERENCE_ID_PATTERN);
+        super(paymentRequest);
+        commonName = getMapString(COMMON_NAME_LBL, COMMON_NAME_PATTERN);
+        amount = getMapString(AMOUNT_LBL, AMOUNT_PATTERN);
+        currency = getMapString(CURRENCY_LBL, CURRENCY_PATTERN);
+        referenceId = getMapString(REFERENCE_ID_LBL, REFERENCE_ID_PATTERN);
         CBORObject ndp = mapObject.getConditionally(NON_DIRECT_PAYMENT_LBL, null);
         nonDirectPayment = ndp == null ? null : ndp.getTag();
     }

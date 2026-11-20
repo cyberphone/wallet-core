@@ -55,6 +55,7 @@ class MessageCommon {
 
     static final Pattern URL_PATH_PATTERN        =  Pattern.compile("^https:\\/\\/\\S+\\/\\S+$");
     static final Pattern ANY_STRING_PATTERN      =  Pattern.compile("^\\S+$");
+    static final Pattern LANGUAGE_PATTERN        =  Pattern.compile("^[a-z]{2,3}$");
 
     static final int MAX_SUPPORTED_NETWORKS      = 20;
 
@@ -83,6 +84,10 @@ class MessageCommon {
             MessageCommon.walletError("\"%s\" does not match: %s", string, pattern.toString());
         }
         return string;
+    }
+
+    static String getAnyString(CBORObject cborObject) {
+        return checkString(cborObject.getString(), ANY_STRING_PATTERN);
     }
 
     static ArrayList<CBORObject> getArray(CBORObject cborObject, int expectedElements) {
